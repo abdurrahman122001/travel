@@ -645,13 +645,13 @@ const Index = () => {
             <div className="absolute inset-0 bg-black/20 rounded-2xl"></div>
             <div className="relative z-10 flex flex-col justify-center h-full px-12 py-12 md:px-24 md:py-20">
               <h1
-                className="text-white text-5xl md:text-6xl font-bold mb-6"
+                className="text-white text-3xl md:text-6xl font-bold mb-6"
                 style={{ fontFamily: "Roboto, sans-serif" }}
               >
                 Local Trips
               </h1>
               <p
-                className="text-white text-lg md:text-2xl mb-8 font-medium"
+                className="text-white text-md md:text-2xl mb-8 font-medium"
                 style={{ fontFamily: "Roboto, sans-serif" }}
               >
                 Discover the world, one destination at a time
