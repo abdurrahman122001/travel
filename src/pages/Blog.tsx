@@ -75,17 +75,18 @@ const Blog = () => {
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
       {/* Header */}
       <Navigation onContactClick={() => setIsContactModalOpen(true)} />
-
-      {/* Hero Section */}
-      <section className="relative py-20 bg-gradient-to-r from-blue-600 to-blue-800">
-        <div className="container mx-auto px-4 text-center">
-          <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">Travel Blog</h1>
-          <p className="text-xl text-blue-100 max-w-2xl mx-auto">
-            Stories, tips, and inspiration for your next adventure
-          </p>
+      <section className="relative h-64 mt-16 bg-gradient-to-r from-blue-600 to-blue-800">
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="text-center text-white px-4">
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">
+              Travel Blog
+            </h1>
+            <p className="text-xl">
+              Stories, tips, and inspiration for your next adventure
+            </p>
+          </div>
         </div>
       </section>
-
       {/* Featured Post */}
       {blogPosts.find(post => post.featured) && (
         <section className="py-16 bg-white">

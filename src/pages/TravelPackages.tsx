@@ -439,13 +439,13 @@ const TravelPackages = () => {
             <div className="flex justify-center gap-4">
               <Button
                 size="lg"
-                className="bg-white text-blue-600 hover:bg-blue-50 px-8"
+                className="bg-white text-black-600 hover:bg-blue-50 px-8"
                 onClick={() => setIsContactModalOpen(true)}
               >
                 Book This Trip
               </Button>
               <Link to="/packages">
-                <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-blue-600 px-8">
+                <Button size="lg" variant="outline" className="border-white text-black hover:bg-white hover:text-blue-600 px-8">
                   <ArrowLeft className="h-4 w-4 mr-2" />
                   Back to Packages
                 </Button>

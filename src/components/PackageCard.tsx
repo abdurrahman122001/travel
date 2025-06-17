@@ -55,7 +55,9 @@ const PackageCard = ({ package: pkg }: PackageCardProps) => {
         {/* Bottom Section - Package Info */}
         <div className="space-y-3">
           <div>
-            <h3 className="text-white text-xl font-bold mb-2">{pkg.title}</h3>
+            <Link to={`/packages/${pkg.id}`}>
+              <h3 className="text-white text-xl font-bold mb-2">{pkg.title}</h3>
+            </Link>
             <div className="flex items-center gap-4 text-white text-sm mb-3">
               <div className="flex items-center gap-1">
                 <MapPin className="w-4 h-4" />
@@ -94,9 +96,9 @@ const PackageCard = ({ package: pkg }: PackageCardProps) => {
             </div>
           </div>
           
-          <Button asChild className="w-full bg-orange-600 hover:bg-orange-700 text-white border-0 rounded-xl py-2 font-semibold">
+          {/* <Button style={{backgroundColor: '#38BDF8'}} asChild className="w-full hover:bg-orange-700 text-white border-0 rounded-xl py-2 font-semibold">
             <Link to={`/packages/${pkg.id}`}>View Details</Link>
-          </Button>
+          </Button> */}
         </div>
       </div>
     </Card>
