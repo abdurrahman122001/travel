@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { MapPin, Star, Calendar, Users, Plane, Hotel, Camera, Shield } from "lucide-react";
 import { useParams, Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
@@ -34,6 +35,12 @@ const TravelPackages = () => {
         "Day 5: Cooking class and spa day",
         "Day 6: Free day for shopping",
         "Day 7: Departure"
+      ],
+      galleryImages: [
+        "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?auto=format&fit=crop&w=800&q=80"
       ]
     },
     {
@@ -55,6 +62,12 @@ const TravelPackages = () => {
         "Day 7-8: Zermatt and Matterhorn",
         "Day 9: Montreux and departure prep",
         "Day 10: Departure"
+      ],
+      galleryImages: [
+        "https://images.unsplash.com/photo-1433086966358-54859d0ed716?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1531366936337-7c912a4589a7?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1551632811-561732d1e306?auto=format&fit=crop&w=800&q=80"
       ]
     },
     {
@@ -76,6 +89,12 @@ const TravelPackages = () => {
         "Day 9-10: Ngorongoro Crater",
         "Day 11: Arusha and cultural visit",
         "Day 12: Departure"
+      ],
+      galleryImages: [
+        "https://images.unsplash.com/photo-1466721591366-2d5fba72006d?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1547036967-23d11aacaee0?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1534177616072-ef7dc120449d?auto=format&fit=crop&w=800&q=80"
       ]
     },
     {
@@ -97,6 +116,12 @@ const TravelPackages = () => {
         "Day 10-12: Ushuaia and Tierra del Fuego",
         "Day 13: Puerto Madryn penguins",
         "Day 14: Departure"
+      ],
+      galleryImages: [
+        "https://images.unsplash.com/photo-1482938289607-e9573fc25ebb?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1552733407-5d5c46c3bb3b?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1508326099804-190c33bd8274?auto=format&fit=crop&w=800&q=80"
       ]
     }
   ];
@@ -128,19 +153,33 @@ const TravelPackages = () => {
       <div className="min-h-screen bg-background">
         <Navigation onContactClick={() => setIsContactModalOpen(true)} />
         
-        {/* Package Hero */}
-        <section className="relative h-96 mt-16">
-          <img
-            src={packageDetails.image}
-            alt={packageDetails.title}
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-            <div className="text-center text-white px-4">
-              <h1 className="text-5xl font-bold mb-4">{packageDetails.title}</h1>
-              <p className="text-xl">{packageDetails.description}</p>
-            </div>
-          </div>
+        {/* Package Hero with Image Slider */}
+        <section className="relative mt-16">
+          <Carousel className="w-full">
+            <CarouselContent>
+              {packageDetails.galleryImages.map((image, index) => (
+                <CarouselItem key={index}>
+                  <div className="relative h-96">
+                    <img
+                      src={image}
+                      alt={`${packageDetails.title} - Image ${index + 1}`}
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+                      {index === 0 && (
+                        <div className="text-center text-white px-4">
+                          <h1 className="text-5xl font-bold mb-4">{packageDetails.title}</h1>
+                          <p className="text-xl">{packageDetails.description}</p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="left-4 bg-white/20 border-white/30 text-white hover:bg-white/30" />
+            <CarouselNext className="right-4 bg-white/20 border-white/30 text-white hover:bg-white/30" />
+          </Carousel>
         </section>
 
         {/* Package Details */}
@@ -149,47 +188,47 @@ const TravelPackages = () => {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               <div className="lg:col-span-2 space-y-8">
                 {/* Overview */}
-                <Card>
+                <Card className="bg-blue-50 border-blue-200">
                   <CardHeader>
-                    <CardTitle className="text-2xl">Package Overview</CardTitle>
+                    <CardTitle className="text-2xl text-blue-900">Package Overview</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
                       <div className="text-center">
-                        <Calendar className="w-6 h-6 mx-auto mb-2 text-primary" />
-                        <p className="font-medium">{packageDetails.duration}</p>
-                        <p className="text-sm text-muted-foreground">Duration</p>
+                        <Calendar className="w-6 h-6 mx-auto mb-2 text-orange-600" />
+                        <p className="font-medium text-blue-900">{packageDetails.duration}</p>
+                        <p className="text-sm text-blue-700">Duration</p>
                       </div>
                       <div className="text-center">
-                        <MapPin className="w-6 h-6 mx-auto mb-2 text-primary" />
-                        <p className="font-medium">{packageDetails.location}</p>
-                        <p className="text-sm text-muted-foreground">Location</p>
+                        <MapPin className="w-6 h-6 mx-auto mb-2 text-orange-600" />
+                        <p className="font-medium text-blue-900">{packageDetails.location}</p>
+                        <p className="text-sm text-blue-700">Location</p>
                       </div>
                       <div className="text-center">
-                        <Star className="w-6 h-6 mx-auto mb-2 text-primary" />
-                        <p className="font-medium">{packageDetails.rating}/5</p>
-                        <p className="text-sm text-muted-foreground">{packageDetails.reviews} Reviews</p>
+                        <Star className="w-6 h-6 mx-auto mb-2 text-orange-600" />
+                        <p className="font-medium text-blue-900">{packageDetails.rating}/5</p>
+                        <p className="text-sm text-blue-700">{packageDetails.reviews} Reviews</p>
                       </div>
                       <div className="text-center">
-                        <Users className="w-6 h-6 mx-auto mb-2 text-primary" />
-                        <p className="font-medium">2-8</p>
-                        <p className="text-sm text-muted-foreground">Group Size</p>
+                        <Users className="w-6 h-6 mx-auto mb-2 text-orange-600" />
+                        <p className="font-medium text-blue-900">2-8</p>
+                        <p className="text-sm text-blue-700">Group Size</p>
                       </div>
                     </div>
                   </CardContent>
                 </Card>
 
                 {/* Highlights */}
-                <Card>
+                <Card className="bg-emerald-50 border-emerald-200">
                   <CardHeader>
-                    <CardTitle>Package Highlights</CardTitle>
+                    <CardTitle className="text-emerald-900">Package Highlights</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                       {packageDetails.highlights.map((highlight, index) => (
                         <div key={index} className="flex items-center gap-2">
-                          <Camera className="w-4 h-4 text-primary" />
-                          <span>{highlight}</span>
+                          <Camera className="w-4 h-4 text-orange-600" />
+                          <span className="text-emerald-800">{highlight}</span>
                         </div>
                       ))}
                     </div>
@@ -197,18 +236,18 @@ const TravelPackages = () => {
                 </Card>
 
                 {/* Itinerary */}
-                <Card>
+                <Card className="bg-orange-50 border-orange-200">
                   <CardHeader>
-                    <CardTitle>Detailed Itinerary</CardTitle>
+                    <CardTitle className="text-orange-900">Detailed Itinerary</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-4">
                       {packageDetails.itinerary.map((day, index) => (
-                        <div key={index} className="flex gap-4 p-4 bg-muted/30 rounded-lg">
-                          <div className="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold">
+                        <div key={index} className="flex gap-4 p-4 bg-orange-100 rounded-lg border border-orange-200">
+                          <div className="w-8 h-8 bg-orange-600 text-white rounded-full flex items-center justify-center text-sm font-bold">
                             {index + 1}
                           </div>
-                          <p>{day}</p>
+                          <p className="text-orange-900">{day}</p>
                         </div>
                       ))}
                     </div>
@@ -216,16 +255,16 @@ const TravelPackages = () => {
                 </Card>
 
                 {/* What's Included */}
-                <Card>
+                <Card className="bg-cyan-50 border-cyan-200">
                   <CardHeader>
-                    <CardTitle>What's Included</CardTitle>
+                    <CardTitle className="text-cyan-900">What's Included</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                       {packageDetails.includes.map((item, index) => (
                         <div key={index} className="flex items-center gap-2">
-                          <Shield className="w-4 h-4 text-green-600" />
-                          <span>{item}</span>
+                          <Shield className="w-4 h-4 text-emerald-600" />
+                          <span className="text-cyan-800">{item}</span>
                         </div>
                       ))}
                     </div>
@@ -235,29 +274,29 @@ const TravelPackages = () => {
 
               {/* Booking Card */}
               <div className="lg:col-span-1">
-                <Card className="sticky top-20">
+                <Card className="sticky top-20 bg-blue-900 text-white border-blue-800">
                   <CardHeader>
-                    <CardTitle className="text-3xl">${packageDetails.price}</CardTitle>
-                    <CardDescription>per person</CardDescription>
+                    <CardTitle className="text-3xl text-orange-400">₹{packageDetails.price.toLocaleString()}</CardTitle>
+                    <CardDescription className="text-blue-200">per person</CardDescription>
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div className="space-y-3">
                       <div className="flex items-center gap-2">
-                        <Plane className="w-4 h-4 text-primary" />
+                        <Plane className="w-4 h-4 text-cyan-400" />
                         <span className="text-sm">Flights included</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <Hotel className="w-4 h-4 text-primary" />
+                        <Hotel className="w-4 h-4 text-cyan-400" />
                         <span className="text-sm">Premium accommodation</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <Users className="w-4 h-4 text-primary" />
+                        <Users className="w-4 h-4 text-cyan-400" />
                         <span className="text-sm">Professional guide</span>
                       </div>
                     </div>
                     
                     <Button 
-                      className="w-full" 
+                      className="w-full bg-orange-600 hover:bg-orange-700 text-white border-0" 
                       size="lg"
                       onClick={() => setIsContactModalOpen(true)}
                     >
@@ -266,7 +305,7 @@ const TravelPackages = () => {
                     
                     <Button 
                       variant="outline" 
-                      className="w-full"
+                      className="w-full border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-blue-900"
                       onClick={() => setIsContactModalOpen(true)}
                     >
                       Get Quote
@@ -292,9 +331,9 @@ const TravelPackages = () => {
       <Navigation onContactClick={() => setIsContactModalOpen(true)} />
       
       {/* Hero Section */}
-      <section className="relative h-64 mt-16 bg-gradient-to-r from-primary to-primary/80">
+      <section className="relative h-64 mt-16 bg-gradient-to-r from-blue-800 to-cyan-700">
         <div className="absolute inset-0 flex items-center justify-center">
-          <div className="text-center text-primary-foreground px-4">
+          <div className="text-center text-white px-4">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">Travel Packages</h1>
             <p className="text-xl">Discover your next adventure</p>
           </div>
@@ -302,7 +341,7 @@ const TravelPackages = () => {
       </section>
 
       {/* Search and Filter */}
-      <section className="py-8 px-4 bg-muted/30">
+      <section className="py-8 px-4 bg-orange-50">
         <div className="max-w-4xl mx-auto">
           <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1">
@@ -310,10 +349,10 @@ const TravelPackages = () => {
                 placeholder="Search packages by destination..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="h-12"
+                className="h-12 border-orange-300 focus:border-orange-500"
               />
             </div>
-            <Button size="lg" onClick={() => setSearchTerm("")}>
+            <Button size="lg" onClick={() => setSearchTerm("")} className="bg-orange-600 hover:bg-orange-700">
               Clear
             </Button>
           </div>
@@ -331,8 +370,8 @@ const TravelPackages = () => {
           
           {filteredPackages.length === 0 && (
             <div className="text-center py-16">
-              <p className="text-xl text-muted-foreground">No packages found matching your search.</p>
-              <Button onClick={() => setSearchTerm("")} className="mt-4">
+              <p className="text-xl text-blue-900">No packages found matching your search.</p>
+              <Button onClick={() => setSearchTerm("")} className="mt-4 bg-orange-600 hover:bg-orange-700">
                 View All Packages
               </Button>
             </div>
