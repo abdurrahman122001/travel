@@ -87,9 +87,9 @@
 
 // export default Navigation;
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Phone, Menu, X, Search, ChevronDown } from "lucide-react";
-import logo from "../../public/logo.png"
+import logo from "../../public/logo.png";
 
 interface NavigationProps {
   onContactClick: () => void;
@@ -97,6 +97,14 @@ interface NavigationProps {
 
 const Navigations: React.FC<NavigationProps> = ({ onContactClick }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [sidebarSearchTerm, setSidebarSearchTerm] = useState("");
+  const navigate = useNavigate();
+
+  const handleSearch = (input: string) => {
+    // Optionally: navigate(`/packages?search=${encodeURIComponent(input)}`);
+    navigate("/packages");
+  };
 
   const dropdowns = {
     international: [
@@ -145,23 +153,31 @@ const Navigations: React.FC<NavigationProps> = ({ onContactClick }) => {
           {/* Logo + Search */}
           <div className="flex items-center gap-3">
             <img src={logo} alt="Logo" className="h-24 w-auto" />
-            {/* <span className="text-sm font-semibold text-blue-700">WANDERON</span> */}
+            {/* Desktop Search */}
             <div className="relative hidden lg:block ml-6">
               <input
                 type="text"
+                value={searchTerm}
+                onChange={e => setSearchTerm(e.target.value)}
+                onKeyDown={e => {
+                  if (e.key === "Enter" && searchTerm.trim()) {
+                    handleSearch(searchTerm.trim());
+                  }
+                }}
                 placeholder="Where do you want to go?"
                 className="w-72 px-4 py-2 pl-5 pr-10 text-sm rounded-full border border-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-400 placeholder:text-gray-500"
               />
-              <Search className="absolute right-3 top-2.5 w-4 h-4 text-blue-400" />
+              <Search
+                className="absolute right-3 top-2.5 w-4 h-4 text-blue-400 cursor-pointer"
+                onClick={() => {
+                  if (searchTerm.trim()) handleSearch(searchTerm.trim());
+                }}
+              />
             </div>
           </div>
-
           {/* Desktop Nav */}
           <div className="hidden lg:flex items-center space-x-6 text-sm text-gray-800">
-            <Link
-              to="/upcoming-trips"
-              className="hover:text-blue-600 flex items-center gap-1"
-            >
+            <Link to="/upcoming-trips" className="hover:text-blue-600 flex items-center gap-1">
               📅 Upcoming Trips
             </Link>
             <Link to="/" className="hover:text-blue-600">
@@ -176,7 +192,6 @@ const Navigations: React.FC<NavigationProps> = ({ onContactClick }) => {
             <Link to="/blog" className="hover:text-blue-600">
               Blog
             </Link>
-
             <Link to="/payments" className="hover:text-blue-600">
               Payments
             </Link>
@@ -188,7 +203,6 @@ const Navigations: React.FC<NavigationProps> = ({ onContactClick }) => {
               +91-9090403075
             </a>
           </div>
-
           {/* Mobile Menu */}
           <button onClick={() => setIsSidebarOpen(true)} className="lg:hidden">
             <Menu className="w-6 h-6 text-blue-600" />
@@ -212,11 +226,7 @@ const Navigations: React.FC<NavigationProps> = ({ onContactClick }) => {
             <div className="absolute left-1/2 -translate-x-1/2 mt-3 bg-white text-black rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 min-w-[300px] p-4 z-50">
               <div className="grid grid-cols-2 gap-2 text-sm">
                 {dropdowns[key as keyof typeof dropdowns].map((item, index) => (
-                  <Link
-                    key={index}
-                    to="#"
-                    className="hover:text-blue-600 whitespace-nowrap"
-                  >
+                  <Link key={index} to="#" className="hover:text-blue-600 whitespace-nowrap">
                     {item}
                   </Link>
                 ))}
@@ -224,16 +234,10 @@ const Navigations: React.FC<NavigationProps> = ({ onContactClick }) => {
             </div>
           </div>
         ))}
-        <Link
-          to="#"
-          className="cursor-pointer hover:text-yellow-100 transition whitespace-nowrap"
-        >
+        <Link to="#" className="cursor-pointer hover:text-yellow-100 transition whitespace-nowrap">
           Honeymoon Packages
         </Link>
-        <Link
-          to="#"
-          className="cursor-pointer hover:text-yellow-100 transition whitespace-nowrap"
-        >
+        <Link to="#" className="cursor-pointer hover:text-yellow-100 transition whitespace-nowrap">
           🎁 Gift Cards
         </Link>
       </div>
@@ -248,29 +252,37 @@ const Navigations: React.FC<NavigationProps> = ({ onContactClick }) => {
                 <X className="w-6 h-6 text-blue-700" />
               </button>
             </div>
-
-            {/* Search in Sidebar */}
+            {/* Sidebar Search */}
             <div className="relative">
               <input
                 type="text"
+                value={sidebarSearchTerm}
+                onChange={e => setSidebarSearchTerm(e.target.value)}
+                onKeyDown={e => {
+                  if (e.key === "Enter" && sidebarSearchTerm.trim()) {
+                    handleSearch(sidebarSearchTerm.trim());
+                    setIsSidebarOpen(false);
+                  }
+                }}
                 placeholder="Where do you want to go?"
                 className="w-full px-4 pl-5 pr-10 py-2 text-sm rounded-full border border-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
-              <Search className="absolute right-3 top-2.5 w-4 h-4 text-blue-400" />
+              <Search
+                className="absolute right-3 top-2.5 w-4 h-4 text-blue-400 cursor-pointer"
+                onClick={() => {
+                  if (sidebarSearchTerm.trim()) {
+                    handleSearch(sidebarSearchTerm.trim());
+                    setIsSidebarOpen(false);
+                  }
+                }}
+              />
             </div>
-
             {/* Links */}
             <nav className="flex flex-col space-y-3 text-sm text-gray-800">
-              <Link
-                to="/upcoming-trips"
-                onClick={() => setIsSidebarOpen(false)}
-              >
+              <Link to="/upcoming-trips" onClick={() => setIsSidebarOpen(false)}>
                 📅 Upcoming Trips
               </Link>
-              <Link
-                to="/corporate-tours"
-                onClick={() => setIsSidebarOpen(false)}
-              >
+              <Link to="/corporate-tours" onClick={() => setIsSidebarOpen(false)}>
                 Corporate Tours
               </Link>
               <Link to="/blogs" onClick={() => setIsSidebarOpen(false)}>
@@ -291,9 +303,7 @@ const Navigations: React.FC<NavigationProps> = ({ onContactClick }) => {
                 +91-9090403075
               </a>
             </nav>
-
             <hr className="border-gray-300" />
-
             <div className="text-sm font-medium text-sky-600 space-y-1">
               {Object.entries(dropdowns).map(([key, items]) => (
                 <div key={key}>
