@@ -89,6 +89,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Phone, Menu, X, Search, ChevronDown } from "lucide-react";
+import logo from "../../public/logo.png"
 
 interface NavigationProps {
   onContactClick: () => void;
@@ -143,7 +144,7 @@ const Navigations: React.FC<NavigationProps> = ({ onContactClick }) => {
         <div className="flex items-center justify-between">
           {/* Logo + Search */}
           <div className="flex items-center gap-3">
-            <img src="/logo.png" alt="Logo" className="h-8 w-auto" />
+            <img src={logo} alt="Logo" className="h-24 w-auto" />
             {/* <span className="text-sm font-semibold text-blue-700">WANDERON</span> */}
             <div className="relative hidden lg:block ml-6">
               <input
