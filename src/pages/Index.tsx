@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -99,6 +98,18 @@ const Index = () => {
       image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=150&q=80",
       rating: 5,
       text: "Amazing safari experience! We saw all the Big 5 and the guides were incredibly knowledgeable."
+    },
+    {
+      name: "David Rodriguez",
+      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=150&q=80",
+      rating: 5,
+      text: "Patagonia was a dream come true! The landscapes were stunning and our guide was fantastic."
+    },
+    {
+      name: "Lisa Park",
+      image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=150&q=80",
+      rating: 5,
+      text: "Perfect honeymoon destination! The beaches were pristine and the accommodations were luxurious."
     }
   ];
 
@@ -106,11 +117,10 @@ const Index = () => {
     e.preventDefault();
     console.log("Newsletter signup:", email);
     setEmail("");
-    // Here you would typically send the email to your backend
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-white">
       <Navigation onContactClick={() => setIsContactModalOpen(true)} />
       
       {/* Hero Section with Slider */}
@@ -134,10 +144,10 @@ const Index = () => {
                         {slide.subtitle}
                       </p>
                       <div className="space-x-4">
-                        <Button size="lg" className="bg-primary hover:bg-primary/90">
+                        <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white">
                           <Link to="/packages">Explore Packages</Link>
                         </Button>
-                        <Button size="lg" variant="outline" className="text-white border-white hover:bg-white hover:text-black">
+                        <Button size="lg" variant="outline" className="text-white border-white hover:bg-white hover:text-blue-600">
                           <Link to="/about">Learn More</Link>
                         </Button>
                       </div>
@@ -153,28 +163,13 @@ const Index = () => {
       </section>
 
       {/* Featured Packages Section */}
-      <section className="py-20 px-4">
+      <section className="py-20 px-4 bg-blue-50">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4">Featured Travel Packages</h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            <h2 className="text-4xl font-bold mb-4 text-blue-900">Featured Travel Packages</h2>
+            <p className="text-xl text-blue-700 max-w-2xl mx-auto">
               Discover our handpicked selection of extraordinary travel experiences
             </p>
-          </div>
-
-          {/* Package Slider */}
-          <div className="mb-16">
-            <Carousel className="w-full">
-              <CarouselContent className="-ml-2 md:-ml-4">
-                {featuredPackages.map((pkg) => (
-                  <CarouselItem key={pkg.id} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
-                    <PackageCard package={pkg} />
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-              <CarouselPrevious />
-              <CarouselNext />
-            </Carousel>
           </div>
 
           {/* Package Grid */}
@@ -187,51 +182,51 @@ const Index = () => {
       </section>
 
       {/* Why Choose Us Section */}
-      <section className="py-20 bg-muted/30">
+      <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4">Why Choose Wanderlust</h2>
-            <p className="text-xl text-muted-foreground">We make your travel dreams come true</p>
+            <h2 className="text-4xl font-bold mb-4 text-blue-900">Why Choose Wanderlust</h2>
+            <p className="text-xl text-blue-700">We make your travel dreams come true</p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <Card className="text-center p-8">
+            <Card className="text-center p-8 border-blue-200 hover:shadow-lg transition-shadow">
               <CardHeader>
-                <div className="mx-auto w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4">
-                  <Users className="w-8 h-8 text-primary" />
+                <div className="mx-auto w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+                  <Users className="w-8 h-8 text-blue-600" />
                 </div>
-                <CardTitle>Expert Guides</CardTitle>
+                <CardTitle className="text-blue-900">Expert Guides</CardTitle>
               </CardHeader>
               <CardContent>
-                <CardDescription className="text-base">
+                <CardDescription className="text-base text-blue-700">
                   Our experienced local guides ensure you get the most authentic and memorable experiences
                 </CardDescription>
               </CardContent>
             </Card>
 
-            <Card className="text-center p-8">
+            <Card className="text-center p-8 border-blue-200 hover:shadow-lg transition-shadow">
               <CardHeader>
-                <div className="mx-auto w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4">
-                  <MapPin className="w-8 h-8 text-primary" />
+                <div className="mx-auto w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+                  <MapPin className="w-8 h-8 text-blue-600" />
                 </div>
-                <CardTitle>Unique Destinations</CardTitle>
+                <CardTitle className="text-blue-900">Unique Destinations</CardTitle>
               </CardHeader>
               <CardContent>
-                <CardDescription className="text-base">
+                <CardDescription className="text-base text-blue-700">
                   We take you to hidden gems and exclusive locations that most tourists never discover
                 </CardDescription>
               </CardContent>
             </Card>
 
-            <Card className="text-center p-8">
+            <Card className="text-center p-8 border-blue-200 hover:shadow-lg transition-shadow">
               <CardHeader>
-                <div className="mx-auto w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4">
-                  <Calendar className="w-8 h-8 text-primary" />
+                <div className="mx-auto w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+                  <Calendar className="w-8 h-8 text-blue-600" />
                 </div>
-                <CardTitle>Flexible Planning</CardTitle>
+                <CardTitle className="text-blue-900">Flexible Planning</CardTitle>
               </CardHeader>
               <CardContent>
-                <CardDescription className="text-base">
+                <CardDescription className="text-base text-blue-700">
                   Customize your journey with flexible itineraries tailored to your preferences and budget
                 </CardDescription>
               </CardContent>
@@ -241,14 +236,14 @@ const Index = () => {
       </section>
 
       {/* Customer Testimonials */}
-      <section className="py-20">
+      <section className="py-20 bg-blue-50">
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4">What Our Travelers Say</h2>
-            <p className="text-xl text-muted-foreground">Real experiences from real adventurers</p>
+            <h2 className="text-4xl font-bold mb-4 text-blue-900">What Our Travelers Say</h2>
+            <p className="text-xl text-blue-700">Real experiences from real adventurers</p>
           </div>
           
-          <Carousel className="w-full">
+          <Carousel className="w-full" opts={{ align: "start", loop: true }}>
             <CarouselContent>
               {testimonials.map((testimonial, index) => (
                 <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
@@ -256,14 +251,14 @@ const Index = () => {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
+            <CarouselPrevious className="bg-blue-600 hover:bg-blue-700 text-white border-blue-600" />
+            <CarouselNext className="bg-blue-600 hover:bg-blue-700 text-white border-blue-600" />
           </Carousel>
         </div>
       </section>
 
       {/* Newsletter Section */}
-      <section className="py-20 bg-primary text-primary-foreground">
+      <section className="py-20 bg-blue-600 text-white">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h2 className="text-4xl font-bold mb-4">Stay Updated</h2>
           <p className="text-xl mb-8 opacity-90">
@@ -280,10 +275,10 @@ const Index = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="bg-white text-black"
+                className="bg-white text-blue-900 border-white"
               />
             </div>
-            <Button type="submit" variant="secondary" size="default">
+            <Button type="submit" variant="secondary" size="default" className="bg-white text-blue-600 hover:bg-blue-50">
               Subscribe
             </Button>
           </form>
@@ -291,29 +286,29 @@ const Index = () => {
       </section>
 
       {/* Footer */}
-      <footer className="bg-muted py-16">
+      <footer className="bg-white py-16 border-t border-blue-200">
         <div className="max-w-7xl mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
-              <h3 className="text-2xl font-bold mb-4">Wanderlust</h3>
-              <p className="text-muted-foreground">
+              <h3 className="text-2xl font-bold mb-4 text-blue-900">Wanderlust</h3>
+              <p className="text-blue-700">
                 Creating unforgettable travel experiences since 2015. Your adventure starts here.
               </p>
             </div>
             
             <div>
-              <h4 className="font-semibold mb-4">Quick Links</h4>
+              <h4 className="font-semibold mb-4 text-blue-900">Quick Links</h4>
               <ul className="space-y-2">
-                <li><Link to="/" className="text-muted-foreground hover:text-foreground">Home</Link></li>
-                <li><Link to="/packages" className="text-muted-foreground hover:text-foreground">Packages</Link></li>
-                <li><Link to="/about" className="text-muted-foreground hover:text-foreground">About Us</Link></li>
-                <li><button onClick={() => setIsContactModalOpen(true)} className="text-muted-foreground hover:text-foreground">Contact</button></li>
+                <li><Link to="/" className="text-blue-700 hover:text-blue-900">Home</Link></li>
+                <li><Link to="/packages" className="text-blue-700 hover:text-blue-900">Packages</Link></li>
+                <li><Link to="/about" className="text-blue-700 hover:text-blue-900">About Us</Link></li>
+                <li><button onClick={() => setIsContactModalOpen(true)} className="text-blue-700 hover:text-blue-900">Contact</button></li>
               </ul>
             </div>
             
             <div>
-              <h4 className="font-semibold mb-4">Destinations</h4>
-              <ul className="space-y-2 text-muted-foreground">
+              <h4 className="font-semibold mb-4 text-blue-900">Destinations</h4>
+              <ul className="space-y-2 text-blue-700">
                 <li>Bali, Indonesia</li>
                 <li>Swiss Alps</li>
                 <li>African Safari</li>
@@ -322,8 +317,8 @@ const Index = () => {
             </div>
             
             <div>
-              <h4 className="font-semibold mb-4">Contact Info</h4>
-              <div className="space-y-2 text-muted-foreground">
+              <h4 className="font-semibold mb-4 text-blue-900">Contact Info</h4>
+              <div className="space-y-2 text-blue-700">
                 <div className="flex items-center gap-2">
                   <Phone className="w-4 h-4" />
                   <span>+1 (555) 123-4567</span>
@@ -336,7 +331,7 @@ const Index = () => {
             </div>
           </div>
           
-          <div className="border-t mt-12 pt-8 text-center text-muted-foreground">
+          <div className="border-t border-blue-200 mt-12 pt-8 text-center text-blue-700">
             <p>&copy; 2024 Wanderlust Travel. All rights reserved.</p>
           </div>
         </div>

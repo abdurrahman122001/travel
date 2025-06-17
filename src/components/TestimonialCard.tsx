@@ -15,7 +15,7 @@ interface TestimonialCardProps {
 
 const TestimonialCard = ({ testimonial }: TestimonialCardProps) => {
   return (
-    <Card className="h-full">
+    <Card className="h-full bg-white border-blue-200 hover:shadow-lg transition-shadow">
       <CardContent className="p-6">
         <div className="flex items-center gap-1 mb-4">
           {[...Array(testimonial.rating)].map((_, i) => (
@@ -23,7 +23,7 @@ const TestimonialCard = ({ testimonial }: TestimonialCardProps) => {
           ))}
         </div>
         
-        <p className="text-muted-foreground mb-6 italic">
+        <p className="text-blue-700 mb-6 italic">
           "{testimonial.text}"
         </p>
         
@@ -34,8 +34,8 @@ const TestimonialCard = ({ testimonial }: TestimonialCardProps) => {
             className="w-12 h-12 rounded-full object-cover"
           />
           <div>
-            <p className="font-semibold">{testimonial.name}</p>
-            <p className="text-sm text-muted-foreground">Verified Traveler</p>
+            <p className="font-semibold text-blue-900">{testimonial.name}</p>
+            <p className="text-sm text-blue-600">Verified Traveler</p>
           </div>
         </div>
       </CardContent>

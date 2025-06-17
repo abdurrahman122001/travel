@@ -1,19 +1,22 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { MapPin, Star, Calendar, Users, Plane, Hotel, Camera, Shield } from "lucide-react";
 import { useParams, Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import ContactModal from "@/components/ContactModal";
 import PackageCard from "@/components/PackageCard";
+import PackageFilters from "@/components/PackageFilters";
 
 const TravelPackages = () => {
   const { id } = useParams();
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedDestination, setSelectedDestination] = useState("All Destinations");
+  const [selectedDuration, setSelectedDuration] = useState("Any Duration");
+  const [priceRange, setPriceRange] = useState([500, 3000]);
+  const [selectedRating, setSelectedRating] = useState("Any Rating");
 
   const allPackages = [
     {
@@ -126,10 +129,35 @@ const TravelPackages = () => {
     }
   ];
 
-  const filteredPackages = allPackages.filter(pkg =>
-    pkg.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    pkg.location.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredPackages = allPackages.filter(pkg => {
+    const matchesSearch = pkg.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         pkg.location.toLowerCase().includes(searchTerm.toLowerCase());
+    
+    const matchesDestination = selectedDestination === "All Destinations" || 
+                              pkg.location === selectedDestination;
+    
+    const matchesDuration = selectedDuration === "Any Duration" || 
+                           (selectedDuration === "1-7 Days" && parseInt(pkg.duration) <= 7) ||
+                           (selectedDuration === "8-14 Days" && parseInt(pkg.duration) >= 8 && parseInt(pkg.duration) <= 14) ||
+                           (selectedDuration === "15+ Days" && parseInt(pkg.duration) >= 15);
+    
+    const matchesPrice = pkg.price >= priceRange[0] && pkg.price <= priceRange[1];
+    
+    const matchesRating = selectedRating === "Any Rating" ||
+                         (selectedRating === "4.0+" && pkg.rating >= 4.0) ||
+                         (selectedRating === "4.5+" && pkg.rating >= 4.5) ||
+                         (selectedRating === "4.8+" && pkg.rating >= 4.8);
+
+    return matchesSearch && matchesDestination && matchesDuration && matchesPrice && matchesRating;
+  });
+
+  const clearAllFilters = () => {
+    setSearchTerm("");
+    setSelectedDestination("All Destinations");
+    setSelectedDuration("Any Duration");
+    setPriceRange([500, 3000]);
+    setSelectedRating("Any Rating");
+  };
 
   // If an ID is provided, show single package details
   if (id) {
@@ -137,11 +165,11 @@ const TravelPackages = () => {
     
     if (!packageDetails) {
       return (
-        <div className="min-h-screen bg-background">
+        <div className="min-h-screen bg-white">
           <Navigation onContactClick={() => setIsContactModalOpen(true)} />
           <div className="pt-20 px-4 text-center">
-            <h1 className="text-4xl font-bold">Package Not Found</h1>
-            <Link to="/packages" className="text-primary hover:underline">
+            <h1 className="text-4xl font-bold text-blue-900">Package Not Found</h1>
+            <Link to="/packages" className="text-blue-600 hover:underline">
               Back to all packages
             </Link>
           </div>
@@ -150,7 +178,7 @@ const TravelPackages = () => {
     }
 
     return (
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-white">
         <Navigation onContactClick={() => setIsContactModalOpen(true)} />
         
         {/* Package Hero with Image Slider */}
@@ -183,34 +211,34 @@ const TravelPackages = () => {
         </section>
 
         {/* Package Details */}
-        <section className="py-16 px-4">
+        <section className="py-16 px-4 bg-blue-50">
           <div className="max-w-6xl mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               <div className="lg:col-span-2 space-y-8">
                 {/* Overview */}
-                <Card className="bg-blue-50 border-blue-200">
+                <Card className="bg-white border-blue-200">
                   <CardHeader>
                     <CardTitle className="text-2xl text-blue-900">Package Overview</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
                       <div className="text-center">
-                        <Calendar className="w-6 h-6 mx-auto mb-2 text-orange-600" />
+                        <Calendar className="w-6 h-6 mx-auto mb-2 text-blue-600" />
                         <p className="font-medium text-blue-900">{packageDetails.duration}</p>
                         <p className="text-sm text-blue-700">Duration</p>
                       </div>
                       <div className="text-center">
-                        <MapPin className="w-6 h-6 mx-auto mb-2 text-orange-600" />
+                        <MapPin className="w-6 h-6 mx-auto mb-2 text-blue-600" />
                         <p className="font-medium text-blue-900">{packageDetails.location}</p>
                         <p className="text-sm text-blue-700">Location</p>
                       </div>
                       <div className="text-center">
-                        <Star className="w-6 h-6 mx-auto mb-2 text-orange-600" />
+                        <Star className="w-6 h-6 mx-auto mb-2 text-blue-600" />
                         <p className="font-medium text-blue-900">{packageDetails.rating}/5</p>
                         <p className="text-sm text-blue-700">{packageDetails.reviews} Reviews</p>
                       </div>
                       <div className="text-center">
-                        <Users className="w-6 h-6 mx-auto mb-2 text-orange-600" />
+                        <Users className="w-6 h-6 mx-auto mb-2 text-blue-600" />
                         <p className="font-medium text-blue-900">2-8</p>
                         <p className="text-sm text-blue-700">Group Size</p>
                       </div>
@@ -274,29 +302,29 @@ const TravelPackages = () => {
 
               {/* Booking Card */}
               <div className="lg:col-span-1">
-                <Card className="sticky top-20 bg-blue-900 text-white border-blue-800">
+                <Card className="sticky top-20 bg-blue-600 text-white border-blue-500">
                   <CardHeader>
-                    <CardTitle className="text-3xl text-orange-400">₹{packageDetails.price.toLocaleString()}</CardTitle>
-                    <CardDescription className="text-blue-200">per person</CardDescription>
+                    <CardTitle className="text-3xl text-white">₹{packageDetails.price.toLocaleString()}</CardTitle>
+                    <CardDescription className="text-blue-100">per person</CardDescription>
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div className="space-y-3">
                       <div className="flex items-center gap-2">
-                        <Plane className="w-4 h-4 text-cyan-400" />
+                        <Plane className="w-4 h-4 text-blue-200" />
                         <span className="text-sm">Flights included</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <Hotel className="w-4 h-4 text-cyan-400" />
+                        <Hotel className="w-4 h-4 text-blue-200" />
                         <span className="text-sm">Premium accommodation</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <Users className="w-4 h-4 text-cyan-400" />
+                        <Users className="w-4 h-4 text-blue-200" />
                         <span className="text-sm">Professional guide</span>
                       </div>
                     </div>
                     
                     <Button 
-                      className="w-full bg-orange-600 hover:bg-orange-700 text-white border-0" 
+                      className="w-full bg-white hover:bg-blue-50 text-blue-600 border-0" 
                       size="lg"
                       onClick={() => setIsContactModalOpen(true)}
                     >
@@ -305,7 +333,7 @@ const TravelPackages = () => {
                     
                     <Button 
                       variant="outline" 
-                      className="w-full border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-blue-900"
+                      className="w-full border-blue-200 text-blue-100 hover:bg-blue-500 hover:text-white"
                       onClick={() => setIsContactModalOpen(true)}
                     >
                       Get Quote
@@ -327,11 +355,11 @@ const TravelPackages = () => {
 
   // Show all packages
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-white">
       <Navigation onContactClick={() => setIsContactModalOpen(true)} />
       
       {/* Hero Section */}
-      <section className="relative h-64 mt-16 bg-gradient-to-r from-blue-800 to-cyan-700">
+      <section className="relative h-64 mt-16 bg-gradient-to-r from-blue-600 to-blue-800">
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="text-center text-white px-4">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">Travel Packages</h1>
@@ -340,42 +368,57 @@ const TravelPackages = () => {
         </div>
       </section>
 
-      {/* Search and Filter */}
-      <section className="py-8 px-4 bg-orange-50">
-        <div className="max-w-4xl mx-auto">
-          <div className="flex flex-col md:flex-row gap-4">
-            <div className="flex-1">
-              <Input
-                placeholder="Search packages by destination..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="h-12 border-orange-300 focus:border-orange-500"
+      {/* Filters and Packages */}
+      <section className="py-8 px-4 bg-blue-50">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            {/* Filters Sidebar */}
+            <div className="lg:col-span-1">
+              <PackageFilters
+                searchTerm={searchTerm}
+                setSearchTerm={setSearchTerm}
+                selectedDestination={selectedDestination}
+                setSelectedDestination={setSelectedDestination}
+                selectedDuration={selectedDuration}
+                setSelectedDuration={setSelectedDuration}
+                priceRange={priceRange}
+                setPriceRange={setPriceRange}
+                selectedRating={selectedRating}
+                setSelectedRating={setSelectedRating}
+                onClearFilters={clearAllFilters}
               />
             </div>
-            <Button size="lg" onClick={() => setSearchTerm("")} className="bg-orange-600 hover:bg-orange-700">
-              Clear
-            </Button>
-          </div>
-        </div>
-      </section>
 
-      {/* Packages Grid */}
-      <section className="py-16 px-4">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {filteredPackages.map((pkg) => (
-              <PackageCard key={pkg.id} package={pkg} />
-            ))}
-          </div>
-          
-          {filteredPackages.length === 0 && (
-            <div className="text-center py-16">
-              <p className="text-xl text-blue-900">No packages found matching your search.</p>
-              <Button onClick={() => setSearchTerm("")} className="mt-4 bg-orange-600 hover:bg-orange-700">
-                View All Packages
-              </Button>
+            {/* Packages Results */}
+            <div className="lg:col-span-3">
+              <div className="mb-6">
+                <h2 className="text-2xl font-bold text-blue-900 mb-2">
+                  {filteredPackages.length} Package{filteredPackages.length !== 1 ? 's' : ''} Found
+                </h2>
+                <p className="text-blue-700">
+                  {filteredPackages.length === allPackages.length 
+                    ? "Showing all available packages" 
+                    : "Filtered results based on your preferences"
+                  }
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                {filteredPackages.map((pkg) => (
+                  <PackageCard key={pkg.id} package={pkg} />
+                ))}
+              </div>
+              
+              {filteredPackages.length === 0 && (
+                <div className="text-center py-16">
+                  <p className="text-xl text-blue-900 mb-4">No packages found matching your criteria.</p>
+                  <Button onClick={clearAllFilters} className="bg-blue-600 hover:bg-blue-700">
+                    Clear All Filters
+                  </Button>
+                </div>
+              )}
             </div>
-          )}
+          </div>
         </div>
       </section>
 
