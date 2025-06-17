@@ -122,6 +122,15 @@ const Index = () => {
       reviews: 87,
     },
   ];
+  useEffect(() => {
+    // Show modal after 12 seconds (random between 10-15s possible too)
+    const timeout = setTimeout(() => {
+      setIsContactModalOpen(true);
+    }, 12000); // 12000 ms = 12 seconds
+
+    // Cleanup to avoid memory leaks if user leaves page early
+    return () => clearTimeout(timeout);
+  }, []);
 
   const testimonials = [
     {
@@ -469,378 +478,381 @@ const Index = () => {
 
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Typing effect styles */}
-      <style>
-        {`
-          .typing-cursor::after {
-            content: '|';
-            animation: blink 0.7s infinite;
-          }
-          @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-          }
-        `}
-      </style>
+    <>
+      <div className="min-h-screen bg-white">
+        {/* Typing effect styles */}
+        <style>
+          {`
+            .typing-cursor::after {
+              content: '|';
+              animation: blink 0.7s infinite;
+            }
+            @keyframes blink {
+              0%, 100% { opacity: 1; }
+              50% { opacity: 0; }
+            }
+          `}
+        </style>
 
-      {/* Navigation */}
-      <Navigations onContactClick={() => setIsContactModalOpen(true)} />
+        {/* Navigation */}
+        <Navigations onContactClick={() => setIsContactModalOpen(true)} />
 
-      {/* HERO SECTION */}
-      <section className="relative w-full">
-        <div className="relative min-h-[380px] xs:min-h-[430px] sm:min-h-[520px] md:min-h-[600px] lg:min-h-[680px] w-full">
-          <Swiper
-            modules={[Navigation]}
-            navigation
-            slidesPerView={1}
-            className="h-full"
-          >
-            {heroSlides.map((slide, index) => (
-              <SwiperSlide key={index}>
-                <div className="relative h-[380px] xs:h-[430px] sm:h-[520px] md:h-[600px] lg:h-[680px] w-full">
-                  <img
-                    src={slide.image}
-                    alt="hero"
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                    <div className="text-center text-white px-4 max-w-4xl">
-                      <h1
-                        style={{ fontFamily: "Roboto" }}
-                        className="text-3xl md:text-7xl font-bold mb-4"
-                      >
-                        Global Community for Travelers
-                      </h1>
-                      <p
-                        style={{ fontFamily: "Roboto" }}
-                        className="text-yellow-400 text-xl md:text-3xl font-medium typing-cursor"
-                      >
-                        {displayText}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </div>
-      </section>
-
-      {/* REVIEWS */}
-      <section
-        className="py-5 flex items-center justify-center"
-        style={{ backgroundColor: "#F1FDFF" }}
-      >
-        <div className="flex flex-wrap justify-center gap-6 max-w-4xl w-full px-4">
-          {reviews.map((item, index) => (
-            <a
-              key={index}
-              href={item.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-4 border border-gray-200 shadow-sm p-4 rounded-lg transition hover:shadow-md bg-white w-full sm:w-auto"
-            >
-              <img
-                src={item.icon}
-                alt={item.name}
-                className="w-10 h-10 object-contain"
-              />
-              <div>
-                <div className="flex items-center gap-1 text-yellow-500 font-bold text-lg">
-                  {/* <StarIcon />  */} {item.rating}
-                </div>
-                <p className="text-sm text-gray-500">({item.count} reviews)</p>
-              </div>
-            </a>
-          ))}
-        </div>
-      </section>
-
-      {/* BANNER */}
-      <section className="py-20 px-4 flex items-center justify-center">
-        <div className="w-full md:w-[80%] mx-auto text-center">
-          <img src={abc} alt="WanderOn Logo" className="w-full max-w-6xl mx-auto" />
-        </div>
-      </section>
-      <section className="py-20 px-4 flex items-center justify-center">
-        <div className="w-full md:w-[80%] mx-auto text-center">
-          <img src={uct} alt="WanderOn Logo" className="w-full max-w-6xl mx-auto" />
-        </div>
-      </section>
-
-      {/* UPCOMING COMMUNITY TRIPS */}
-      <section className="py-10 md:py-14 bg-white">
-        <div className="max-w-7xl mx-auto px-4">
-          {/* Header */}
-          <div className="flex flex-col sm:flex-row items-center justify-between mb-6 gap-2">
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
-              Upcoming Community Trips
-            </h2>
-            <a
-              href="#"
-              className="text-blue-700 text-base md:text-lg font-semibold flex items-center gap-1 hover:underline"
-            >
-              View All
-              <span className="inline-block ml-1 text-lg">→</span>
-            </a>
-          </div>
-          {/* Month Tabs */}
-          <div className="flex items-center gap-2 overflow-x-auto pb-3 mb-2">
-            {months.map((m, i) => (
-              <button
-                key={m}
-                onClick={() => setActiveMonth(monthMap[i])}
-                className={`whitespace-nowrap rounded-full px-5 py-2 border text-sm md:text-base font-medium transition-all ${activeMonth === monthMap[i]
-                    ? "bg-blue-50 border-blue-400 text-blue-800 shadow-sm"
-                    : "bg-white border-gray-200 text-gray-600 hover:border-blue-300"
-                  }`}
-              >
-                {m}
-              </button>
-            ))}
-          </div>
-          {/* Slider */}
-          <div className="relative mt-4">
-            {/* Left Arrow */}
-            <button
-              ref={prevRef}
-              className="hidden md:flex absolute z-10 left-[-25px] top-1/2 -translate-y-1/2 bg-white shadow-lg w-10 h-10 items-center justify-center rounded-full border border-gray-200 hover:bg-blue-100 transition-all"
-            >
-              <FaArrowLeft className="text-blue-500 text-lg" />
-            </button>
-            {/* Right Arrow */}
-            <button
-              ref={nextRef}
-              className="hidden md:flex absolute z-10 right-[-25px] top-1/2 -translate-y-1/2 bg-white shadow-lg w-10 h-10 items-center justify-center rounded-full border border-gray-200 hover:bg-blue-100 transition-all"
-            >
-              <FaArrowRight className="text-blue-500 text-lg" />
-            </button>
-            {/* Cards */}
+        {/* HERO SECTION */}
+        <section className="relative w-full">
+          <div className="relative min-h-[380px] xs:min-h-[430px] sm:min-h-[520px] md:min-h-[600px] lg:min-h-[680px] w-full">
             <Swiper
               modules={[Navigation]}
-              spaceBetween={16}
-              slidesPerView={1}
-              breakpoints={{
-                640: { slidesPerView: 1.1 },
-                768: { slidesPerView: 2 },
-                1024: { slidesPerView: 3 },
-                1280: { slidesPerView: 4 },
-              }}
-              navigation={{
-                prevEl: prevRef.current!,
-                nextEl: nextRef.current!,
-              }}
-              onInit={(swiper) => {
-                // @ts-ignore
-                swiper.params.navigation.prevEl = prevRef.current;
-                // @ts-ignore
-                swiper.params.navigation.nextEl = nextRef.current;
-                swiper.navigation.init();
-                swiper.navigation.update();
-              }}
-            >
-              {filteredTrips.length > 0 ? filteredTrips.map((trip, idx) => (
-                <SwiperSlide key={idx}>
-                  <div
-                    className="relative group rounded-2xl overflow-hidden h-[350px] sm:h-[400px] md:h-[420px] flex flex-col justify-end"
-                    style={{
-                      backgroundImage: `url(${trip.img})`,
-                      backgroundSize: "cover",
-                      backgroundPosition: "center",
-                    }}
-                  >
-                    {/* Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent z-0" />
-                    {/* Price Badge */}
-                    <div className="absolute top-4 left-4 z-10">
-                      <div className="bg-yellow-300/95 text-gray-900 font-semibold px-4 py-1 rounded-full flex items-center gap-2 text-base shadow">
-                        <span className="line-through text-gray-600">{trip.oldPrice}</span>
-                        <span className="font-bold">{trip.price}/-</span>
-                        <span className="text-xs">Onwards</span>
-                      </div>
-                    </div>
-                    {/* Info */}
-                    <div className="relative z-10 p-5 pb-4 flex flex-col justify-end">
-                      <div className="text-white font-bold text-base leading-snug mb-2 line-clamp-2 drop-shadow">
-                        {trip.title}
-                      </div>
-                      <div className="flex flex-wrap items-center text-white/90 text-xs mb-1 gap-x-4 gap-y-1">
-                        <span className="flex items-center gap-1">
-                          <span className="text-lg">⏱️</span> {trip.days}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <span className="text-lg">📍</span> {trip.location}
-                        </span>
-                      </div>
-                      <div className="flex items-center text-white/90 text-xs gap-2">
-                        <span className="flex items-center gap-1">
-                          <span className="text-lg">📅</span> {trip.date}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </SwiperSlide>
-              )) : (
-                <SwiperSlide>
-                  <div className="flex items-center justify-center h-[350px] sm:h-[400px] md:h-[420px] bg-gray-100 rounded-2xl">
-                    <span className="text-gray-400 font-semibold">No trips for this month</span>
-                  </div>
-                </SwiperSlide>
-              )}
-            </Swiper>
-          </div>
-        </div>
-      </section>
-
-      {/* FEATURED PACKAGES */}
-      <section className="py-20 px-4">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-10 md:mb-16">
-            <h2 className="text-2xl md:text-4xl font-bold mb-4 text-blue-900">
-              Featured Travel Packages
-            </h2>
-            <p className="text-lg md:text-xl text-blue-700 max-w-2xl mx-auto">
-              Discover our handpicked selection of extraordinary travel experiences
-            </p>
-          </div>
-          <div className="px-2 py-6 md:py-10">
-            <Swiper
-              modules={[Navigation]}
-              spaceBetween={16}
-              slidesPerView={1}
-              breakpoints={{
-                640: { slidesPerView: 1 },
-                768: { slidesPerView: 2 },
-                1024: { slidesPerView: 3 },
-              }}
               navigation
+              slidesPerView={1}
+              className="h-full"
             >
-              {featuredPackages.map((pkg) => (
-                <SwiperSlide key={pkg.id}>
-                  <PackageCard package={pkg} />
+              {heroSlides.map((slide, index) => (
+                <SwiperSlide key={index}>
+                  <div className="relative h-[380px] xs:h-[430px] sm:h-[520px] md:h-[600px] lg:h-[680px] w-full">
+                    <img
+                      src={slide.image}
+                      alt="hero"
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+                      <div className="text-center text-white px-4 max-w-4xl">
+                        <h1
+                          style={{ fontFamily: "Roboto" }}
+                          className="text-3xl md:text-7xl font-bold mb-4"
+                        >
+                          Global Community for Travelers
+                        </h1>
+                        <p
+                          style={{ fontFamily: "Roboto" }}
+                          className="text-yellow-400 text-xl md:text-3xl font-medium typing-cursor"
+                        >
+                          {displayText}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
                 </SwiperSlide>
               ))}
             </Swiper>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* WHY CHOOSE US */}
-      <section className="py-12 md:py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4">
-          {/* Heading */}
-          <div className="text-center mb-10">
-            <div className="text-[#12a5c4] font-semibold text-lg mb-1">
-              Why WanderOn?
-            </div>
-            <h2 className="text-3xl md:text-5xl font-bold text-[#066980]">
-              WanderOn’s Secret Sauce
-            </h2>
-            <div className="flex justify-center mt-4">
-              <span className="block w-32 h-1 bg-yellow-400 rounded"></span>
-            </div>
+        {/* REVIEWS */}
+        <section
+          className="py-5 flex items-center justify-center"
+          style={{ backgroundColor: "#F1FDFF" }}
+        >
+          <div className="flex flex-wrap justify-center gap-6 max-w-4xl w-full px-4">
+            {reviews.map((item, index) => (
+              <a
+                key={index}
+                href={item.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-4 border border-gray-200 shadow-sm p-4 rounded-lg transition hover:shadow-md bg-white w-full sm:w-auto"
+              >
+                <img
+                  src={item.icon}
+                  alt={item.name}
+                  className="w-10 h-10 object-contain"
+                />
+                <div>
+                  <div className="flex items-center gap-1 text-yellow-500 font-bold text-lg">
+                    {/* <StarIcon />  */} {item.rating}
+                  </div>
+                  <p className="text-sm text-gray-500">({item.count} reviews)</p>
+                </div>
+              </a>
+            ))}
           </div>
-          {/* Cards Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
-            {features.map((item, idx) => (
-              <div
-                key={item.title}
-                className="relative rounded-2xl border border-blue-200 bg-white p-6 pt-8 pb-24 min-h-[340px] shadow-sm hover:shadow-lg transition-shadow flex flex-col"
-                style={{
-                  backgroundImage: `url('${item.bg}')`,
-                  backgroundRepeat: "no-repeat",
-                  backgroundPosition: "left bottom",
-                  backgroundSize: "contain",
+        </section>
+
+        {/* BANNER */}
+        <section className="py-20 px-4 flex items-center justify-center">
+          <div className="w-full md:w-[80%] mx-auto text-center">
+            <img src={abc} alt="WanderOn Logo" className="w-full max-w-6xl mx-auto" />
+          </div>
+        </section>
+        <section className="py-20 px-4 flex items-center justify-center">
+          <div className="w-full md:w-[80%] mx-auto text-center">
+            <img src={uct} alt="WanderOn Logo" className="w-full max-w-6xl mx-auto" />
+          </div>
+        </section>
+
+        {/* UPCOMING COMMUNITY TRIPS */}
+        <section className="py-10 md:py-14 bg-white">
+          <div className="max-w-7xl mx-auto px-4">
+            {/* Header */}
+            <div className="flex flex-col sm:flex-row items-center justify-between mb-6 gap-2">
+              <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
+                Upcoming Community Trips
+              </h2>
+              <a
+                href="#"
+                className="text-blue-700 text-base md:text-lg font-semibold flex items-center gap-1 hover:underline"
+              >
+                View All
+                <span className="inline-block ml-1 text-lg">→</span>
+              </a>
+            </div>
+            {/* Month Tabs */}
+            <div className="flex items-center gap-2 overflow-x-auto pb-3 mb-2">
+              {months.map((m, i) => (
+                <button
+                  key={m}
+                  onClick={() => setActiveMonth(monthMap[i])}
+                  className={`whitespace-nowrap rounded-full px-5 py-2 border text-sm md:text-base font-medium transition-all ${activeMonth === monthMap[i]
+                    ? "bg-blue-50 border-blue-400 text-blue-800 shadow-sm"
+                    : "bg-white border-gray-200 text-gray-600 hover:border-blue-300"
+                    }`}
+                >
+                  {m}
+                </button>
+              ))}
+            </div>
+            {/* Slider */}
+            <div className="relative mt-4">
+              {/* Left Arrow */}
+              <button
+                ref={prevRef}
+                className="hidden md:flex absolute z-10 left-[-25px] top-1/2 -translate-y-1/2 bg-white shadow-lg w-10 h-10 items-center justify-center rounded-full border border-gray-200 hover:bg-blue-100 transition-all"
+              >
+                <FaArrowLeft className="text-blue-500 text-lg" />
+              </button>
+              {/* Right Arrow */}
+              <button
+                ref={nextRef}
+                className="hidden md:flex absolute z-10 right-[-25px] top-1/2 -translate-y-1/2 bg-white shadow-lg w-10 h-10 items-center justify-center rounded-full border border-gray-200 hover:bg-blue-100 transition-all"
+              >
+                <FaArrowRight className="text-blue-500 text-lg" />
+              </button>
+              {/* Cards */}
+              <Swiper
+                modules={[Navigation]}
+                spaceBetween={16}
+                slidesPerView={1}
+                breakpoints={{
+                  640: { slidesPerView: 1.1 },
+                  768: { slidesPerView: 2 },
+                  1024: { slidesPerView: 3 },
+                  1280: { slidesPerView: 4 },
+                }}
+                navigation={{
+                  prevEl: prevRef.current!,
+                  nextEl: nextRef.current!,
+                }}
+                onInit={(swiper) => {
+                  // @ts-ignore
+                  swiper.params.navigation.prevEl = prevRef.current;
+                  // @ts-ignore
+                  swiper.params.navigation.nextEl = nextRef.current;
+                  swiper.navigation.init();
+                  swiper.navigation.update();
                 }}
               >
-                <h3 className="text-[#12a5c4] text-xl font-bold mb-2">{item.title}</h3>
-                <p className="text-gray-600 text-base mb-4">{item.desc}</p>
-                <div className="absolute left-6 bottom-8">{item.icon}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-
-      {/* TESTIMONIALS */}
-      <section className="py-20 bg-blue-50">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center mb-10 md:mb-16">
-            <h2 className="text-2xl md:text-4xl font-bold mb-4 text-blue-900">
-              What Our Travelers Say
-            </h2>
-            <p className="text-lg md:text-xl text-blue-700">
-              Real experiences from real adventurers
-            </p>
-          </div>
-          <Swiper
-            modules={[Navigation]}
-            slidesPerView={1}
-            spaceBetween={16}
-            breakpoints={{
-              640: { slidesPerView: 1 },
-              1024: { slidesPerView: 2 },
-              1280: { slidesPerView: 3 },
-            }}
-            navigation
-          >
-            {testimonials.map((testimonial, index) => (
-              <SwiperSlide key={index}>
-                <TestimonialCard testimonial={testimonial} />
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </div>
-      </section>
-
-      {/* NEWSLETTER */}
-      <section className="py-20 bg-blue-600 text-white">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <h2 className="text-2xl md:text-4xl font-bold mb-4">Stay Updated</h2>
-          <p className="text-lg md:text-xl mb-8 opacity-90">
-            Subscribe to our newsletter for exclusive deals and travel inspiration
-          </p>
-          <form
-            onSubmit={handleNewsletterSubmit}
-            className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto"
-          >
-            <div className="flex-1">
-              <Label htmlFor="email" className="sr-only">
-                Email
-              </Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="Enter your email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                className="bg-white text-blue-900 border-white"
-              />
+                {filteredTrips.length > 0 ? filteredTrips.map((trip, idx) => (
+                  <SwiperSlide key={idx}>
+                    <div
+                      className="relative group rounded-2xl overflow-hidden h-[350px] sm:h-[400px] md:h-[420px] flex flex-col justify-end"
+                      style={{
+                        backgroundImage: `url(${trip.img})`,
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                      }}
+                    >
+                      {/* Overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent z-0" />
+                      {/* Price Badge */}
+                      <div className="absolute top-4 left-4 z-10">
+                        <div className="bg-yellow-300/95 text-gray-900 font-semibold px-4 py-1 rounded-full flex items-center gap-2 text-base shadow">
+                          <span className="line-through text-gray-600">{trip.oldPrice}</span>
+                          <span className="font-bold">{trip.price}/-</span>
+                          <span className="text-xs">Onwards</span>
+                        </div>
+                      </div>
+                      {/* Info */}
+                      <div className="relative z-10 p-5 pb-4 flex flex-col justify-end">
+                        <div className="text-white font-bold text-base leading-snug mb-2 line-clamp-2 drop-shadow">
+                          {trip.title}
+                        </div>
+                        <div className="flex flex-wrap items-center text-white/90 text-xs mb-1 gap-x-4 gap-y-1">
+                          <span className="flex items-center gap-1">
+                            <span className="text-lg">⏱️</span> {trip.days}
+                          </span>
+                          <span className="flex items-center gap-1">
+                            <span className="text-lg">📍</span> {trip.location}
+                          </span>
+                        </div>
+                        <div className="flex items-center text-white/90 text-xs gap-2">
+                          <span className="flex items-center gap-1">
+                            <span className="text-lg">📅</span> {trip.date}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </SwiperSlide>
+                )) : (
+                  <SwiperSlide>
+                    <div className="flex items-center justify-center h-[350px] sm:h-[400px] md:h-[420px] bg-gray-100 rounded-2xl">
+                      <span className="text-gray-400 font-semibold">No trips for this month</span>
+                    </div>
+                  </SwiperSlide>
+                )}
+              </Swiper>
             </div>
-            <Button
-              type="submit"
-              variant="secondary"
-              size="default"
-              className="bg-white text-blue-600 hover:bg-blue-50"
-            >
-              Subscribe
-            </Button>
-          </form>
-        </div>
-      </section>
+          </div>
+        </section>
 
-      {/* FOOTER */}
-      <footer className="bg-white py-12 border-t border-blue-200">
-        <Footer setIsContactModalOpen={setIsContactModalOpen} />
-      </footer>
-      <ContactModal
-        isOpen={isContactModalOpen}
-        onClose={() => setIsContactModalOpen(false)}
-      />
-    </div>
+        {/* FEATURED PACKAGES */}
+        <section className="py-20 px-4">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-10 md:mb-16">
+              <h2 className="text-2xl md:text-4xl font-bold mb-4 text-blue-900">
+                Featured Travel Packages
+              </h2>
+              <p className="text-lg md:text-xl text-blue-700 max-w-2xl mx-auto">
+                Discover our handpicked selection of extraordinary travel experiences
+              </p>
+            </div>
+            <div className="px-2 py-6 md:py-10">
+              <Swiper
+                modules={[Navigation]}
+                spaceBetween={16}
+                slidesPerView={1}
+                breakpoints={{
+                  640: { slidesPerView: 1 },
+                  768: { slidesPerView: 2 },
+                  1024: { slidesPerView: 3 },
+                }}
+                navigation
+              >
+                {featuredPackages.map((pkg) => (
+                  <SwiperSlide key={pkg.id}>
+                    <PackageCard package={pkg} />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </div>
+          </div>
+        </section>
+
+        {/* WHY CHOOSE US */}
+        <section className="py-12 md:py-20 bg-white">
+          <div className="max-w-7xl mx-auto px-4">
+            {/* Heading */}
+            <div className="text-center mb-10">
+              <div className="text-[#12a5c4] font-semibold text-lg mb-1">
+                Why WanderOn?
+              </div>
+              <h2 className="text-3xl md:text-5xl font-bold text-[#066980]">
+                WanderOn’s Secret Sauce
+              </h2>
+              <div className="flex justify-center mt-4">
+                <span className="block w-32 h-1 bg-yellow-400 rounded"></span>
+              </div>
+            </div>
+            {/* Cards Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+              {features.map((item, idx) => (
+                <div
+                  key={item.title}
+                  className="relative rounded-2xl border border-blue-200 bg-white p-6 pt-8 pb-24 min-h-[340px] shadow-sm hover:shadow-lg transition-shadow flex flex-col"
+                  style={{
+                    backgroundImage: `url('${item.bg}')`,
+                    backgroundRepeat: "no-repeat",
+                    backgroundPosition: "left bottom",
+                    backgroundSize: "contain",
+                  }}
+                >
+                  <h3 className="text-[#12a5c4] text-xl font-bold mb-2">{item.title}</h3>
+                  <p className="text-gray-600 text-base mb-4">{item.desc}</p>
+                  <div className="absolute left-6 bottom-8">{item.icon}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+
+        {/* TESTIMONIALS */}
+        <section className="py-20 bg-blue-50">
+          <div className="max-w-7xl mx-auto px-4">
+            <div className="text-center mb-10 md:mb-16">
+              <h2 className="text-2xl md:text-4xl font-bold mb-4 text-blue-900">
+                What Our Travelers Say
+              </h2>
+              <p className="text-lg md:text-xl text-blue-700">
+                Real experiences from real adventurers
+              </p>
+            </div>
+            <Swiper
+              modules={[Navigation]}
+              slidesPerView={1}
+              spaceBetween={16}
+              breakpoints={{
+                640: { slidesPerView: 1 },
+                1024: { slidesPerView: 2 },
+                1280: { slidesPerView: 3 },
+              }}
+              navigation
+            >
+              {testimonials.map((testimonial, index) => (
+                <SwiperSlide key={index}>
+                  <TestimonialCard testimonial={testimonial} />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
+        </section>
+
+        {/* NEWSLETTER */}
+        <section className="py-20 bg-blue-600 text-white">
+          <div className="max-w-4xl mx-auto px-4 text-center">
+            <h2 className="text-2xl md:text-4xl font-bold mb-4">Stay Updated</h2>
+            <p className="text-lg md:text-xl mb-8 opacity-90">
+              Subscribe to our newsletter for exclusive deals and travel inspiration
+            </p>
+            <form
+              onSubmit={handleNewsletterSubmit}
+              className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto"
+            >
+              <div className="flex-1">
+                <Label htmlFor="email" className="sr-only">
+                  Email
+                </Label>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  className="bg-white text-blue-900 border-white"
+                />
+              </div>
+              <Button
+                type="submit"
+                variant="secondary"
+                size="default"
+                className="bg-white text-blue-600 hover:bg-blue-50"
+              >
+                Subscribe
+              </Button>
+            </form>
+          </div>
+        </section>
+
+        {/* FOOTER */}
+        <footer className="bg-white py-12 border-t border-blue-200">
+          <Footer setIsContactModalOpen={setIsContactModalOpen} />
+        </footer>
+        <ContactModal
+          isOpen={isContactModalOpen}
+          onClose={() => setIsContactModalOpen(false)}
+        />
+      </div>
+      {/* Remove duplicate ContactModal below, as it's already included above */}
+    </>
   );
 }
 

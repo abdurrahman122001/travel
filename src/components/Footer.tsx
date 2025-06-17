@@ -7,7 +7,7 @@ interface FooterProps {
 }
 
 const Footer = ({ setIsContactModalOpen }: FooterProps) => {
-    
+
   return (
     <div className="max-w-7xl mx-auto px-4">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -47,6 +47,16 @@ const Footer = ({ setIsContactModalOpen }: FooterProps) => {
               >
                 Contact
               </button>
+            </li>
+            <li>
+              <Link to="/privacy-policy" className="hover:text-blue-900">
+                Privacy Policy
+              </Link>
+            </li>
+            <li>
+              <Link to="/terms-and-conditions" className="hover:text-blue-900">
+                Teams & COndition
+              </Link>
             </li>
           </ul>
         </div>
