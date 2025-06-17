@@ -71,21 +71,17 @@ const About = () => {
       <Navigation onContactClick={() => setIsContactModalOpen(true)} />
       
       {/* Hero Section */}
-      <section className="relative h-96 mt-16">
-        <img
-          src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=1920&q=80"
-          alt="About Us"
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-          <div className="text-center text-white px-4">
-            <h1 className="text-5xl font-bold mb-4">About Wanderlust</h1>
-            <p className="text-xl max-w-2xl">
-              Creating extraordinary travel experiences since 2015
-            </p>
-          </div>
+      <section className="relative py-20 bg-gradient-to-r from-blue-600 to-blue-800">
+        <div className="container mx-auto px-4 text-center">
+          <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
+            About Wanderlust
+          </h1>
+          <p className="text-xl text-blue-100 max-w-2xl mx-auto">
+            Creating extraordinary travel experiences since 2020
+          </p>
         </div>
       </section>
+
 
       {/* Our Story */}
       <section className="py-20 px-4">

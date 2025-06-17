@@ -23,7 +23,7 @@ const TestimonialCard = ({ testimonial }: TestimonialCardProps) => {
           ))}
         </div>
         
-        <p className="text-blue-700 mb-6 italic">
+        <p className="mb-6 italic">
           "{testimonial.text}"
         </p>
         

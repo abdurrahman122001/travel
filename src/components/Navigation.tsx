@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
@@ -18,62 +17,84 @@ const Navigation = ({ onContactClick }: NavigationProps) => {
           <Link to="/" className="text-2xl font-bold text-blue-600">
             Wanderlust
           </Link>
-          
+
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            <Link to="/" className="text-blue-900 hover:text-blue-600 transition-colors font-medium">
+            <Link
+              to="/"
+              className="hover:text-blue-600 transition-colors font-medium"
+            >
               Home
             </Link>
-            <Link to="/packages" className="text-blue-900 hover:text-blue-600 transition-colors font-medium">
+            <Link
+              to="/packages"
+              className="hover:text-blue-600 transition-colors font-medium"
+            >
               Packages
             </Link>
-            <Link to="/about" className="text-blue-900 hover:text-blue-600 transition-colors font-medium">
+            <Link
+              to="/about"
+              className="hover:text-blue-600 transition-colors font-medium"
+            >
               About Us
             </Link>
-            <Button onClick={onContactClick} className="bg-blue-600 hover:bg-blue-700 text-white border-0">
+            <Link
+              to="/blog"
+              className="hover:text-blue-600 transition-colors font-medium"
+            >
+              Blog
+            </Link>
+            <Button
+              onClick={onContactClick}
+              className="bg-blue-600 hover:bg-blue-700 text-white border-0"
+            >
               Contact
             </Button>
           </div>
-          
+
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             className="md:hidden p-2 text-blue-900"
           >
-            {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {isMenuOpen ? (
+              <X className="w-6 h-6" />
+            ) : (
+              <Menu className="w-6 h-6" />
+            )}
           </button>
         </div>
-        
+
         {/* Mobile Navigation */}
         {isMenuOpen && (
           <div className="md:hidden py-4 border-t border-blue-200 bg-white/98">
             <div className="flex flex-col space-y-4">
-              <Link 
-                to="/" 
-                className="text-blue-900 hover:text-blue-600 transition-colors px-2 font-medium"
+              <Link
+                to="/"
+                className="hover:text-blue-600 transition-colors px-2 font-medium"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Home
               </Link>
-              <Link 
-                to="/packages" 
-                className="text-blue-900 hover:text-blue-600 transition-colors px-2 font-medium"
+              <Link
+                to="/packages"
+                className="hover:text-blue-600 transition-colors px-2 font-medium"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Packages
               </Link>
-              <Link 
-                to="/about" 
-                className="text-blue-900 hover:text-blue-600 transition-colors px-2 font-medium"
+              <Link
+                to="/about"
+                className="hover:text-blue-600 transition-colors px-2 font-medium"
                 onClick={() => setIsMenuOpen(false)}
               >
                 About Us
               </Link>
-              <Button 
+              <Button
                 onClick={() => {
                   onContactClick();
                   setIsMenuOpen(false);
-                }} 
+                }}
                 className="bg-blue-600 hover:bg-blue-700 text-white border-0 mx-2"
               >
                 Contact

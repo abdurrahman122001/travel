@@ -10,6 +10,7 @@ import ContactModal from "@/components/ContactModal";
 import Navigation from "@/components/Navigation";
 import PackageCard from "@/components/PackageCard";
 import TestimonialCard from "@/components/TestimonialCard";
+import Footer from "@/components/Footer";
 
 const Index = () => {
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
@@ -147,7 +148,7 @@ const Index = () => {
                         <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white">
                           <Link to="/packages">Explore Packages</Link>
                         </Button>
-                        <Button size="lg" variant="outline" className="text-white border-white hover:bg-white hover:text-blue-600">
+                        <Button size="lg" variant="outline" className="text-black border-white hover:bg-white hover:text-blue-600">
                           <Link to="/about">Learn More</Link>
                         </Button>
                       </div>
@@ -287,54 +288,7 @@ const Index = () => {
 
       {/* Footer */}
       <footer className="bg-white py-16 border-t border-blue-200">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div>
-              <h3 className="text-2xl font-bold mb-4 text-blue-900">Wanderlust</h3>
-              <p className="text-blue-700">
-                Creating unforgettable travel experiences since 2015. Your adventure starts here.
-              </p>
-            </div>
-            
-            <div>
-              <h4 className="font-semibold mb-4 text-blue-900">Quick Links</h4>
-              <ul className="space-y-2">
-                <li><Link to="/" className="text-blue-700 hover:text-blue-900">Home</Link></li>
-                <li><Link to="/packages" className="text-blue-700 hover:text-blue-900">Packages</Link></li>
-                <li><Link to="/about" className="text-blue-700 hover:text-blue-900">About Us</Link></li>
-                <li><button onClick={() => setIsContactModalOpen(true)} className="text-blue-700 hover:text-blue-900">Contact</button></li>
-              </ul>
-            </div>
-            
-            <div>
-              <h4 className="font-semibold mb-4 text-blue-900">Destinations</h4>
-              <ul className="space-y-2 text-blue-700">
-                <li>Bali, Indonesia</li>
-                <li>Swiss Alps</li>
-                <li>African Safari</li>
-                <li>Patagonia</li>
-              </ul>
-            </div>
-            
-            <div>
-              <h4 className="font-semibold mb-4 text-blue-900">Contact Info</h4>
-              <div className="space-y-2 text-blue-700">
-                <div className="flex items-center gap-2">
-                  <Phone className="w-4 h-4" />
-                  <span>+1 (555) 123-4567</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Mail className="w-4 h-4" />
-                  <span>info@wanderlust.com</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <div className="border-t border-blue-200 mt-12 pt-8 text-center text-blue-700">
-            <p>&copy; 2024 Wanderlust Travel. All rights reserved.</p>
-          </div>
-        </div>
+            <Footer setIsContactModalOpen={setIsContactModalOpen} />
       </footer>
 
       <ContactModal 
