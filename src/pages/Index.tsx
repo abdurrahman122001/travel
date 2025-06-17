@@ -27,6 +27,7 @@ import {
   MessageCircle,
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import ContactModal from "@/components/ContactModal";
 import Navigations from "@/components/Navigation";
 import PackageCard from "@/components/PackageCard";
@@ -314,7 +315,7 @@ const Index = () => {
     },
   ];
 
-    const LocalDestination = [
+  const LocalDestination = [
     {
       title: "Kerala",
       price: "1,49,999",
@@ -370,7 +371,58 @@ const Index = () => {
         "https://images.wanderon.in/new-homepage-data/Explore%20India/meghalaya",
     },
   ];
+  const months = [
+    "JUN '25",
+    "JUL '25",
+    "AUG '25",
+    "SEP '25",
+    "OCT '25",
+    "NOV '25",
+    "DEC '25",
+  ];
 
+  const trips = [
+    {
+      img: "https://images.unsplash.com/photo-1506744038136-46273834b3fb",
+      oldPrice: "₹42,999",
+      price: "₹37,499",
+      title: "11 Days Ladakh Tour Package with Umling La | Manali Leh Srinagar",
+      days: "10N/11D",
+      location: "Delhi/Chandigarh - Srinagar",
+      date: "18 Jun, 25 Jun",
+      icon: "🇮🇳",
+    },
+    {
+      img: "https://images.unsplash.com/photo-1469474968028-56623f02e42e",
+      oldPrice: "₹3,61,990",
+      price: "₹3,20,990",
+      title: "15 Days Summer Special European Grandeur Tour Package",
+      days: "14N/15D",
+      location: "London Airport - Rome Airport",
+      date: "28 Jun",
+      icon: "🇪🇺",
+    },
+    {
+      img: "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429",
+      oldPrice: "₹2,99,990",
+      price: "₹2,74,990",
+      title: "13 Days Splendid Europe Tour Package | Summer Special",
+      days: "12N/13D",
+      location: "Paris Airport - Rome Airport",
+      date: "18 Jun, 19 Jun, 21 Jun +2 Batches",
+      icon: "🇳🇱",
+    },
+    {
+      img: "https://images.unsplash.com/photo-1519125323398-675f0ddb6308",
+      oldPrice: "₹2,89,990",
+      price: "₹2,43,990",
+      title: "Summer Deals: 11 Days Amazing Europe Tour",
+      days: "10N/11D",
+      location: "Paris Airport - Rome Airport",
+      date: "23 Jun, 28 Jun",
+      icon: "🇮🇹",
+    },
+  ];
 
   return (
     <div className="min-h-screen bg-white">
@@ -796,6 +848,126 @@ const Index = () => {
         }
       `}</style>
       </section>
+    <section className="py-10 md:py-14 bg-white">
+      <div className="max-w-7xl mx-auto px-4">
+        {/* Header */}
+        <div className="flex items-center justify-between mb-4 md:mb-6">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
+            Upcoming Community Trips
+          </h2>
+          <a
+            href="#"
+            className="text-blue-700 text-base md:text-lg font-semibold flex items-center gap-1 hover:underline"
+          >
+            View All
+            <span className="inline-block ml-1 text-lg">→</span>
+          </a>
+        </div>
+
+        {/* Month Tabs */}
+        <div className="flex items-center gap-3 overflow-x-auto pb-3 mb-2">
+          {months.map((m, i) => (
+            <button
+              key={i}
+              className={`whitespace-nowrap rounded-full px-6 py-2 border text-base font-medium transition-all ${
+                i === 0
+                  ? "bg-blue-50 border-blue-400 text-blue-800 shadow-sm"
+                  : "bg-white border-gray-200 text-gray-600 hover:border-blue-300"
+              }`}
+            >
+              {m}
+            </button>
+          ))}
+        </div>
+
+        {/* Slider */}
+        <div className="relative mt-4">
+          {/* Left Arrow */}
+          <button
+            ref={prevRef}
+            className="absolute z-10 left-[-25px] top-1/2 -translate-y-1/2 bg-white shadow-lg w-10 h-10 flex items-center justify-center rounded-full border border-gray-200 hover:bg-blue-100 transition-all"
+          >
+            <FaArrowLeft className="text-blue-500 text-lg" />
+          </button>
+          {/* Right Arrow */}
+          <button
+            ref={nextRef}
+            className="absolute z-10 right-[-25px] top-1/2 -translate-y-1/2 bg-white shadow-lg w-10 h-10 flex items-center justify-center rounded-full border border-gray-200 hover:bg-blue-100 transition-all"
+          >
+            <FaArrowRight className="text-blue-500 text-lg" />
+          </button>
+          {/* Cards */}
+          <Swiper
+            modules={[Navigation]}
+            spaceBetween={24}
+            slidesPerView={1}
+            breakpoints={{
+              640: { slidesPerView: 1.1 },
+              768: { slidesPerView: 2 },
+              1024: { slidesPerView: 3 },
+              1280: { slidesPerView: 4 },
+            }}
+            navigation={{
+              prevEl: prevRef.current!,
+              nextEl: nextRef.current!,
+            }}
+            onInit={(swiper) => {
+              // @ts-ignore
+              swiper.params.navigation.prevEl = prevRef.current;
+              // @ts-ignore
+              swiper.params.navigation.nextEl = nextRef.current;
+              swiper.navigation.init();
+              swiper.navigation.update();
+            }}
+          >
+            {trips.map((trip, idx) => (
+              <SwiperSlide key={idx}>
+                <div
+                  className="relative group rounded-2xl overflow-hidden h-[420px] flex flex-col justify-end"
+                  style={{
+                    backgroundImage: `url(${trip.img})`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                  }}
+                >
+                  {/* Black Gradient Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent z-0" />
+
+                  {/* Price Badge */}
+                  <div className="absolute top-5 left-5 z-10">
+                    <div className="bg-yellow-300/95 text-gray-900 font-semibold px-4 py-1 rounded-full flex items-center gap-2 text-base shadow">
+                      <span className="line-through text-gray-600">{trip.oldPrice}</span>
+                      <span className="font-bold">{trip.price}/-</span>
+                      <span className="text-xs">Onwards</span>
+                    </div>
+                  </div>
+
+                  {/* Info */}
+                  <div className="relative z-10 p-6 pb-4 flex flex-col justify-end">
+                    <div className="text-white font-bold text-base leading-snug mb-2 line-clamp-2 drop-shadow">
+                      {trip.title}
+                    </div>
+                    <div className="flex flex-wrap items-center text-white/90 text-xs mb-1 gap-x-4 gap-y-1">
+                      <span className="flex items-center gap-1">
+                        <span className="text-lg">⏱️</span> {trip.days}
+                      </span>
+                      <span className="flex items-center gap-1">
+                        <span className="text-lg">📍</span> {trip.location}
+                      </span>
+                    </div>
+                    <div className="flex items-center text-white/90 text-xs gap-2">
+                      <span className="flex items-center gap-1">
+                        <span className="text-lg">📅</span> {trip.date}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
+      </div>
+    </section>
       <section className="py-20 px-4">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">

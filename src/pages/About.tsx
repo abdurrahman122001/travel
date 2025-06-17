@@ -82,7 +82,7 @@ const About = () => {
       <Navigation onContactClick={() => setIsContactModalOpen(true)} />
 
       {/* Hero Section */}
-      <section className="relative h-64 mt-16 bg-gradient-to-r from-blue-600 to-blue-800">
+      <section className="relative h-64" style={{backgroundColor: '#38bdf8'}}>
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="text-center text-white px-4">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">

@@ -208,25 +208,9 @@ const TravelPackages = () => {
 
     return (
       <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
-        {/* Navigation/Header */}
-        <header className="bg-white/95 backdrop-blur-sm border-b border-slate-200 sticky top-0 z-50">
-          <div className="container mx-auto px-4 py-4">
-            <div className="flex items-center justify-between">
-              <Link to="/" className="flex items-center space-x-2">
-                <Globe className="h-8 w-8 text-blue-600" />
-                <span className="text-2xl font-bold text-slate-800">Wanderlust</span>
-              </Link>
-              <nav className="hidden md:flex items-center space-x-8">
-                <Link to="/" className="text-slate-700 hover:text-blue-600 transition-colors">Home</Link>
-                <Link to="/packages" className="text-blue-600 font-medium">Packages</Link>
-                <Link to="/about" className="text-slate-700 hover:text-blue-600 transition-colors">About</Link>
-                <Button onClick={() => setIsContactModalOpen(true)} variant="ghost">Contact</Button>
-              </nav>
-              <Button onClick={() => setIsContactModalOpen(true)} variant="outline">Contact</Button>
-            </div>
-          </div>
-        </header>
+        <Navigation onContactClick={() => setIsContactModalOpen(true)} />
 
+        {/* Hero Section */}
         {/* Breadcrumb */}
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center space-x-2 text-sm text-slate-600">
@@ -465,7 +449,7 @@ const TravelPackages = () => {
       <Navigation onContactClick={() => setIsContactModalOpen(true)} />
 
       {/* Hero Section */}
-      <section className="relative h-64 mt-16 bg-gradient-to-r from-blue-600 to-blue-800">
+      <section className="relative h-64" style={{backgroundColor: '#38bdf8'}}>
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="text-center text-white px-4">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">Travel Packages</h1>
