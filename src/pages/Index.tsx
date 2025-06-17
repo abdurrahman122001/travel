@@ -256,7 +256,8 @@ const Index = () => {
       clearTimeout(deletingTimeout);
     };
   }, [currentTextIndex, typing]);
-  const destinations = [
+
+  const InternattionalDestinations = [
     {
       title: "Europe",
       price: "1,49,999",
@@ -312,6 +313,64 @@ const Index = () => {
         "https://images.wanderon.in/new-homepage-data/Explore%20India/meghalaya",
     },
   ];
+
+    const LocalDestination = [
+    {
+      title: "Kerala",
+      price: "1,49,999",
+      image:
+        "https://images.wanderon.in/new-homepage-data/Explore%20India/kerala",
+    },
+    {
+      title: "Ladakh",
+      price: "58,999",
+      image:
+        "https://images.wanderon.in/new-homepage-data/Explore%20India/ladakh",
+    },
+    {
+      title: "Rajasthan",
+      price: "49,999",
+      image:
+        "https://images.wanderon.in/new-homepage-data/Explore%20India/rajasthan",
+    },
+    {
+      title: "Andaman",
+      price: "59,999",
+      image:
+        "https://images.wanderon.in/new-homepage-data/Explore%20India/andaman",
+    },
+    {
+      title: "Himachal",
+      price: "44,999",
+      image:
+        "https://images.wanderon.in/new-homepage-data/Explore%20India/ladakh",
+    },
+    {
+      title: "Kashmir",
+      price: "29,999",
+      image:
+        "https://images.wanderon.in/new-homepage-data/romantic%20escapes/kashmir-romantic-02",
+    },
+    {
+      title: "Leh-Ladakh",
+      price: "39,999",
+      image:
+        "https://images.wanderon.in/new-homepage-data/Explore%20India/ladakh",
+    },
+    {
+      title: "Spiti Valley",
+      price: "34,999",
+      image:
+        "https://images.wanderon.in/new-homepage-data/Explore%20India/spiti",
+    },
+    {
+      title: "Meghalaya",
+      price: "33,999",
+      image:
+        "https://images.wanderon.in/new-homepage-data/Explore%20India/meghalaya",
+    },
+  ];
+
 
   return (
     <div className="min-h-screen bg-white">
@@ -405,136 +464,136 @@ const Index = () => {
           <img src={uct} alt="WanderOn Logo" className="w-full" />
         </div>
       </section>
-    <section className="py-12 bg-[#FFFBEF] relative">
-      <div className="max-w-[1500px] mx-auto px-4 flex flex-col items-center">
-        {/* --- Hero Banner --- */}
-        <div
-          className="w-full bg-cover bg-center rounded-2xl mb-[-75px] relative"
-          style={{
-            backgroundImage:
-              "url('https://images.wanderon.in/new-homepage-data/cta%20homepage%20-%20desktop.png')",
-            minHeight: "370px",
-            maxWidth: "1400px",
-          }}
-        >
-          <div className="absolute inset-0 bg-black/20 rounded-2xl"></div>
-          <div className="relative z-10 flex flex-col justify-center h-full px-12 py-12 md:px-24 md:py-20">
-            <h1
-              className="text-white text-5xl md:text-6xl font-bold mb-6"
-              style={{ fontFamily: "Roboto, sans-serif" }}
-            >
-              International Trips
-            </h1>
-            <p
-              className="text-white text-lg md:text-2xl mb-8 font-medium"
-              style={{ fontFamily: "Roboto, sans-serif" }}
-            >
-              Discover the world, one destination at a time
-            </p>
-            <button
-              className="bg-yellow-300 hover:bg-yellow-400 text-black font-semibold rounded-md px-12 py-3 text-lg shadow-md border border-yellow-400 transition-all duration-150 focus:outline-none"
-              style={{ width: 180 }}
-            >
-              Explore
-            </button>
+      <section className="py-12 bg-[#FFFBEF] relative">
+        <div className="max-w-[1500px] mx-auto px-4 flex flex-col items-center">
+          {/* --- Hero Banner --- */}
+          <div
+            className="w-full bg-cover bg-center rounded-2xl mb-[-60px] relative"
+            style={{
+              backgroundImage:
+                "url('https://images.wanderon.in/new-homepage-data/cta%20homepage%20-%20desktop.png')",
+              minHeight: "370px",
+              maxWidth: "1400px",
+            }}
+          >
+            <div className="absolute inset-0 bg-black/20 rounded-2xl"></div>
+            <div className="relative z-10 flex flex-col justify-center h-full px-12 py-12 md:px-24 md:py-20">
+              <h1
+                className="text-white text-5xl md:text-6xl font-bold mb-6"
+                style={{ fontFamily: "Roboto, sans-serif" }}
+              >
+                International Trips
+              </h1>
+              <p
+                className="text-white text-lg md:text-2xl mb-8 font-medium"
+                style={{ fontFamily: "Roboto, sans-serif" }}
+              >
+                Discover the world, one destination at a time
+              </p>
+              <button
+                className="bg-yellow-300 hover:bg-yellow-400 text-black font-semibold rounded-md px-12 py-3 text-lg shadow-md border border-yellow-400 transition-all duration-150 focus:outline-none"
+                style={{ width: 180 }}
+              >
+                Explore
+              </button>
+            </div>
           </div>
-        </div>
 
-        {/* --- Swiper Slider --- */}
-        <div className="relative w-full max-w-7xl">
-          {/* LEFT ARROW */}
-          <button
-            ref={prevRef}
-            className="swiper-button-custom absolute left-0 top-1/2 -translate-y-1/2 z-10"
-            aria-label="Previous"
-          >
-            <svg viewBox="0 0 24 24" fill="none">
-              <path
-                d="M15.5 19L8.5 12L15.5 5"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </button>
-
-          {/* RIGHT ARROW */}
-          <button
-            ref={nextRef}
-            className="swiper-button-custom absolute right-0 top-1/2 -translate-y-1/2 z-10"
-            aria-label="Next"
-          >
-            <svg viewBox="0 0 24 24" fill="none">
-              <path
-                d="M8.5 5L15.5 12L8.5 19"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </button>
-
-          {/* Swiper: clipped between arrows */}
-          <div className="overflow-hidden px-[56px]"> 
-            {/* px-[56px] = 42px (arrow) + 14px (gap), match to your arrow size */}
-            <Swiper
-              modules={[Navigation, Pagination]}
-              spaceBetween={20}
-              slidesPerView={"auto"}
-              centeredSlides={false}
-              navigation={{
-                prevEl: prevRef.current,
-                nextEl: nextRef.current,
-              }}
-              pagination={{
-                clickable: true,
-                el: ".swiper-pagination-custom",
-              }}
-              onInit={(swiper) => {
-                // @ts-ignore
-                swiper.params.navigation.prevEl = prevRef.current;
-                // @ts-ignore
-                swiper.params.navigation.nextEl = nextRef.current;
-                swiper.navigation.init();
-                swiper.navigation.update();
-              }}
-              className="w-full"
+          {/* --- Swiper Slider --- */}
+          <div className="relative w-full max-w-7xl">
+            {/* LEFT ARROW */}
+            <button
+              ref={prevRef}
+              className="swiper-button-custom absolute left-0 top-1/2 -translate-y-1/2 z-10"
+              aria-label="Previous"
             >
-              {destinations.map((item, idx) => (
-                <SwiperSlide
-                  key={idx}
-                  className="w-[260px] md:w-[300px] flex-shrink-0"
-                >
-                  <div className="rounded-xl overflow-hidden shadow-lg border bg-white">
-                    <div className="relative h-[350px]">
-                      <img
-                        src={item.image}
-                        alt={item.title}
-                        className="w-full h-full object-cover"
-                      />
-                      <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black via-black/50 to-transparent">
-                        <h3 className="text-white text-center text-2xl font-bold">
-                          {item.title}
-                        </h3>
-                        <p className="text-white text-center text-sm font-medium">
-                          Starting Price Rs. {item.price}/-
-                        </p>
+              <svg viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M15.5 19L8.5 12L15.5 5"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
+
+            {/* RIGHT ARROW */}
+            <button
+              ref={nextRef}
+              className="swiper-button-custom absolute right-0 top-1/2 -translate-y-1/2 z-10"
+              aria-label="Next"
+            >
+              <svg viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M8.5 5L15.5 12L8.5 19"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
+
+            {/* Swiper: clipped between arrows */}
+            <div className="overflow-hidden px-[56px]">
+              {/* px-[56px] = 42px (arrow) + 14px (gap), match to your arrow size */}
+              <Swiper
+                modules={[Navigation, Pagination]}
+                spaceBetween={20}
+                slidesPerView={"auto"}
+                centeredSlides={false}
+                navigation={{
+                  prevEl: prevRef.current,
+                  nextEl: nextRef.current,
+                }}
+                pagination={{
+                  clickable: true,
+                  el: ".swiper-pagination-custom",
+                }}
+                onInit={(swiper) => {
+                  // @ts-ignore
+                  swiper.params.navigation.prevEl = prevRef.current;
+                  // @ts-ignore
+                  swiper.params.navigation.nextEl = nextRef.current;
+                  swiper.navigation.init();
+                  swiper.navigation.update();
+                }}
+                className="w-full"
+              >
+                {InternattionalDestinations.map((item, idx) => (
+                  <SwiperSlide
+                    key={idx}
+                    className="w-[260px] md:w-[300px] flex-shrink-0"
+                  >
+                    <div className="rounded-xl overflow-hidden shadow-lg border bg-white">
+                      <div className="relative h-[350px]">
+                        <img
+                          src={item.image}
+                          alt={item.title}
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black via-black/50 to-transparent">
+                          <h3 className="text-white text-center text-2xl font-bold">
+                            {item.title}
+                          </h3>
+                          <p className="text-white text-center text-sm font-medium">
+                            Starting Price Rs. {item.price}/-
+                          </p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </SwiperSlide>
-              ))}
-            </Swiper>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </div>
+            {/* Pagination Dots */}
+            {/* <div className="swiper-pagination-custom mt-5"></div> */}
           </div>
-          {/* Pagination Dots */}
-          <div className="swiper-pagination-custom mt-5"></div>
         </div>
-      </div>
 
-      {/* Swiper custom styles */}
-      <style>{`
+        {/* Swiper custom styles */}
+        <style>{`
         .swiper-button-custom {
           background: white;
           border-radius: 50%;
@@ -570,7 +629,173 @@ const Index = () => {
           background: #4bb2e8;
         }
       `}</style>
-    </section>
+      </section>
+      <section className="py-12 bg-[#FFFBEF] relative">
+        <div className="max-w-[1500px] mx-auto px-4 flex flex-col items-center">
+          {/* --- Hero Banner --- */}
+          <div
+            className="w-full bg-cover bg-center rounded-2xl mb-[-60px] relative"
+            style={{
+              backgroundImage:
+                "url('https://images.wanderon.in/new-homepage-data/cta%20homepage%20-%20desktop.png')",
+              minHeight: "370px",
+              maxWidth: "1400px",
+            }}
+          >
+            <div className="absolute inset-0 bg-black/20 rounded-2xl"></div>
+            <div className="relative z-10 flex flex-col justify-center h-full px-12 py-12 md:px-24 md:py-20">
+              <h1
+                className="text-white text-5xl md:text-6xl font-bold mb-6"
+                style={{ fontFamily: "Roboto, sans-serif" }}
+              >
+                Local Trips
+              </h1>
+              <p
+                className="text-white text-lg md:text-2xl mb-8 font-medium"
+                style={{ fontFamily: "Roboto, sans-serif" }}
+              >
+                Discover the world, one destination at a time
+              </p>
+              <button
+                className="bg-yellow-300 hover:bg-yellow-400 text-black font-semibold rounded-md px-12 py-3 text-lg shadow-md border border-yellow-400 transition-all duration-150 focus:outline-none"
+                style={{ width: 180 }}
+              >
+                Explore
+              </button>
+            </div>
+          </div>
+
+          {/* --- Swiper Slider --- */}
+          <div className="relative w-full max-w-7xl">
+            {/* LEFT ARROW */}
+            <button
+              ref={prevRef}
+              className="swiper-button-custom absolute left-0 top-1/2 -translate-y-1/2 z-10"
+              aria-label="Previous"
+            >
+              <svg viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M15.5 19L8.5 12L15.5 5"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
+
+            {/* RIGHT ARROW */}
+            <button
+              ref={nextRef}
+              className="swiper-button-custom absolute right-0 top-1/2 -translate-y-1/2 z-10"
+              aria-label="Next"
+            >
+              <svg viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M8.5 5L15.5 12L8.5 19"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
+
+            {/* Swiper: clipped between arrows */}
+            <div className="overflow-hidden px-[56px]">
+              {/* px-[56px] = 42px (arrow) + 14px (gap), match to your arrow size */}
+              <Swiper
+                modules={[Navigation, Pagination]}
+                spaceBetween={20}
+                slidesPerView={"auto"}
+                centeredSlides={false}
+                navigation={{
+                  prevEl: prevRef.current,
+                  nextEl: nextRef.current,
+                }}
+                pagination={{
+                  clickable: true,
+                  el: ".swiper-pagination-custom",
+                }}
+                onInit={(swiper) => {
+                  // @ts-ignore
+                  swiper.params.navigation.prevEl = prevRef.current;
+                  // @ts-ignore
+                  swiper.params.navigation.nextEl = nextRef.current;
+                  swiper.navigation.init();
+                  swiper.navigation.update();
+                }}
+                className="w-full"
+              >
+                {LocalDestination.map((item, idx) => (
+                  <SwiperSlide
+                    key={idx}
+                    className="w-[260px] md:w-[300px] flex-shrink-0"
+                  >
+                    <div className="rounded-xl overflow-hidden shadow-lg border bg-white">
+                      <div className="relative h-[350px]">
+                        <img
+                          src={item.image}
+                          alt={item.title}
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black via-black/50 to-transparent">
+                          <h3 className="text-white text-center text-2xl font-bold">
+                            {item.title}
+                          </h3>
+                          <p className="text-white text-center text-sm font-medium">
+                            Starting Price Rs. {item.price}/-
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </div>
+            {/* Pagination Dots */}
+            {/* <div className="swiper-pagination-custom mt-5"></div> */}
+          </div>
+        </div>
+
+        {/* Swiper custom styles */}
+        <style>{`
+        .swiper-button-custom {
+          background: white;
+          border-radius: 50%;
+          box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+          width: 42px;
+          height: 42px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: box-shadow 0.2s;
+        }
+        .swiper-button-custom:after { display: none; }
+        .swiper-button-custom svg {
+          width: 28px;
+          height: 28px;
+          color: #4bb2e8;
+        }
+        .swiper-pagination-custom {
+          display: flex;
+          justify-content: center;
+          gap: 8px;
+          margin-top: 18px;
+        }
+        .swiper-pagination-bullet {
+          width: 44px;
+          height: 8px;
+          border-radius: 8px;
+          background: #e0e6ea;
+          opacity: 1;
+          transition: background 0.3s;
+        }
+        .swiper-pagination-bullet-active {
+          background: #4bb2e8;
+        }
+      `}</style>
+      </section>
       <section className="py-20 px-4">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
