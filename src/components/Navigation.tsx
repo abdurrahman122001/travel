@@ -47,13 +47,15 @@ const Navigations: React.FC<NavigationProps> = ({ onContactClick }) => {
         <div className="flex items-center justify-between">
           {/* Logo + Desktop Search */}
           <div className="flex items-center gap-3">
-            <Link to="/"><img src={logo} alt="Logo" className="h-24 w-auto" /></Link>
+            <Link to="/">
+              <img src={logo} alt="Logo" className="h-24 w-auto" />
+            </Link>
             {/* Desktop Search */}
             <div className="relative hidden lg:block ml-6">
               <input
                 type="text"
                 value={searchTerm}
-                onChange={e => setSearchTerm(e.target.value)}
+                onChange={(e) => setSearchTerm(e.target.value)}
                 onFocus={handleSearch}
                 placeholder="Where do you want to go?"
                 className="w-72 px-4 py-2 pl-5 pr-10 text-sm rounded-full border border-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-400 placeholder:text-gray-500"
@@ -66,14 +68,27 @@ const Navigations: React.FC<NavigationProps> = ({ onContactClick }) => {
           </div>
           {/* Desktop Nav */}
           <div className="hidden lg:flex items-center space-x-6 text-sm text-gray-800">
-            <Link to="/upcoming-trips" className="hover:text-blue-600 flex items-center gap-1">
+            <Link
+              to="/upcoming-trips"
+              className="hover:text-blue-600 flex items-center gap-1"
+            >
               📅 Upcoming Trips
             </Link>
-            <Link to="/" className="hover:text-blue-600">Home</Link>
-            <Link to="/package" className="hover:text-blue-600">Packages</Link>
-            <Link to="/about" className="hover:text-blue-600">About Us</Link>
-            <Link to="/blog" className="hover:text-blue-600">Blog</Link>
-            <Link to="/payments" className="hover:text-blue-600">Payments</Link>
+            <Link to="/" className="hover:text-blue-600">
+              Home
+            </Link>
+            <Link to="/package" className="hover:text-blue-600">
+              Packages
+            </Link>
+            <Link to="/about" className="hover:text-blue-600">
+              About Us
+            </Link>
+            <Link to="/blog" className="hover:text-blue-600">
+              Blog
+            </Link>
+            <Link to="/payments" className="hover:text-blue-600">
+              Payments
+            </Link>
             <button
               onClick={onContactClick}
               className="px-5 py-2 rounded-full transition font-semibold border border-sky-400 text-sky-400 hover:bg-sky-50"
@@ -90,7 +105,7 @@ const Navigations: React.FC<NavigationProps> = ({ onContactClick }) => {
 
       {/* Sky Blue Menu: only handwritten options */}
       <div className="bg-sky-400 text-white text-[15px] font-medium py-4 hidden lg:flex justify-center items-center space-x-7 relative z-40">
-        {skyMenuOrder.map(label => (
+        {skyMenuOrder.map((label) => (
           <div className="group relative" key={label}>
             <div className="cursor-pointer group-hover:text-yellow-100 transition flex items-center gap-1 whitespace-nowrap">
               {label}
@@ -99,7 +114,11 @@ const Navigations: React.FC<NavigationProps> = ({ onContactClick }) => {
             <div className="absolute left-1/2 -translate-x-1/2 mt-3 bg-white text-black rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 min-w-[220px] p-4 z-50">
               <div className="flex flex-col gap-2 text-sm">
                 {skyMenuDropdowns[label].map((item, index) => (
-                  <Link key={index} to="#" className="hover:text-blue-600 whitespace-nowrap">
+                  <Link
+                    key={index}
+                    to="#"
+                    className="hover:text-blue-600 whitespace-nowrap"
+                  >
                     {item}
                   </Link>
                 ))}
@@ -124,7 +143,7 @@ const Navigations: React.FC<NavigationProps> = ({ onContactClick }) => {
               <input
                 type="text"
                 value={sidebarSearchTerm}
-                onChange={e => setSidebarSearchTerm(e.target.value)}
+                onChange={(e) => setSidebarSearchTerm(e.target.value)}
                 onFocus={() => {
                   setIsSidebarOpen(false);
                   navigate("/search");
@@ -142,11 +161,31 @@ const Navigations: React.FC<NavigationProps> = ({ onContactClick }) => {
             </div>
             {/* Links */}
             <nav className="flex flex-col space-y-3 text-sm text-gray-800">
-              <Link to="/upcoming-trips" onClick={() => setIsSidebarOpen(false)}>📅 Upcoming Trips</Link>
-              <Link to="/corporate-tours" onClick={() => setIsSidebarOpen(false)}>Corporate Tours</Link>
-              <Link to="/blogs" onClick={() => setIsSidebarOpen(false)}>Blogs</Link>
-              <Link to="/about" onClick={() => setIsSidebarOpen(false)}>About Us</Link>
-              <Link to="/payments" onClick={() => setIsSidebarOpen(false)}>Payments</Link>
+              <Link
+                to="/upcoming-trips"
+                onClick={() => setIsSidebarOpen(false)}
+              >
+                📅 Upcoming Trips
+              </Link>
+              <Link to="/package" className="hover:text-blue-600">
+                Packages
+              </Link>
+
+              <Link
+                to="/corporate-tours"
+                onClick={() => setIsSidebarOpen(false)}
+              >
+                Corporate Tours
+              </Link>
+              <Link to="/blogs" onClick={() => setIsSidebarOpen(false)}>
+                Blogs
+              </Link>
+              <Link to="/about" onClick={() => setIsSidebarOpen(false)}>
+                About Us
+              </Link>
+              <Link to="/payments" onClick={() => setIsSidebarOpen(false)}>
+                Payments
+              </Link>
               <button
                 onClick={() => {
                   setIsSidebarOpen(false);
