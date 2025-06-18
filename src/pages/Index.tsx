@@ -605,8 +605,8 @@ const Index = () => {
           <img src={uct} alt="WanderOn Logo" className="w-full" />
         </div>
       </section>
-      <EffectCard/>
-      <section className="py-12 relative hidden md:block bg-[#fffbe0]" style={{marginBottom: '100px'}}>
+      <EffectCard />
+      <section className="py-12 relative hidden md:block bg-[#fffbe0]" style={{ marginBottom: '100px' }}>
         <div className="max-w-[1500px] mx-auto px-4 flex flex-col items-center">
           {/* Hero Banner */}
           <div
@@ -619,6 +619,7 @@ const Index = () => {
             }}
           >
             <div className="absolute inset-0 bg-black/20 rounded-2xl"></div>
+
             <div className="relative z-10 flex flex-col justify-center h-full px-12 py-12 md:px-24 md:py-20">
               <h1
                 className="text-white text-5xl md:text-6xl font-bold mb-6 drop-shadow"
@@ -632,17 +633,14 @@ const Index = () => {
               >
                 Discover the world, one destination at a time
               </p>
-              <button
-                className="bg-yellow-300 hover:bg-yellow-400 text-black font-semibold rounded-md px-12 py-3 text-lg shadow-md border border-yellow-400 transition-all duration-150 focus:outline-none"
-                style={{ width: 140 }}
-              >
+              <button className="bg-yellow-300 hover:bg-yellow-400 text-black font-semibold rounded-md py-3 text-lg shadow-md border border-yellow-400 transition-all duration-150 focus:outline-none w-36 flex justify-center items-center">
                 Explore
               </button>
             </div>
           </div>
 
           {/* Swiper Slider */}
-          <div className="relative w-full max-w-[1300px] min-h-[430px] flex items-center">
+          <div className="relative w-full max-w-[1150px] min-h-[430px] flex items-center">
             {/* LEFT ARROW - align to slide */}
             <button
               ref={prevRef}
@@ -766,7 +764,7 @@ const Index = () => {
         `}</style>
         </div>
       </section>
-      <EffectCardTwo/>
+      <EffectCardTwo />
       <section className="py-12 relative hidden md:block mt-15 bg-[#FFECE2]">
         <div className="max-w-[1500px] mx-auto px-4 flex flex-col items-center">
           {/* Hero Banner */}
@@ -780,6 +778,7 @@ const Index = () => {
             }}
           >
             <div className="absolute inset-0 bg-black/20 rounded-2xl"></div>
+
             <div className="relative z-10 flex flex-col justify-center h-full px-12 py-12 md:px-24 md:py-20">
               <h1
                 className="text-white text-5xl md:text-6xl font-bold mb-6 drop-shadow"
@@ -793,17 +792,14 @@ const Index = () => {
               >
                 Discover the world, one destination at a time
               </p>
-              <button
-                className="bg-yellow-300 hover:bg-yellow-400 text-black font-semibold rounded-md px-12 py-3 text-lg shadow-md border border-yellow-400 transition-all duration-150 focus:outline-none"
-                style={{ width: 140 }}
-              >
+              <button className="bg-yellow-300 hover:bg-yellow-400 text-black font-semibold rounded-md py-3 text-lg shadow-md border border-yellow-400 transition-all duration-150 focus:outline-none w-36 flex justify-center items-center">
                 Explore
               </button>
             </div>
           </div>
 
           {/* Swiper Slider */}
-          <div className="relative w-full max-w-[1300px] min-h-[430px] flex items-center">
+          <div className="relative w-full max-w-[1150px] min-h-[430px] flex items-center" style={{ marginTop: '-45px', zIndex: 20 }}>
             {/* LEFT ARROW - align to slide */}
             <button
               ref={prevRef}
@@ -926,7 +922,7 @@ const Index = () => {
         `}</style>
         </div>
       </section>
-      <EffectCardThree/>
+      <EffectCardThree />
       <section className="py-10 md:py-14 bg-white hidden md:block">
         <div className="max-w-7xl mx-auto px-4">
           {/* Header */}
@@ -948,11 +944,10 @@ const Index = () => {
               <button
                 key={m}
                 onClick={() => setActiveMonth(monthMap[i])}
-                className={`whitespace-nowrap rounded-full px-5 py-2 border text-sm md:text-base font-medium transition-all ${
-                  activeMonth === monthMap[i]
-                    ? "bg-blue-50 border-blue-400 text-blue-800 shadow-sm"
-                    : "bg-white border-gray-200 text-gray-600 hover:border-blue-300"
-                }`}
+                className={`whitespace-nowrap rounded-full px-5 py-2 border text-sm md:text-base font-medium transition-all ${activeMonth === monthMap[i]
+                  ? "bg-blue-50 border-blue-400 text-blue-800 shadow-sm"
+                  : "bg-white border-gray-200 text-gray-600 hover:border-blue-300"
+                  }`}
               >
                 {m}
               </button>
@@ -1090,7 +1085,7 @@ const Index = () => {
           </div>
 
           {/* Swiper Slider */}
-          <div className="relative w-full max-w-[1300px] min-h-[430px] flex items-center">
+          <div className="relative w-full max-w-[1150px] min-h-[430px] flex items-center" style={{ marginTop: '-45px', zIndex: 20 }}>
             {/* LEFT ARROW - align to slide */}
             <button
               ref={prevRef}
