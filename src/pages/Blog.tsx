@@ -198,9 +198,7 @@ const Blog = () => {
           </div>
         </div>
       </section>
-      <footer className="bg-white py-16 border-t border-blue-200">
         <Footer setIsContactModalOpen={setIsContactModalOpen} />
-      </footer>
     </div>
   );
 };

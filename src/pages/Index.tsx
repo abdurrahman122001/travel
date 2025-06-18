@@ -1353,72 +1353,6 @@ const Index = () => {
           </div>
         </div>
       </section>
-
-      {/* Why Choose Us Section */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4 text-blue-900">
-              Why Choose Wanderlust
-            </h2>
-            <p className="text-xl text-blue-700">
-              We make your travel dreams come true
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <Card className="text-center p-8 border-blue-200 hover:shadow-lg transition-shadow">
-              <CardHeader>
-                <div className="mx-auto w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
-                  <Users className="w-8 h-8 text-blue-600" />
-                </div>
-                <CardTitle className="text-blue-900">Expert Guides</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-base text-blue-700">
-                  Our experienced local guides ensure you get the most authentic
-                  and memorable experiences
-                </CardDescription>
-              </CardContent>
-            </Card>
-
-            <Card className="text-center p-8 border-blue-200 hover:shadow-lg transition-shadow">
-              <CardHeader>
-                <div className="mx-auto w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
-                  <MapPin className="w-8 h-8 text-blue-600" />
-                </div>
-                <CardTitle className="text-blue-900">
-                  Unique Destinations
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-base text-blue-700">
-                  We take you to hidden gems and exclusive locations that most
-                  tourists never discover
-                </CardDescription>
-              </CardContent>
-            </Card>
-
-            <Card className="text-center p-8 border-blue-200 hover:shadow-lg transition-shadow">
-              <CardHeader>
-                <div className="mx-auto w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
-                  <Calendar className="w-8 h-8 text-blue-600" />
-                </div>
-                <CardTitle className="text-blue-900">
-                  Flexible Planning
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-base text-blue-700">
-                  Customize your journey with flexible itineraries tailored to
-                  your preferences and budget
-                </CardDescription>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
-
       {/* Customer Testimonials */}
       <section className="py-20 bg-blue-50">
         <div className="max-w-7xl mx-auto px-4">
@@ -1439,14 +1373,14 @@ const Index = () => {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious className="hidden sm:block bg-blue-600 hover:bg-blue-700 text-white border-blue-600" />
-            <CarouselNext className="hidden sm:block bg-blue-600 hover:bg-blue-700 text-white border-blue-600" />
+            {/* <CarouselPrevious className="hidden sm:block bg-blue-600 hover:bg-blue-700 text-white border-blue-600" />
+            <CarouselNext className="hidden sm:block bg-blue-600 hover:bg-blue-700 text-white border-blue-600" /> */}
           </Carousel>
         </div>
       </section>
 
       {/* Newsletter Section */}
-      <section className="py-20 bg-blue-600 text-white">
+      {/* <section className="py-20 bg-blue-600 text-white">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h2 className="text-4xl font-bold mb-4">Stay Updated</h2>
           <p className="text-xl mb-8 opacity-90">
@@ -1482,12 +1416,10 @@ const Index = () => {
             </Button>
           </form>
         </div>
-      </section>
+      </section> */}
 
       {/* Footer */}
-      <footer className="bg-white py-16 border-t border-blue-200">
         <Footer setIsContactModalOpen={setIsContactModalOpen} />
-      </footer>
 
       <ContactModal
         isOpen={isContactModalOpen}

@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Users, Award, Globe, Heart, MapPin, Clock } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import ContactModal from "@/components/ContactModal";
-
+import Footer from "@/components/Footer";
 const About = () => {
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
 
@@ -228,11 +228,11 @@ const About = () => {
 
       {/* Call to Action */}
       <section className="py-20 bg-muted/30">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <h2 className="text-4xl font-bold mb-4">
+        <div className="max-w-4xl mx-auto px-4 text-center p-10 rounded-xl" style={{backgroundColor: '#38BDF8'}}>
+          <h2 className="text-4xl text-white font-bold mb-4">
             Ready to Start Your Journey?
           </h2>
-          <p className="text-xl text-muted-foreground mb-8">
+          <p className="text-xl text-white text-muted-foreground mb-8">
             Let us help you create memories that will last a lifetime
           </p>
           <div className="space-x-4">
@@ -245,7 +245,7 @@ const About = () => {
           </div>
         </div>
       </section>
-
+        <Footer setIsContactModalOpen={setIsContactModalOpen} />
       <ContactModal
         isOpen={isContactModalOpen}
         onClose={() => setIsContactModalOpen(false)}
