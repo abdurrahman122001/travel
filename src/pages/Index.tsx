@@ -36,11 +36,12 @@ import Footer from "@/components/Footer";
 import abc from "../../public/abc.png";
 import uct from "../../public/ucl.jpg";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination } from "swiper/modules";
+import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-
+// import "swiper/swiper.min.css";
+// import "swiper/swiper.scss"; // core Swiper
 const Index = () => {
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const [email, setEmail] = useState("");
@@ -48,7 +49,6 @@ const Index = () => {
   const AUTO_SLIDE_INTERVAL = 3000;
   const prevRef = useRef(null);
   const nextRef = useRef(null);
-
   const heroSlides = [
     {
       image:
@@ -122,15 +122,6 @@ const Index = () => {
       reviews: 87,
     },
   ];
-  useEffect(() => {
-    // Show modal after 12 seconds (random between 10-15s possible too)
-    const timeout = setTimeout(() => {
-      setIsContactModalOpen(true);
-    }, 12000); // 12000 ms = 12 seconds
-
-    // Cleanup to avoid memory leaks if user leaves page early
-    return () => clearTimeout(timeout);
-  }, []);
 
   const testimonials = [
     {
@@ -167,6 +158,28 @@ const Index = () => {
         "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=150&q=80",
       rating: 5,
       text: "Perfect honeymoon destination! The beaches were pristine and the accommodations were luxurious.",
+    },
+  ];
+  const features = [
+    {
+      title: "No Third Party Mess",
+      desc: "100 percent in-house operations for all trips! No third parties involved, hence no fishy claims!",
+      bg: "https://wanderon.in/assets/images/sauceBg1.svg", // Unique background for this card
+    },
+    {
+      title: "Transparency & Security",
+      desc: "Real time monitoring of all trips by ground team! All routes and weather conditions are accurately updated!",
+      bg: "https://wanderon.in/assets/images/sauceBg2.svg",
+    },
+    {
+      title: "Co-Travelers Filtering",
+      desc: "Multi-step filtering to bring only like-minded people together! That’s our key to have fuss-free trips!",
+      bg: "https://wanderon.in/assets/images/sauceBg3.svg",
+    },
+    {
+      title: "One Stop Hassle Free Experience",
+      desc: "Comfortable stays, trained drivers, hospitable staff and friendly trip leaders put together that one memorable trip for you!",
+      bg: "https://wanderon.in/assets/images/sauceBg4.svg",
     },
   ];
   const reviews = [
@@ -325,6 +338,63 @@ const Index = () => {
     },
   ];
 
+  const RomanticTrips = [
+    {
+      title: "Europe",
+      price: "1,49,999",
+      image:
+        "https://images.wanderon.in/new-homepage-data/Explore%20India/kerala",
+    },
+    {
+      title: "Georgia",
+      price: "58,999",
+      image:
+        "https://images.wanderon.in/new-homepage-data/Explore%20India/ladakh",
+    },
+    {
+      title: "Bali",
+      price: "49,999",
+      image:
+        "https://images.wanderon.in/new-homepage-data/Explore%20India/rajasthan",
+    },
+    {
+      title: "Vietnam",
+      price: "59,999",
+      image:
+        "https://images.wanderon.in/new-homepage-data/Explore%20India/andaman",
+    },
+    {
+      title: "Thailand",
+      price: "44,999",
+      image:
+        "https://images.wanderon.in/new-homepage-data/Explore%20India/ladakh",
+    },
+    {
+      title: "Kashmir",
+      price: "29,999",
+      image:
+        "https://images.wanderon.in/new-homepage-data/romantic%20escapes/kashmir-romantic-02",
+    },
+    {
+      title: "Leh-Ladakh",
+      price: "39,999",
+      image:
+        "https://images.wanderon.in/new-homepage-data/Explore%20India/ladakh",
+    },
+    {
+      title: "Spiti Valley",
+      price: "34,999",
+      image:
+        "https://images.wanderon.in/new-homepage-data/Explore%20India/spiti",
+    },
+    {
+      title: "Meghalaya",
+      price: "33,999",
+      image:
+        "https://images.wanderon.in/new-homepage-data/Explore%20India/meghalaya",
+    },
+  ];
+
   const LocalDestination = [
     {
       title: "Kerala",
@@ -391,10 +461,6 @@ const Index = () => {
     "DEC '25",
   ];
 
-  const monthMap = [
-    "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"
-  ];
-
   const trips = [
     {
       img: "https://images.unsplash.com/photo-1506744038136-46273834b3fb",
@@ -405,7 +471,6 @@ const Index = () => {
       location: "Delhi/Chandigarh - Srinagar",
       date: "18 Jun, 25 Jun",
       icon: "🇮🇳",
-      month: "JUN",
     },
     {
       img: "https://images.unsplash.com/photo-1469474968028-56623f02e42e",
@@ -416,7 +481,6 @@ const Index = () => {
       location: "London Airport - Rome Airport",
       date: "28 Jun",
       icon: "🇪🇺",
-      month: "JUN",
     },
     {
       img: "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429",
@@ -427,7 +491,6 @@ const Index = () => {
       location: "Paris Airport - Rome Airport",
       date: "18 Jun, 19 Jun, 21 Jun +2 Batches",
       icon: "🇳🇱",
-      month: "JUN",
     },
     {
       img: "https://images.unsplash.com/photo-1519125323398-675f0ddb6308",
@@ -438,208 +501,187 @@ const Index = () => {
       location: "Paris Airport - Rome Airport",
       date: "23 Jun, 28 Jun",
       icon: "🇮🇹",
-      month: "JUN",
     },
   ];
-  const [activeMonth, setActiveMonth] = useState(monthMap[0]);
-
-  // Filter trips by activeMonth
-  const filteredTrips = trips.filter(trip => trip.month === activeMonth);
-  const features = [
-    {
-      title: "No Third Party Mess",
-      desc: "100 percent in-house operations for all trips! No third parties involved, hence no fishy claims!",
-      bg: "https://wanderon.in/assets/images/sauceBg1.svg", // Unique background for this card
-    },
-    {
-      title: "Transparency & Security",
-      desc: "Real time monitoring of all trips by ground team! All routes and weather conditions are accurately updated!",
-      bg: "https://wanderon.in/assets/images/sauceBg2.svg",
-
-    },
-    {
-      title: "Co-Travelers Filtering",
-      desc: "Multi-step filtering to bring only like-minded people together! That’s our key to have fuss-free trips!",
-      bg: "https://wanderon.in/assets/images/sauceBg3.svg",
-
-    },
-    {
-      title: "One Stop Hassle Free Experience",
-      desc: "Comfortable stays, trained drivers, hospitable staff and friendly trip leaders put together that one memorable trip for you!",
-      bg: "https://wanderon.in/assets/images/sauceBg4.svg",
-      icon: (
-        <svg width="56" height="56" fill="none" viewBox="0 0 24 24" className="text-blue-400">
-          <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.5" />
-          <path d="M8 12l2 2 4-4" stroke="currentColor" strokeWidth="1.5" />
-        </svg>
-      ),
-    },
-  ];
-
 
   return (
-    <>
-      <div className="min-h-screen bg-white">
-        {/* Typing effect styles */}
-        <style>
-          {`
-            .typing-cursor::after {
-              content: '|';
-              animation: blink 0.7s infinite;
-            }
-            @keyframes blink {
-              0%, 100% { opacity: 1; }
-              50% { opacity: 0; }
-            }
-          `}
-        </style>
+    <div className="min-h-screen bg-white">
+      <style>
+        {`
+          .typing-cursor::after {
+            content: '|';
+            animation: blink 0.7s infinite;
+          }
 
-        {/* Navigation */}
-        <Navigations onContactClick={() => setIsContactModalOpen(true)} />
+          @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+          }
+        `}
+      </style>
+      <Navigations onContactClick={() => setIsContactModalOpen(true)} />
 
-        {/* HERO SECTION */}
-        <section className="relative w-full">
-          <div className="relative min-h-[380px] xs:min-h-[430px] sm:min-h-[520px] md:min-h-[600px] lg:min-h-[680px] w-full">
-            <Swiper
-              modules={[Navigation]}
-              navigation
-              slidesPerView={1}
-              className="h-full"
-            >
-              {heroSlides.map((slide, index) => (
-                <SwiperSlide key={index}>
-                  <div className="relative h-[380px] xs:h-[430px] sm:h-[520px] md:h-[600px] lg:h-[680px] w-full">
-                    <img
-                      src={slide.image}
-                      alt="hero"
-                      className="w-full h-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                      <div className="text-center text-white px-4 max-w-4xl">
-                        <h1
-                          style={{ fontFamily: "Roboto" }}
-                          className="text-3xl md:text-7xl font-bold mb-4"
-                        >
-                          Global Community for Travelers
-                        </h1>
-                        <p
-                          style={{ fontFamily: "Roboto" }}
-                          className="text-yellow-400 text-xl md:text-3xl font-medium typing-cursor"
-                        >
-                          {displayText}
-                        </p>
-                      </div>
+      {/* Hero Section with Slider */}
+      <section className="min-h-[380px] xs:min-h-[430px] sm:min-h-[520px] md:min-h-[600px] lg:min-h-[680px] w-full">
+        <Carousel className="h-full">
+          <CarouselContent>
+            {heroSlides.map((slide, index) => (
+              <CarouselItem key={index}>
+                <div className="relative h-screen">
+                  <img
+                    src={slide.image}
+                    alt="hero"
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+                    <div className="text-center text-white px-4 max-w-4xl">
+                      <h1
+                        style={{ fontFamily: "roboto" }}
+                        className="text-3xl md:text-7xl font-bold mb-4"
+                      >
+                        Global Community for Travelers
+                      </h1>
+                      <p
+                        style={{ fontFamily: "roboto" }}
+                        className="text-yellow-400 text-xl md:text-3xl font-medium typing-cursor"
+                      >
+                        {displayText}
+                      </p>
                     </div>
                   </div>
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          </div>
-        </section>
-
-        {/* REVIEWS */}
-        <section
-          className="py-5 flex items-center justify-center"
-          style={{ backgroundColor: "#F1FDFF" }}
-        >
-          <div className="flex flex-wrap justify-center gap-6 max-w-4xl w-full px-4">
-            {reviews.map((item, index) => (
-              <a
-                key={index}
-                href={item.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-4 border border-gray-200 shadow-sm p-4 rounded-lg transition hover:shadow-md bg-white w-full sm:w-auto"
-              >
-                <img
-                  src={item.icon}
-                  alt={item.name}
-                  className="w-10 h-10 object-contain"
-                />
-                <div>
-                  <div className="flex items-center gap-1 text-yellow-500 font-bold text-lg">
-                    {/* <StarIcon />  */} {item.rating}
-                  </div>
-                  <p className="text-sm text-gray-500">({item.count} reviews)</p>
                 </div>
-              </a>
+              </CarouselItem>
             ))}
-          </div>
-        </section>
+          </CarouselContent>
+          {/* <CarouselPrevious className="hidden sm:block bg-blue-600 hover:bg-blue-700 text-white border-blue-600" /> */}
+          {/* <CarouselNext className="hidden sm:block bg-blue-600 hover:bg-blue-700 text-white border-blue-600" /> */}
+        </Carousel>
+      </section>
+      <section
+        className="py-5 flex items-center justify-center"
+        style={{ backgroundColor: "#F1FDFF" }}
+      >
+        <div className="flex flex-wrap justify-center gap-6 max-w-4xl w-full px-4">
+          {reviews.map((item, index) => (
+            <a
+              key={index}
+              href={item.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-4 border border-gray-200 shadow-sm p-4 rounded-lg transition hover:shadow-md bg-white w-full sm:w-auto"
+            >
+              <img
+                src={item.icon}
+                alt={item.name}
+                className="w-10 h-10 object-contain"
+              />
+              <div>
+                <div className="flex items-center gap-1 text-yellow-500 font-bold text-lg">
+                  <StarIcon /> {item.rating}
+                </div>
+                <p className="text-sm text-gray-500">({item.count} reviews)</p>
+              </div>
+            </a>
+          ))}
+        </div>
+      </section>
+      <section className="py-20 px-4 flex items-center justify-center">
+        <div className="w-[80%] mx-auto text-center">
+          <img src={abc} alt="WanderOn Logo" className="w-full" />
+        </div>
+      </section>
 
-        {/* BANNER */}
-        <section className="py-20 px-4 flex items-center justify-center">
-          <div className="w-full md:w-[80%] mx-auto text-center">
-            <img src={abc} alt="WanderOn Logo" className="w-full max-w-6xl mx-auto" />
+      <section className="py-20 px-4 flex items-center justify-center">
+        <div className="w-[80%] mx-auto text-center">
+          <img src={uct} alt="WanderOn Logo" className="w-full" />
+        </div>
+      </section>
+      <section className="py-12 bg-[#FFFBEF] relative">
+        <div className="max-w-[1500px] mx-auto px-4 flex flex-col items-center">
+          {/* --- Hero Banner --- */}
+          <div
+            className="w-full bg-cover bg-center rounded-2xl mb-[-60px] relative"
+            style={{
+              backgroundImage:
+                "url('https://images.wanderon.in/new-homepage-data/cta%20homepage%20-%20desktop.png')",
+              minHeight: "370px",
+              maxWidth: "1400px",
+            }}
+          >
+            <div className="absolute inset-0 bg-black/20 rounded-2xl"></div>
+            <div className="relative z-10 flex flex-col justify-center h-full px-12 py-12 md:px-24 md:py-20">
+              <h1
+                className="text-white text-5xl md:text-6xl font-bold mb-6"
+                style={{ fontFamily: "Roboto, sans-serif" }}
+              >
+                International Trips
+              </h1>
+              <p
+                className="text-white text-lg md:text-2xl mb-8 font-medium"
+                style={{ fontFamily: "Roboto, sans-serif" }}
+              >
+                Discover the world, one destination at a time
+              </p>
+              <button
+                className="bg-yellow-300 hover:bg-yellow-400 text-black font-semibold rounded-md px-12 py-3 text-lg shadow-md border border-yellow-400 transition-all duration-150 focus:outline-none"
+                style={{ width: 180 }}
+              >
+                Explore
+              </button>
+            </div>
           </div>
-        </section>
-        <section className="py-20 px-4 flex items-center justify-center">
-          <div className="w-full md:w-[80%] mx-auto text-center">
-            <img src={uct} alt="WanderOn Logo" className="w-full max-w-6xl mx-auto" />
-          </div>
-        </section>
 
-        {/* UPCOMING COMMUNITY TRIPS */}
-        <section className="py-10 md:py-14 bg-white">
-          <div className="max-w-7xl mx-auto px-4">
-            {/* Header */}
-            <div className="flex flex-col sm:flex-row items-center justify-between mb-6 gap-2">
-              <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
-                Upcoming Community Trips
-              </h2>
-              <a
-                href="#"
-                className="text-blue-700 text-base md:text-lg font-semibold flex items-center gap-1 hover:underline"
-              >
-                View All
-                <span className="inline-block ml-1 text-lg">→</span>
-              </a>
-            </div>
-            {/* Month Tabs */}
-            <div className="flex items-center gap-2 overflow-x-auto pb-3 mb-2">
-              {months.map((m, i) => (
-                <button
-                  key={m}
-                  onClick={() => setActiveMonth(monthMap[i])}
-                  className={`whitespace-nowrap rounded-full px-5 py-2 border text-sm md:text-base font-medium transition-all ${activeMonth === monthMap[i]
-                    ? "bg-blue-50 border-blue-400 text-blue-800 shadow-sm"
-                    : "bg-white border-gray-200 text-gray-600 hover:border-blue-300"
-                    }`}
-                >
-                  {m}
-                </button>
-              ))}
-            </div>
-            {/* Slider */}
-            <div className="relative mt-4">
-              {/* Left Arrow */}
-              <button
-                ref={prevRef}
-                className="hidden md:flex absolute z-10 left-[-25px] top-1/2 -translate-y-1/2 bg-white shadow-lg w-10 h-10 items-center justify-center rounded-full border border-gray-200 hover:bg-blue-100 transition-all"
-              >
-                <FaArrowLeft className="text-blue-500 text-lg" />
-              </button>
-              {/* Right Arrow */}
-              <button
-                ref={nextRef}
-                className="hidden md:flex absolute z-10 right-[-25px] top-1/2 -translate-y-1/2 bg-white shadow-lg w-10 h-10 items-center justify-center rounded-full border border-gray-200 hover:bg-blue-100 transition-all"
-              >
-                <FaArrowRight className="text-blue-500 text-lg" />
-              </button>
-              {/* Cards */}
+          {/* --- Swiper Slider --- */}
+          <div className="relative w-full max-w-7xl">
+            {/* LEFT ARROW */}
+            <button
+              ref={prevRef}
+              className="swiper-button-custom absolute left-0 top-1/2 -translate-y-1/2 z-10"
+              aria-label="Previous"
+            >
+              <svg viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M15.5 19L8.5 12L15.5 5"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
+
+            {/* RIGHT ARROW */}
+            <button
+              ref={nextRef}
+              className="swiper-button-custom absolute right-0 top-1/2 -translate-y-1/2 z-10"
+              aria-label="Next"
+            >
+              <svg viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M8.5 5L15.5 12L8.5 19"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
+
+            {/* Swiper: clipped between arrows */}
+            <div className="overflow-hidden px-[56px]">
+              {/* px-[56px] = 42px (arrow) + 14px (gap), match to your arrow size */}
               <Swiper
-                modules={[Navigation]}
-                spaceBetween={16}
-                slidesPerView={1}
-                breakpoints={{
-                  640: { slidesPerView: 1.1 },
-                  768: { slidesPerView: 2 },
-                  1024: { slidesPerView: 3 },
-                  1280: { slidesPerView: 4 },
-                }}
+                modules={[Navigation, Pagination]}
+                spaceBetween={20}
+                slidesPerView={"auto"}
+                centeredSlides={false}
                 navigation={{
-                  prevEl: prevRef.current!,
-                  nextEl: nextRef.current!,
+                  prevEl: prevRef.current,
+                  nextEl: nextRef.current,
+                }}
+                pagination={{
+                  clickable: true,
+                  el: ".swiper-pagination-custom",
                 }}
                 onInit={(swiper) => {
                   // @ts-ignore
@@ -649,212 +691,779 @@ const Index = () => {
                   swiper.navigation.init();
                   swiper.navigation.update();
                 }}
+                className="w-full"
               >
-                {filteredTrips.length > 0 ? filteredTrips.map((trip, idx) => (
-                  <SwiperSlide key={idx}>
-                    <div
-                      className="relative group rounded-2xl overflow-hidden h-[350px] sm:h-[400px] md:h-[420px] flex flex-col justify-end"
-                      style={{
-                        backgroundImage: `url(${trip.img})`,
-                        backgroundSize: "cover",
-                        backgroundPosition: "center",
-                      }}
-                    >
-                      {/* Overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent z-0" />
-                      {/* Price Badge */}
-                      <div className="absolute top-4 left-4 z-10">
-                        <div className="bg-yellow-300/95 text-gray-900 font-semibold px-4 py-1 rounded-full flex items-center gap-2 text-base shadow">
-                          <span className="line-through text-gray-600">{trip.oldPrice}</span>
-                          <span className="font-bold">{trip.price}/-</span>
-                          <span className="text-xs">Onwards</span>
-                        </div>
-                      </div>
-                      {/* Info */}
-                      <div className="relative z-10 p-5 pb-4 flex flex-col justify-end">
-                        <div className="text-white font-bold text-base leading-snug mb-2 line-clamp-2 drop-shadow">
-                          {trip.title}
-                        </div>
-                        <div className="flex flex-wrap items-center text-white/90 text-xs mb-1 gap-x-4 gap-y-1">
-                          <span className="flex items-center gap-1">
-                            <span className="text-lg">⏱️</span> {trip.days}
-                          </span>
-                          <span className="flex items-center gap-1">
-                            <span className="text-lg">📍</span> {trip.location}
-                          </span>
-                        </div>
-                        <div className="flex items-center text-white/90 text-xs gap-2">
-                          <span className="flex items-center gap-1">
-                            <span className="text-lg">📅</span> {trip.date}
-                          </span>
+                {InternattionalDestinations.map((item, idx) => (
+                  <SwiperSlide
+                    key={idx}
+                    className="w-[260px] md:w-[300px] flex-shrink-0"
+                  >
+                    <div className="rounded-xl overflow-hidden shadow-lg border bg-white">
+                      <div className="relative h-[350px]">
+                        <img
+                          src={item.image}
+                          alt={item.title}
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black via-black/50 to-transparent">
+                          <h3 className="text-white text-center text-2xl font-bold">
+                            {item.title}
+                          </h3>
+                          <p className="text-white text-center text-sm font-medium">
+                            Starting Price Rs. {item.price}/-
+                          </p>
                         </div>
                       </div>
                     </div>
-                  </SwiperSlide>
-                )) : (
-                  <SwiperSlide>
-                    <div className="flex items-center justify-center h-[350px] sm:h-[400px] md:h-[420px] bg-gray-100 rounded-2xl">
-                      <span className="text-gray-400 font-semibold">No trips for this month</span>
-                    </div>
-                  </SwiperSlide>
-                )}
-              </Swiper>
-            </div>
-          </div>
-        </section>
-
-        {/* FEATURED PACKAGES */}
-        <section className="py-20 px-4">
-          <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-10 md:mb-16">
-              <h2 className="text-2xl md:text-4xl font-bold mb-4 text-blue-900">
-                Featured Travel Packages
-              </h2>
-              <p className="text-lg md:text-xl text-blue-700 max-w-2xl mx-auto">
-                Discover our handpicked selection of extraordinary travel experiences
-              </p>
-            </div>
-            <div className="px-2 py-6 md:py-10">
-              <Swiper
-                modules={[Navigation]}
-                spaceBetween={16}
-                slidesPerView={1}
-                breakpoints={{
-                  640: { slidesPerView: 1 },
-                  768: { slidesPerView: 2 },
-                  1024: { slidesPerView: 3 },
-                }}
-                navigation
-              >
-                {featuredPackages.map((pkg) => (
-                  <SwiperSlide key={pkg.id}>
-                    <PackageCard package={pkg} />
                   </SwiperSlide>
                 ))}
               </Swiper>
             </div>
+            {/* Pagination Dots */}
+            {/* <div className="swiper-pagination-custom mt-5"></div> */}
           </div>
-        </section>
+        </div>
 
-        {/* WHY CHOOSE US */}
-        <section className="py-12 md:py-20 bg-white">
-          <div className="max-w-7xl mx-auto px-4">
-            {/* Heading */}
-            <div className="text-center mb-10">
-              <div className="text-[#12a5c4] font-semibold text-lg mb-1">
-                Why WanderOn?
-              </div>
-              <h2 className="text-3xl md:text-5xl font-bold text-[#066980]">
-                WanderOn’s Secret Sauce
-              </h2>
-              <div className="flex justify-center mt-4">
-                <span className="block w-32 h-1 bg-yellow-400 rounded"></span>
-              </div>
-            </div>
-            {/* Cards Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
-              {features.map((item, idx) => (
-                <div
-                  key={item.title}
-                  className="relative rounded-2xl border border-blue-200 bg-white p-6 pt-8 pb-24 min-h-[340px] shadow-sm hover:shadow-lg transition-shadow flex flex-col"
-                  style={{
-                    backgroundImage: `url('${item.bg}')`,
-                    backgroundRepeat: "no-repeat",
-                    backgroundPosition: "left bottom",
-                    backgroundSize: "contain",
-                  }}
-                >
-                  <h3 className="text-[#12a5c4] text-xl font-bold mb-2">{item.title}</h3>
-                  <p className="text-gray-600 text-base mb-4">{item.desc}</p>
-                  <div className="absolute left-6 bottom-8">{item.icon}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-
-        {/* TESTIMONIALS */}
-        <section className="py-20 bg-blue-50">
-          <div className="max-w-7xl mx-auto px-4">
-            <div className="text-center mb-10 md:mb-16">
-              <h2 className="text-2xl md:text-4xl font-bold mb-4 text-blue-900">
-                What Our Travelers Say
-              </h2>
-              <p className="text-lg md:text-xl text-blue-700">
-                Real experiences from real adventurers
+        {/* Swiper custom styles */}
+        <style>{`
+        .swiper-button-custom {
+          background: white;
+          border-radius: 50%;
+          box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+          width: 42px;
+          height: 42px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: box-shadow 0.2s;
+        }
+        .swiper-button-custom:after { display: none; }
+        .swiper-button-custom svg {
+          width: 28px;
+          height: 28px;
+          color: #4bb2e8;
+        }
+        .swiper-pagination-custom {
+          display: flex;
+          justify-content: center;
+          gap: 8px;
+          margin-top: 18px;
+        }
+        .swiper-pagination-bullet {
+          width: 44px;
+          height: 8px;
+          border-radius: 8px;
+          background: #e0e6ea;
+          opacity: 1;
+          transition: background 0.3s;
+        }
+        .swiper-pagination-bullet-active {
+          background: #4bb2e8;
+        }
+      `}</style>
+      </section>
+      <section className="py-12 bg-[#FFFBEF] relative">
+        <div className="max-w-[1500px] mx-auto px-4 flex flex-col items-center">
+          {/* --- Hero Banner --- */}
+          <div
+            className="w-full bg-cover bg-center rounded-2xl mb-[-60px] relative"
+            style={{
+              backgroundImage:
+                "url('https://images.wanderon.in/new-homepage-data/cta%20homepage%20-%20desktop.png')",
+              minHeight: "370px",
+              maxWidth: "1400px",
+            }}
+          >
+            <div className="absolute inset-0 bg-black/20 rounded-2xl"></div>
+            <div className="relative z-10 flex flex-col justify-center h-full px-12 py-12 md:px-24 md:py-20">
+              <h1
+                className="text-white text-3xl md:text-6xl font-bold mb-6"
+                style={{ fontFamily: "Roboto, sans-serif" }}
+              >
+                Local Trips
+              </h1>
+              <p
+                className="text-white text-md md:text-2xl mb-8 font-medium"
+                style={{ fontFamily: "Roboto, sans-serif" }}
+              >
+                Discover the world, one destination at a time
               </p>
+              <button
+                className="bg-yellow-300 hover:bg-yellow-400 text-black font-semibold rounded-md px-12 py-3 text-lg shadow-md border border-yellow-400 transition-all duration-150 focus:outline-none"
+                style={{ width: 180 }}
+              >
+                Explore
+              </button>
             </div>
+          </div>
+
+          {/* --- Swiper Slider --- */}
+          <div className="relative w-full max-w-7xl">
+            {/* LEFT ARROW */}
+            <button
+              ref={prevRef}
+              className="swiper-button-custom absolute left-0 top-1/2 -translate-y-1/2 z-10"
+              aria-label="Previous"
+            >
+              <svg viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M15.5 19L8.5 12L15.5 5"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
+
+            {/* RIGHT ARROW */}
+            <button
+              ref={nextRef}
+              className="swiper-button-custom absolute right-0 top-1/2 -translate-y-1/2 z-10"
+              aria-label="Next"
+            >
+              <svg viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M8.5 5L15.5 12L8.5 19"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
+
+            {/* Swiper: clipped between arrows */}
+            <div className="overflow-hidden px-[56px]">
+              {/* px-[56px] = 42px (arrow) + 14px (gap), match to your arrow size */}
+              <Swiper
+                modules={[Navigation, Pagination]}
+                spaceBetween={20}
+                slidesPerView={"auto"}
+                centeredSlides={false}
+                navigation={{
+                  prevEl: prevRef.current,
+                  nextEl: nextRef.current,
+                }}
+                pagination={{
+                  clickable: true,
+                  el: ".swiper-pagination-custom",
+                }}
+                onInit={(swiper) => {
+                  // @ts-ignore
+                  swiper.params.navigation.prevEl = prevRef.current;
+                  // @ts-ignore
+                  swiper.params.navigation.nextEl = nextRef.current;
+                  swiper.navigation.init();
+                  swiper.navigation.update();
+                }}
+                className="w-full"
+              >
+                {LocalDestination.map((item, idx) => (
+                  <SwiperSlide
+                    key={idx}
+                    className="w-[260px] md:w-[300px] flex-shrink-0"
+                  >
+                    <div className="rounded-xl overflow-hidden shadow-lg border bg-white">
+                      <div className="relative h-[350px]">
+                        <img
+                          src={item.image}
+                          alt={item.title}
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black via-black/50 to-transparent">
+                          <h3 className="text-white text-center text-2xl font-bold">
+                            {item.title}
+                          </h3>
+                          <p className="text-white text-center text-sm font-medium">
+                            Starting Price Rs. {item.price}/-
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </div>
+            {/* Pagination Dots */}
+            {/* <div className="swiper-pagination-custom mt-5"></div> */}
+          </div>
+        </div>
+
+        {/* Swiper custom styles */}
+        <style>{`
+        .swiper-button-custom {
+          background: white;
+          border-radius: 50%;
+          box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+          width: 42px;
+          height: 42px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: box-shadow 0.2s;
+        }
+        .swiper-button-custom:after { display: none; }
+        .swiper-button-custom svg {
+          width: 28px;
+          height: 28px;
+          color: #4bb2e8;
+        }
+        .swiper-pagination-custom {
+          display: flex;
+          justify-content: center;
+          gap: 8px;
+          margin-top: 18px;
+        }
+        .swiper-pagination-bullet {
+          width: 44px;
+          height: 8px;
+          border-radius: 8px;
+          background: #e0e6ea;
+          opacity: 1;
+          transition: background 0.3s;
+        }
+        .swiper-pagination-bullet-active {
+          background: #4bb2e8;
+        }
+      `}</style>
+      </section>
+      <section className="py-10 md:py-14 bg-white">
+        <div className="max-w-7xl mx-auto px-4">
+          {/* Header */}
+          <div className="flex items-center justify-between mb-4 md:mb-6">
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
+              Upcoming Community Trips
+            </h2>
+            <a
+              href="#"
+              className="text-blue-700 text-base md:text-lg font-semibold flex items-center gap-1 hover:underline"
+            >
+              View All
+              <span className="inline-block ml-1 text-lg">→</span>
+            </a>
+          </div>
+
+          {/* Month Tabs */}
+          <div className="flex items-center gap-3 overflow-x-auto pb-3 mb-2">
+            {months.map((m, i) => (
+              <button
+                key={i}
+                className={`whitespace-nowrap rounded-full px-6 py-2 border text-base font-medium transition-all ${i === 0
+                  ? "bg-blue-50 border-blue-400 text-blue-800 shadow-sm"
+                  : "bg-white border-gray-200 text-gray-600 hover:border-blue-300"
+                  }`}
+              >
+                {m}
+              </button>
+            ))}
+          </div>
+
+          {/* Slider */}
+          <div className="relative mt-4">
+            {/* Left Arrow */}
+            <button
+              ref={prevRef}
+              className="absolute z-10 left-[-25px] top-1/2 -translate-y-1/2 bg-white shadow-lg w-10 h-10 flex items-center justify-center rounded-full border border-gray-200 hover:bg-blue-100 transition-all"
+            >
+              <FaArrowLeft className="text-blue-500 text-lg" />
+            </button>
+            {/* Right Arrow */}
+            <button
+              ref={nextRef}
+              className="absolute z-10 right-[-25px] top-1/2 -translate-y-1/2 bg-white shadow-lg w-10 h-10 flex items-center justify-center rounded-full border border-gray-200 hover:bg-blue-100 transition-all"
+            >
+              <FaArrowRight className="text-blue-500 text-lg" />
+            </button>
+            {/* Cards */}
             <Swiper
               modules={[Navigation]}
+              spaceBetween={24}
               slidesPerView={1}
-              spaceBetween={16}
               breakpoints={{
-                640: { slidesPerView: 1 },
-                1024: { slidesPerView: 2 },
-                1280: { slidesPerView: 3 },
+                640: { slidesPerView: 1.1 },
+                768: { slidesPerView: 2 },
+                1024: { slidesPerView: 3 },
+                1280: { slidesPerView: 4 },
               }}
-              navigation
+              navigation={{
+                prevEl: prevRef.current!,
+                nextEl: nextRef.current!,
+              }}
+              onInit={(swiper) => {
+                // @ts-ignore
+                swiper.params.navigation.prevEl = prevRef.current;
+                // @ts-ignore
+                swiper.params.navigation.nextEl = nextRef.current;
+                swiper.navigation.init();
+                swiper.navigation.update();
+              }}
             >
-              {testimonials.map((testimonial, index) => (
-                <SwiperSlide key={index}>
-                  <TestimonialCard testimonial={testimonial} />
+              {trips.map((trip, idx) => (
+                <SwiperSlide key={idx}>
+                  <div
+                    className="relative group rounded-2xl overflow-hidden h-[420px] flex flex-col justify-end"
+                    style={{
+                      backgroundImage: `url(${trip.img})`,
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
+                    }}
+                  >
+                    {/* Black Gradient Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent z-0" />
+
+                    {/* Price Badge */}
+                    <div className="absolute top-5 left-5 z-10">
+                      <div className="bg-yellow-300/95 text-gray-900 font-semibold px-4 py-1 rounded-full flex items-center gap-2 text-base shadow">
+                        <span className="line-through text-gray-600">{trip.oldPrice}</span>
+                        <span className="font-bold">{trip.price}/-</span>
+                        <span className="text-xs">Onwards</span>
+                      </div>
+                    </div>
+
+                    {/* Info */}
+                    <div className="relative z-10 p-6 pb-4 flex flex-col justify-end">
+                      <div className="text-white font-bold text-base leading-snug mb-2 line-clamp-2 drop-shadow">
+                        {trip.title}
+                      </div>
+                      <div className="flex flex-wrap items-center text-white/90 text-xs mb-1 gap-x-4 gap-y-1">
+                        <span className="flex items-center gap-1">
+                          <span className="text-lg">⏱️</span> {trip.days}
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <span className="text-lg">📍</span> {trip.location}
+                        </span>
+                      </div>
+                      <div className="flex items-center text-white/90 text-xs gap-2">
+                        <span className="flex items-center gap-1">
+                          <span className="text-lg">📅</span> {trip.date}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
                 </SwiperSlide>
               ))}
             </Swiper>
           </div>
-        </section>
-
-        {/* NEWSLETTER */}
-        <section className="py-20 bg-blue-600 text-white">
-          <div className="max-w-4xl mx-auto px-4 text-center">
-            <h2 className="text-2xl md:text-4xl font-bold mb-4">Stay Updated</h2>
-            <p className="text-lg md:text-xl mb-8 opacity-90">
-              Subscribe to our newsletter for exclusive deals and travel inspiration
-            </p>
-            <form
-              onSubmit={handleNewsletterSubmit}
-              className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto"
-            >
-              <div className="flex-1">
-                <Label htmlFor="email" className="sr-only">
-                  Email
-                </Label>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="Enter your email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  className="bg-white text-blue-900 border-white"
-                />
-              </div>
-              <Button
-                type="submit"
-                variant="secondary"
-                size="default"
-                className="bg-white text-blue-600 hover:bg-blue-50"
+        </div>
+      </section>
+      <section className="py-12 bg-[#FFFBEF] relative">
+        <div className="max-w-[1500px] mx-auto px-4 flex flex-col items-center">
+          {/* --- Hero Banner --- */}
+          <div
+            className="w-full bg-cover bg-center rounded-2xl mb-[-60px] relative"
+            style={{
+              backgroundImage:
+                "url('https://images.wanderon.in/new-homepage-data/cta%20homepage%20-%20desktop.png')",
+              minHeight: "370px",
+              maxWidth: "1400px",
+            }}
+          >
+            <div className="absolute inset-0 bg-black/20 rounded-2xl"></div>
+            <div className="relative z-10 flex flex-col justify-center h-full px-12 py-12 md:px-24 md:py-20">
+              <h1
+                className="text-white text-3xl md:text-6xl font-bold mb-6"
+                style={{ fontFamily: "Roboto, sans-serif" }}
               >
-                Subscribe
-              </Button>
-            </form>
+                Romantic Escapes
+              </h1>
+              <p
+                className="text-white text-md md:text-2xl mb-8 font-medium"
+                style={{ fontFamily: "Roboto, sans-serif" }}
+              >
+                Where Forever Begins...Together!              </p>
+              <button
+                className="bg-yellow-300 hover:bg-yellow-400 text-black font-semibold rounded-md px-12 py-3 text-lg shadow-md border border-yellow-400 transition-all duration-150 focus:outline-none"
+                style={{ width: 180 }}
+              >
+                Explore
+              </button>
+            </div>
           </div>
-        </section>
 
-        {/* FOOTER */}
-        <footer className="bg-white py-12 border-t border-blue-200">
-          <Footer setIsContactModalOpen={setIsContactModalOpen} />
-        </footer>
-        <ContactModal
-          isOpen={isContactModalOpen}
-          onClose={() => setIsContactModalOpen(false)}
-        />
-      </div>
-      {/* Remove duplicate ContactModal below, as it's already included above */}
-    </>
+          {/* --- Swiper Slider --- */}
+          <div className="relative w-full max-w-7xl">
+            {/* LEFT ARROW */}
+            <button
+              ref={prevRef}
+              className="swiper-button-custom absolute left-0 top-1/2 -translate-y-1/2 z-10"
+              aria-label="Previous"
+            >
+              <svg viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M15.5 19L8.5 12L15.5 5"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
+
+            {/* RIGHT ARROW */}
+            <button
+              ref={nextRef}
+              className="swiper-button-custom absolute right-0 top-1/2 -translate-y-1/2 z-10"
+              aria-label="Next"
+            >
+              <svg viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M8.5 5L15.5 12L8.5 19"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
+
+            {/* Swiper: clipped between arrows */}
+            <div className="overflow-hidden px-[56px]">
+              {/* px-[56px] = 42px (arrow) + 14px (gap), match to your arrow size */}
+              <Swiper
+                modules={[Navigation, Pagination]}
+                spaceBetween={20}
+                slidesPerView={"auto"}
+                centeredSlides={false}
+                navigation={{
+                  prevEl: prevRef.current,
+                  nextEl: nextRef.current,
+                }}
+                pagination={{
+                  clickable: true,
+                  el: ".swiper-pagination-custom",
+                }}
+                onInit={(swiper) => {
+                  // @ts-ignore
+                  swiper.params.navigation.prevEl = prevRef.current;
+                  // @ts-ignore
+                  swiper.params.navigation.nextEl = nextRef.current;
+                  swiper.navigation.init();
+                  swiper.navigation.update();
+                }}
+                className="w-full"
+              >
+                {LocalDestination.map((item, idx) => (
+                  <SwiperSlide
+                    key={idx}
+                    className="w-[260px] md:w-[300px] flex-shrink-0"
+                  >
+                    <div className="rounded-xl overflow-hidden shadow-lg border bg-white">
+                      <div className="relative h-[350px]">
+                        <img
+                          src={item.image}
+                          alt={item.title}
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black via-black/50 to-transparent">
+                          <h3 className="text-white text-center text-2xl font-bold">
+                            {item.title}
+                          </h3>
+                          <p className="text-white text-center text-sm font-medium">
+                            Starting Price Rs. {item.price}/-
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </div>
+            {/* Pagination Dots */}
+            {/* <div className="swiper-pagination-custom mt-5"></div> */}
+          </div>
+        </div>
+
+        {/* Swiper custom styles */}
+        <style>{`
+        .swiper-button-custom {
+          background: white;
+          border-radius: 50%;
+          box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+          width: 42px;
+          height: 42px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: box-shadow 0.2s;
+        }
+        .swiper-button-custom:after { display: none; }
+        .swiper-button-custom svg {
+          width: 28px;
+          height: 28px;
+          color: #4bb2e8;
+        }
+        .swiper-pagination-custom {
+          display: flex;
+          justify-content: center;
+          gap: 8px;
+          margin-top: 18px;
+        }
+        .swiper-pagination-bullet {
+          width: 44px;
+          height: 8px;
+          border-radius: 8px;
+          background: #e0e6ea;
+          opacity: 1;
+          transition: background 0.3s;
+        }
+        .swiper-pagination-bullet-active {
+          background: #4bb2e8;
+        }
+      `}</style>
+      </section>
+      <section className="py-12 md:py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4">
+          {/* Heading */}
+          <div className="text-center mb-10">
+            <div className="text-[#12a5c4] font-semibold text-lg mb-1">
+              Why WanderOn?
+            </div>
+            <h2 className="text-3xl md:text-5xl font-bold text-[#066980]">
+              WanderOn’s Secret Sauce
+            </h2>
+            <div className="flex justify-center mt-4">
+              <span className="block w-32 h-1 bg-yellow-400 rounded"></span>
+            </div>
+          </div>
+          {/* Cards Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+            {features.map((item, idx) => (
+              <div
+                key={item.title}
+                className="relative rounded-2xl border border-blue-200 bg-white p-6 pt-8 pb-24 min-h-[340px] shadow-sm hover:shadow-lg transition-shadow flex flex-col"
+                style={{
+                  backgroundImage: `url('${item.bg}')`,
+                  backgroundRepeat: "no-repeat",
+                  backgroundPosition: "left bottom",
+                  backgroundSize: "contain",
+                }}
+              >
+                <h3 className="text-[#12a5c4] text-xl font-bold mb-2">{item.title}</h3>
+                <p className="text-gray-600 text-base mb-4">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    <div className="container mx-auto py-8">
+      <section className="custom-swiper-slider relative">
+        {/* Arrow Buttons */}
+        <Swiper
+          spaceBetween={10}
+          slidesPerView={6}
+          modules={[Autoplay, Navigation]}
+          autoplay={true}
+          navigation={{
+            prevEl: prevRef.current,
+            nextEl: nextRef.current,
+          }}
+          onInit={(swiper) => {
+            // @ts-ignore
+            swiper.params.navigation.prevEl = prevRef.current;
+            // @ts-ignore
+            swiper.params.navigation.nextEl = nextRef.current;
+            swiper.navigation.init();
+            swiper.navigation.update();
+          }}
+              breakpoints={{
+      0: { slidesPerView: 1 },
+      640: { slidesPerView: 1 },
+      768: { slidesPerView: 2 },
+      1024: { slidesPerView: 4 },  // Show 4 slides from 1024px+
+      1280: { slidesPerView: 4 },  // Optional: 4 slides on extra large screens too
+    }}
+        >
+          {Array.from({ length: 20 }).map((_, index) => (
+            <SwiperSlide key={index}>
+              <img
+                alt=""
+                src={`https://picsum.photos/seed/picsum${index}/300`}
+              />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </section>
+    </div>
+
+      <section className="py-20 px-4">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold mb-4 text-blue-900">
+              Featured Travel Packages
+            </h2>
+            <p className="text-xl text-blue-700 max-w-2xl mx-auto">
+              Discover our handpicked selection of extraordinary travel
+              experiences
+            </p>
+          </div>
+
+          {/* Package Grid */}
+          <div className="px-4 py-10">
+            <Swiper
+              modules={[Navigation, Pagination]}
+              spaceBetween={20}
+              navigation
+              pagination={{ clickable: true }}
+              breakpoints={{
+                0: { slidesPerView: 1 },
+                640: { slidesPerView: 1 },
+                768: { slidesPerView: 2 },
+                1024: { slidesPerView: 3 },
+                1280: { slidesPerView: 3 },
+              }}
+            >
+              {featuredPackages.map((pkg) => (
+                <SwiperSlide key={pkg.id}>
+                  <PackageCard package={pkg} />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
+        </div>
+      </section>
+
+      {/* Why Choose Us Section */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold mb-4 text-blue-900">
+              Why Choose Wanderlust
+            </h2>
+            <p className="text-xl text-blue-700">
+              We make your travel dreams come true
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <Card className="text-center p-8 border-blue-200 hover:shadow-lg transition-shadow">
+              <CardHeader>
+                <div className="mx-auto w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+                  <Users className="w-8 h-8 text-blue-600" />
+                </div>
+                <CardTitle className="text-blue-900">Expert Guides</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <CardDescription className="text-base text-blue-700">
+                  Our experienced local guides ensure you get the most authentic
+                  and memorable experiences
+                </CardDescription>
+              </CardContent>
+            </Card>
+
+            <Card className="text-center p-8 border-blue-200 hover:shadow-lg transition-shadow">
+              <CardHeader>
+                <div className="mx-auto w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+                  <MapPin className="w-8 h-8 text-blue-600" />
+                </div>
+                <CardTitle className="text-blue-900">
+                  Unique Destinations
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <CardDescription className="text-base text-blue-700">
+                  We take you to hidden gems and exclusive locations that most
+                  tourists never discover
+                </CardDescription>
+              </CardContent>
+            </Card>
+
+            <Card className="text-center p-8 border-blue-200 hover:shadow-lg transition-shadow">
+              <CardHeader>
+                <div className="mx-auto w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+                  <Calendar className="w-8 h-8 text-blue-600" />
+                </div>
+                <CardTitle className="text-blue-900">
+                  Flexible Planning
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <CardDescription className="text-base text-blue-700">
+                  Customize your journey with flexible itineraries tailored to
+                  your preferences and budget
+                </CardDescription>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Customer Testimonials */}
+      <section className="py-20 bg-blue-50">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold mb-4 text-blue-900">
+              What Our Travelers Say
+            </h2>
+            <p className="text-xl text-blue-700">
+              Real experiences from real adventurers
+            </p>
+          </div>
+
+          <Carousel className="w-full" opts={{ align: "start", loop: true }}>
+            <CarouselContent>
+              {testimonials.map((testimonial, index) => (
+                <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
+                  <TestimonialCard testimonial={testimonial} />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="hidden sm:block bg-blue-600 hover:bg-blue-700 text-white border-blue-600" />
+            <CarouselNext className="hidden sm:block bg-blue-600 hover:bg-blue-700 text-white border-blue-600" />
+          </Carousel>
+        </div>
+      </section>
+
+      {/* Newsletter Section */}
+      <section className="py-20 bg-blue-600 text-white">
+        <div className="max-w-4xl mx-auto px-4 text-center">
+          <h2 className="text-4xl font-bold mb-4">Stay Updated</h2>
+          <p className="text-xl mb-8 opacity-90">
+            Subscribe to our newsletter for exclusive deals and travel
+            inspiration
+          </p>
+
+          <form
+            onSubmit={handleNewsletterSubmit}
+            className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto"
+          >
+            <div className="flex-1">
+              <Label htmlFor="email" className="sr-only">
+                Email
+              </Label>
+              <Input
+                id="email"
+                type="email"
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                className="bg-white text-blue-900 border-white"
+              />
+            </div>
+            <Button
+              type="submit"
+              variant="secondary"
+              size="default"
+              className="bg-white text-blue-600 hover:bg-blue-50"
+            >
+              Subscribe
+            </Button>
+          </form>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-white py-16 border-t border-blue-200">
+        <Footer setIsContactModalOpen={setIsContactModalOpen} />
+      </footer>
+
+      <ContactModal
+        isOpen={isContactModalOpen}
+        onClose={() => setIsContactModalOpen(false)}
+      />
+    </div>
   );
-}
-
+};
 
 export default Index;

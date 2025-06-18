@@ -4,18 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
-  Star,
-  MapPin,
-  Calendar,
-  Users,
-  Globe,
-  ArrowLeft,
-  Heart,
-  Share2,
-  Clock,
-  Camera,
-  Shield,
-  CheckCircle2,
+  Star, MapPin, Calendar, Users, ArrowLeft,
+  Heart, Share2, Clock, Shield, CheckCircle2, ChevronDown, ChevronUp
 } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import ContactModal from "@/components/ContactModal";
@@ -133,13 +123,15 @@ const allPackages = [
   },
 ];
 
+
 const TravelPackages = () => {
   const { id } = useParams();
-
-  // ALL HOOKS DECLARED UNCONDITIONALLY AT TOP
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const [isWishlisted, setIsWishlisted] = useState(false);
   const [selectedImage, setSelectedImage] = useState(0);
+
+  // Itinerary accordion toggle state (allow multiple open, or just one: for one, use a number, for multiple use array)
+  const [openDayIndexes, setOpenDayIndexes] = useState<number[]>([0]); // First day open by default
 
   // Filter states for all-packages view
   const [searchTerm, setSearchTerm] = useState("");
@@ -189,6 +181,20 @@ const TravelPackages = () => {
     setSelectedRating("Any Rating");
   };
 
+  // Accordion toggle handler
+  const toggleDay = (idx: number) => {
+    setOpenDayIndexes(prev => {
+      // For "only one open at a time", use:
+      // return prev[0] === idx ? [] : [idx];
+      // For "multiple can open", use:
+      if (prev.includes(idx)) {
+        return prev.filter(i => i !== idx);
+      } else {
+        return [...prev, idx];
+      }
+    });
+  };
+
   // ========== DETAIL PAGE STYLE ==========
   if (id) {
     const packageDetails = allPackages.find((pkg) => pkg.id === parseInt(id));
@@ -207,205 +213,216 @@ const TravelPackages = () => {
     }
 
     return (
-      <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
+      <div className="bg-gradient-to-b from-slate-50 to-white min-h-screen">
         <Navigation onContactClick={() => setIsContactModalOpen(true)} />
 
-        {/* Hero Section */}
         {/* Breadcrumb */}
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center space-x-2 text-sm text-slate-600">
+        <div className="container mx-auto px-4 pt-6 pb-2">
+          <div className="flex items-center gap-2 text-sm text-gray-500">
             <Link to="/" className="hover:text-blue-600">Home</Link>
             <span>/</span>
             <Link to="/packages" className="hover:text-blue-600">Packages</Link>
             <span>/</span>
-            <span className="text-slate-800">{packageDetails.title}</span>
+            <span className="text-gray-800">{packageDetails.title}</span>
           </div>
         </div>
 
-        {/* Hero Section */}
+        {/* MAIN HERO SECTION */}
         <section className="container mx-auto px-4 pb-8">
-          <div className="grid lg:grid-cols-2 gap-8">
-            {/* Image Gallery */}
-            <div className="space-y-4">
-              <div className="relative overflow-hidden rounded-2xl">
+          <div className="grid md:grid-cols-2 gap-10 lg:gap-16">
+            {/* GALLERY */}
+            <div>
+              <div className="relative overflow-hidden rounded-2xl shadow-sm mb-4">
                 <img
                   src={packageDetails.galleryImages[selectedImage]}
                   alt={packageDetails.title}
-                  className="w-full h-96 object-cover"
+                  className="w-full h-[360px] object-cover"
                 />
                 <div className="absolute top-4 right-4 flex gap-2">
                   <Button
                     variant="outline"
                     size="sm"
-                    className="bg-white/90 backdrop-blur-sm"
-                    onClick={() => setIsWishlisted(!isWishlisted)}
+                    className="bg-white/80 backdrop-blur-sm"
+                    onClick={() => setIsWishlisted(w => !w)}
+                    aria-label="Wishlist"
                   >
-                    <Heart className={`h-4 w-4 ${isWishlisted ? 'fill-red-500 text-red-500' : ''}`} />
+                    <Heart className={`h-4 w-4 ${isWishlisted ? "fill-red-500 text-red-500" : ""}`} />
                   </Button>
-                  <Button variant="outline" size="sm" className="bg-white/90 backdrop-blur-sm">
+                  <Button variant="outline" size="sm" className="bg-white/80 backdrop-blur-sm" aria-label="Share">
                     <Share2 className="h-4 w-4" />
                   </Button>
                 </div>
               </div>
-              <div className="flex gap-2 overflow-x-auto">
-                {packageDetails.galleryImages.map((image, index) => (
+              <div className="flex gap-2 overflow-x-auto pt-1">
+                {packageDetails.galleryImages.map((img, idx) => (
                   <button
-                    key={index}
-                    onClick={() => setSelectedImage(index)}
-                    className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 ${
-                      selectedImage === index ? 'border-blue-600' : 'border-slate-200'
+                    key={idx}
+                    onClick={() => setSelectedImage(idx)}
+                    className={`w-16 h-16 rounded-lg overflow-hidden border-2 transition ${
+                      selectedImage === idx ? "border-blue-600" : "border-slate-200"
                     }`}
+                    aria-label={`Select image ${idx + 1}`}
                   >
-                    <img src={image} alt="" className="w-full h-full object-cover" />
+                    <img src={img} alt="" className="w-full h-full object-cover" />
                   </button>
                 ))}
               </div>
             </div>
 
-            {/* Package Info */}
-            <div className="space-y-6">
+            {/* SUMMARY / ACTIONS */}
+            <div className="flex flex-col gap-6">
               <div>
-                <div className="flex items-center gap-2 mb-2">
+                <div className="flex items-center gap-2 mb-3">
                   <Badge className="bg-blue-600 hover:bg-blue-700">{packageDetails.duration}</Badge>
                   <Badge variant="secondary">{packageDetails.location}</Badge>
                 </div>
-                <h1 className="text-3xl font-bold text-slate-800 mb-2">{packageDetails.title}</h1>
-                <div className="flex items-center space-x-4 mb-4">
-                  <div className="flex items-center space-x-1">
+                <h1 className="text-3xl font-bold text-gray-900 mb-1">{packageDetails.title}</h1>
+                <div className="flex items-center flex-wrap gap-4 mb-3">
+                  <div className="flex items-center gap-1">
                     <MapPin className="h-4 w-4 text-slate-500" />
-                    <span className="text-slate-600">{packageDetails.location}</span>
+                    <span className="text-gray-600">{packageDetails.location}</span>
                   </div>
-                  <div className="flex items-center space-x-1">
+                  <div className="flex items-center gap-1">
                     <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
                     <span className="font-medium">{packageDetails.rating}</span>
-                    <span className="text-slate-500">({packageDetails.reviews} reviews)</span>
+                    <span className="text-gray-500">({packageDetails.reviews} reviews)</span>
                   </div>
                 </div>
-                <p className="text-slate-600 text-lg leading-relaxed">{packageDetails.description}</p>
+                <p className="text-gray-600 text-lg leading-relaxed">{packageDetails.description}</p>
               </div>
-
-              {/* Pricing */}
-              <Card className="border-2 border-blue-100 bg-blue-50/50">
-                <CardContent className="p-6">
-                  <div className="flex items-center justify-between mb-4">
-                    <div>
-                      <div className="flex items-center space-x-2">
+              {/* PRICING & ACTIONS (Sticky on large screens) */}
+              <div className="lg:sticky lg:top-28">
+                <Card className="border-2 border-blue-100 bg-blue-50/60 shadow-none">
+                  <CardContent className="p-5">
+                    <div className="flex items-center justify-between mb-4">
+                      <div>
                         <span className="text-3xl font-bold text-blue-600">${packageDetails.price}</span>
+                        <span className="ml-2 text-sm text-gray-700">per person</span>
                       </div>
-                      <p className="text-sm text-slate-600">per person</p>
                     </div>
+                    <div className="flex gap-3">
+                      <Button
+                        className="flex-1 bg-blue-600 hover:bg-blue-700 text-lg"
+                        onClick={() => setIsContactModalOpen(true)}
+                      >
+                        Book Now
+                      </Button>
+                      <Button
+                        variant="outline"
+                        className="flex-1"
+                        onClick={() => setIsContactModalOpen(true)}
+                      >
+                        Get Quote
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+                <div className="grid grid-cols-2 gap-3 mt-4">
+                  <div className="flex items-center gap-2">
+                    <Calendar className="h-5 w-5 text-blue-600" />
+                    <span className="text-sm text-gray-600">{packageDetails.duration}</span>
                   </div>
-                  <div className="flex gap-3">
-                    <Button
-                      className="flex-1 bg-blue-600 hover:bg-blue-700"
-                      onClick={() => setIsContactModalOpen(true)}
-                    >
-                      Book Now
-                    </Button>
-                    <Button
-                      variant="outline"
-                      className="flex-1"
-                      onClick={() => setIsContactModalOpen(true)}
-                    >
-                      Get Quote
-                    </Button>
+                  <div className="flex items-center gap-2">
+                    <Users className="h-5 w-5 text-blue-600" />
+                    <span className="text-sm text-gray-600">2-8 People</span>
                   </div>
-                </CardContent>
-              </Card>
-
-              {/* Quick Info */}
-              <div className="grid grid-cols-2 gap-4">
-                <div className="flex items-center space-x-2">
-                  <Calendar className="h-5 w-5 text-blue-600" />
-                  <span className="text-sm text-slate-600">{packageDetails.duration}</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Users className="h-5 w-5 text-blue-600" />
-                  <span className="text-sm text-slate-600">2-8 People</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Clock className="h-5 w-5 text-blue-600" />
-                  <span className="text-sm text-slate-600">All year round</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Shield className="h-5 w-5 text-blue-600" />
-                  <span className="text-sm text-slate-600">Fully insured</span>
+                  <div className="flex items-center gap-2">
+                    <Clock className="h-5 w-5 text-blue-600" />
+                    <span className="text-sm text-gray-600">All year round</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Shield className="h-5 w-5 text-blue-600" />
+                    <span className="text-sm text-gray-600">Fully insured</span>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Highlights */}
+        {/* HIGHLIGHTS */}
         <section className="container mx-auto px-4 py-12">
-          <h2 className="text-2xl font-bold text-slate-800 mb-6">Trip Highlights</h2>
+          <h2 className="text-2xl font-bold text-gray-900 mb-6">Trip Highlights</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {packageDetails.highlights.map((highlight, index) => (
-              <div key={index} className="flex items-center space-x-3 p-4 bg-white rounded-lg shadow-sm border">
-                <CheckCircle2 className="h-5 w-5 text-green-500 flex-shrink-0" />
-                <span className="text-slate-700">{highlight}</span>
+            {packageDetails.highlights.map((h, idx) => (
+              <div key={idx} className="flex items-center gap-3 p-4 bg-white rounded-lg shadow-sm border">
+                <CheckCircle2 className="h-5 w-5 text-green-500" />
+                <span className="text-gray-700">{h}</span>
               </div>
             ))}
           </div>
         </section>
 
-        {/* Itinerary */}
+        {/* ITINERARY - Accordion/FAQ style */}
         <section className="container mx-auto px-4 py-12 bg-slate-50">
-          <h2 className="text-2xl font-bold text-slate-800 mb-6">Day by Day Itinerary</h2>
-          <div className="space-y-4">
-            {packageDetails.itinerary.map((day, index) => (
-              <Card key={index} className="border-0 shadow-md">
-                <CardContent className="p-6">
-                  <div className="flex items-start space-x-4">
-                    <div className="flex-shrink-0 w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold">
-                      {index + 1}
-                    </div>
-                    <div className="flex-1">
-                      <p className="text-slate-600">{day}</p>
-                    </div>
-                  </div>
-                </CardContent>
+          <h2 className="text-2xl font-bold text-gray-900 mb-6">Day by Day Itinerary</h2>
+          <div className="space-y-3">
+            {packageDetails.itinerary.map((day, idx) => (
+              <Card key={idx} className="border-0 shadow-md">
+                <button
+                  className="flex items-center w-full justify-between px-6 py-5 bg-white rounded-xl font-semibold text-lg text-left focus:outline-none"
+                  onClick={() => toggleDay(idx)}
+                  aria-expanded={openDayIndexes.includes(idx)}
+                >
+                  <span className="flex items-center gap-3">
+                    <span className="w-10 h-10 flex items-center justify-center bg-blue-600 text-white rounded-full font-bold">{idx + 1}</span>
+                    <span>{`Day ${idx + 1}`}</span>
+                  </span>
+                  {openDayIndexes.includes(idx) ? (
+                    <ChevronUp className="w-6 h-6 text-blue-600" />
+                  ) : (
+                    <ChevronDown className="w-6 h-6 text-blue-600" />
+                  )}
+                </button>
+                <div
+                  className={`transition-all duration-200 overflow-hidden px-6 ${
+                    openDayIndexes.includes(idx) ? "max-h-40 py-2" : "max-h-0 py-0"
+                  }`}
+                  style={{ background: openDayIndexes.includes(idx) ? "#f8fafc" : "white" }}
+                >
+                  <CardContent className="p-0">
+                    <div className="text-gray-600 text-base">{day}</div>
+                  </CardContent>
+                </div>
               </Card>
             ))}
           </div>
         </section>
 
-        {/* What's Included */}
+        {/* INCLUSIONS / EXCLUSIONS */}
         <section className="container mx-auto px-4 py-12">
-          <h2 className="text-2xl font-bold text-slate-800 mb-6">What's Included</h2>
+          <h2 className="text-2xl font-bold text-gray-900 mb-6">What's Included</h2>
           <div className="grid md:grid-cols-2 gap-8">
             <Card className="border-0 shadow-md">
               <CardContent className="p-6">
                 <h3 className="text-lg font-bold text-green-700 mb-4 flex items-center">
-                  <CheckCircle2 className="h-5 w-5 mr-2" />
-                  Included
+                  <CheckCircle2 className="h-5 w-5 mr-2" /> Included
                 </h3>
                 <ul className="space-y-2">
-                  {packageDetails.includes.map((item, index) => (
-                    <li key={index} className="flex items-center space-x-2">
-                      <CheckCircle2 className="h-4 w-4 text-green-500 flex-shrink-0" />
-                      <span className="text-slate-700">{item}</span>
+                  {packageDetails.includes.map((item, i) => (
+                    <li key={i} className="flex items-center gap-2">
+                      <CheckCircle2 className="h-4 w-4 text-green-500" />
+                      <span className="text-gray-700">{item}</span>
                     </li>
                   ))}
                 </ul>
               </CardContent>
             </Card>
-
             <Card className="border-0 shadow-md">
               <CardContent className="p-6">
                 <h3 className="text-lg font-bold text-red-700 mb-4">Not Included</h3>
                 <ul className="space-y-2">
-                  <li className="flex items-center space-x-2">
-                    <div className="w-4 h-4 border border-red-300 rounded flex-shrink-0"></div>
-                    <span className="text-slate-700">Personal expenses</span>
+                  <li className="flex items-center gap-2">
+                    <div className="w-4 h-4 border border-red-300 rounded"></div>
+                    <span className="text-gray-700">Personal expenses</span>
                   </li>
-                  <li className="flex items-center space-x-2">
-                    <div className="w-4 h-4 border border-red-300 rounded flex-shrink-0"></div>
-                    <span className="text-slate-700">Optional activities</span>
+                  <li className="flex items-center gap-2">
+                    <div className="w-4 h-4 border border-red-300 rounded"></div>
+                    <span className="text-gray-700">Optional activities</span>
                   </li>
-                  <li className="flex items-center space-x-2">
-                    <div className="w-4 h-4 border border-red-300 rounded flex-shrink-0"></div>
-                    <span className="text-slate-700">Gratuities</span>
+                  <li className="flex items-center gap-2">
+                    <div className="w-4 h-4 border border-red-300 rounded"></div>
+                    <span className="text-gray-700">Gratuities</span>
                   </li>
                 </ul>
               </CardContent>
@@ -418,18 +435,22 @@ const TravelPackages = () => {
           <div className="text-center">
             <h2 className="text-3xl font-bold mb-4">Ready for Your Adventure?</h2>
             <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
-              Don&apos;t wait - spots are limited and this amazing experience fills up quickly!
+              Don&apos;t wait – spots are limited and this amazing experience fills up quickly!
             </p>
-            <div className="flex justify-center gap-4">
+            <div className="flex flex-col sm:flex-row justify-center gap-4">
               <Button
                 size="lg"
-                className="bg-white text-black-600 hover:bg-blue-50 px-8"
+                className="bg-white text-blue-600 hover:bg-blue-50 px-8 font-bold"
                 onClick={() => setIsContactModalOpen(true)}
               >
                 Book This Trip
               </Button>
               <Link to="/packages">
-                <Button size="lg" variant="outline" className="border-white text-black hover:bg-white hover:text-blue-600 px-8">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="border-white text-white hover:bg-white hover:text-blue-600 px-8"
+                >
                   <ArrowLeft className="h-4 w-4 mr-2" />
                   Back to Packages
                 </Button>
@@ -449,7 +470,7 @@ const TravelPackages = () => {
       <Navigation onContactClick={() => setIsContactModalOpen(true)} />
 
       {/* Hero Section */}
-      <section className="relative h-64" style={{backgroundColor: '#38bdf8'}}>
+      <section className="relative h-64" style={{ backgroundColor: '#38bdf8' }}>
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="text-center text-white px-4">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">Travel Packages</h1>
@@ -492,13 +513,11 @@ const TravelPackages = () => {
                   }
                 </p>
               </div>
-
               <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
                 {filteredPackages.map((pkg) => (
                   <PackageCard key={pkg.id} package={pkg} />
                 ))}
               </div>
-
               {filteredPackages.length === 0 && (
                 <div className="text-center py-16">
                   <p className="text-xl text-blue-900 mb-4">No packages found matching your criteria.</p>
