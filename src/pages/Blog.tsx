@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import Footer from "@/components/Footer";
 import Navigation from "@/components/Navigation";
 const Blog = () => {
-      const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const blogPosts = [
     {
       id: 1,
@@ -75,7 +75,7 @@ const Blog = () => {
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
       {/* Header */}
       <Navigation onContactClick={() => setIsContactModalOpen(true)} />
-      <section className="relative h-64 mt-16 bg-gradient-to-r from-blue-600 to-blue-800">
+      <section className="relative h-64" style={{ backgroundColor: '#38bdf8' }}>
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="text-center text-white px-4">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
@@ -96,15 +96,15 @@ const Blog = () => {
                 <Badge className="bg-blue-600 hover:bg-blue-700 mb-4">Featured</Badge>
                 <h2 className="text-3xl font-bold text-slate-800 mb-4">Latest from our blog</h2>
               </div>
-              
+
               {(() => {
                 const featuredPost = blogPosts.find(post => post.featured);
                 return (
                   <Card className="overflow-hidden hover:shadow-xl transition-shadow duration-300 border-0 shadow-lg">
                     <div className="md:flex">
                       <div className="md:w-1/2">
-                        <img 
-                          src={featuredPost.image} 
+                        <img
+                          src={featuredPost.image}
                           alt={featuredPost.title}
                           className="w-full h-64 md:h-full object-cover"
                         />
@@ -145,13 +145,13 @@ const Blog = () => {
             <h2 className="text-3xl font-bold text-slate-800 mb-4">Recent Posts</h2>
             <p className="text-xl text-slate-600">Discover travel insights and inspiration</p>
           </div>
-          
+
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {blogPosts.filter(post => !post.featured).map((post) => (
               <Card key={post.id} className="group overflow-hidden hover:shadow-xl transition-all duration-300 border-0 shadow-lg">
                 <div className="relative overflow-hidden">
-                  <img 
-                    src={post.image} 
+                  <img
+                    src={post.image}
                     alt={post.title}
                     className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
                   />
@@ -159,7 +159,7 @@ const Blog = () => {
                     {post.category}
                   </Badge>
                 </div>
-                
+
                 <CardContent className="p-6">
                   <div className="flex items-center text-slate-500 text-sm mb-3">
                     <Calendar className="h-4 w-4 mr-1" />
@@ -199,7 +199,7 @@ const Blog = () => {
         </div>
       </section>
       <footer className="bg-white py-16 border-t border-blue-200">
-            <Footer setIsContactModalOpen={setIsContactModalOpen} />
+        <Footer setIsContactModalOpen={setIsContactModalOpen} />
       </footer>
     </div>
   );

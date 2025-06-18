@@ -11,6 +11,7 @@ import NotFound from "./pages/NotFound";
 import Blog from "./pages/Blog";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsAndConditions from "./pages/Terms&Condition";
+import SearchHero from "./pages/SearchHero";
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -27,6 +28,7 @@ const App = () => (
           <Route path="/blog" element={<Blog />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+          <Route path="/search" element={<SearchHero />} />
           {/* Add more routes as needed */}
           <Route path="*" element={<NotFound />} />
         </Routes>

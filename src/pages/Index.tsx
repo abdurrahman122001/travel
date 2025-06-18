@@ -49,6 +49,8 @@ const Index = () => {
   const AUTO_SLIDE_INTERVAL = 3000;
   const prevRef = useRef(null);
   const nextRef = useRef(null);
+
+
   const heroSlides = [
     {
       image:
@@ -444,21 +446,12 @@ const Index = () => {
       image:
         "https://images.wanderon.in/new-homepage-data/Explore%20India/spiti",
     },
-    {
-      title: "Meghalaya",
-      price: "33,999",
-      image:
-        "https://images.wanderon.in/new-homepage-data/Explore%20India/meghalaya",
-    },
   ];
   const months = [
-    "JUN '25",
-    "JUL '25",
-    "AUG '25",
-    "SEP '25",
-    "OCT '25",
-    "NOV '25",
-    "DEC '25",
+    "JUN '25", "JUL '25", "AUG '25", "SEP '25", "OCT '25", "NOV '25", "DEC '25"
+  ];
+  const monthMap = [
+    "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"
   ];
 
   const trips = [
@@ -471,6 +464,7 @@ const Index = () => {
       location: "Delhi/Chandigarh - Srinagar",
       date: "18 Jun, 25 Jun",
       icon: "🇮🇳",
+      month: "JUN",
     },
     {
       img: "https://images.unsplash.com/photo-1469474968028-56623f02e42e",
@@ -481,6 +475,7 @@ const Index = () => {
       location: "London Airport - Rome Airport",
       date: "28 Jun",
       icon: "🇪🇺",
+      month: "JUN",
     },
     {
       img: "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429",
@@ -491,6 +486,7 @@ const Index = () => {
       location: "Paris Airport - Rome Airport",
       date: "18 Jun, 19 Jun, 21 Jun +2 Batches",
       icon: "🇳🇱",
+      month: "JUN",
     },
     {
       img: "https://images.unsplash.com/photo-1519125323398-675f0ddb6308",
@@ -501,7 +497,20 @@ const Index = () => {
       location: "Paris Airport - Rome Airport",
       date: "23 Jun, 28 Jun",
       icon: "🇮🇹",
+      month: "JUN",
     },
+  ];
+  const [activeMonth, setActiveMonth] = useState(monthMap[0]);
+  const filteredTrips = trips.filter(trip => trip.month === activeMonth);
+
+  const images = [
+    { src: "https://images.wanderon.in/new-homepage-data/Gallery/vietnam%202", label: "Vietnam" },
+    { src: "https://images.wanderon.in/new-homepage-data/Gallery/dubai%20re%2001?updatedAt=1711452484035/images/slide2.jpg", label: "Dubai" },
+    { src: "https://images.wanderon.in/new-homepage-data/Gallery/bhutan%204", label: "Bhutan" },
+    { src: "https://images.wanderon.in/new-homepage-data/Gallery/kerala-trips-1", label: "Kerala" },
+    { src: "https://images.wanderon.in/new-homepage-data/Gallery/meghalaya%201?updatedAt=1711451040355", label: "Meghalaya" },
+    { src: "https://images.wanderon.in/new-homepage-data/Gallery/uttarakhand-re-2?updatedAt=1711452678546", label: "Uttarakhand" },
+
   ];
 
   return (
@@ -931,7 +940,7 @@ const Index = () => {
       <section className="py-10 md:py-14 bg-white">
         <div className="max-w-7xl mx-auto px-4">
           {/* Header */}
-          <div className="flex items-center justify-between mb-4 md:mb-6">
+          <div className="flex flex-col sm:flex-row items-center justify-between mb-6 gap-2">
             <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
               Upcoming Community Trips
             </h2>
@@ -943,13 +952,13 @@ const Index = () => {
               <span className="inline-block ml-1 text-lg">→</span>
             </a>
           </div>
-
           {/* Month Tabs */}
-          <div className="flex items-center gap-3 overflow-x-auto pb-3 mb-2">
+          <div className="flex items-center gap-2 overflow-x-auto pb-3 mb-2">
             {months.map((m, i) => (
               <button
-                key={i}
-                className={`whitespace-nowrap rounded-full px-6 py-2 border text-base font-medium transition-all ${i === 0
+                key={m}
+                onClick={() => setActiveMonth(monthMap[i])}
+                className={`whitespace-nowrap rounded-full px-5 py-2 border text-sm md:text-base font-medium transition-all ${activeMonth === monthMap[i]
                   ? "bg-blue-50 border-blue-400 text-blue-800 shadow-sm"
                   : "bg-white border-gray-200 text-gray-600 hover:border-blue-300"
                   }`}
@@ -958,27 +967,26 @@ const Index = () => {
               </button>
             ))}
           </div>
-
           {/* Slider */}
           <div className="relative mt-4">
             {/* Left Arrow */}
             <button
               ref={prevRef}
-              className="absolute z-10 left-[-25px] top-1/2 -translate-y-1/2 bg-white shadow-lg w-10 h-10 flex items-center justify-center rounded-full border border-gray-200 hover:bg-blue-100 transition-all"
+              className="hidden md:flex absolute z-10 left-[-25px] top-1/2 -translate-y-1/2 bg-white shadow-lg w-10 h-10 items-center justify-center rounded-full border border-gray-200 hover:bg-blue-100 transition-all"
             >
               <FaArrowLeft className="text-blue-500 text-lg" />
             </button>
             {/* Right Arrow */}
             <button
               ref={nextRef}
-              className="absolute z-10 right-[-25px] top-1/2 -translate-y-1/2 bg-white shadow-lg w-10 h-10 flex items-center justify-center rounded-full border border-gray-200 hover:bg-blue-100 transition-all"
+              className="hidden md:flex absolute z-10 right-[-25px] top-1/2 -translate-y-1/2 bg-white shadow-lg w-10 h-10 items-center justify-center rounded-full border border-gray-200 hover:bg-blue-100 transition-all"
             >
               <FaArrowRight className="text-blue-500 text-lg" />
             </button>
             {/* Cards */}
             <Swiper
               modules={[Navigation]}
-              spaceBetween={24}
+              spaceBetween={16}
               slidesPerView={1}
               breakpoints={{
                 640: { slidesPerView: 1.1 },
@@ -999,30 +1007,28 @@ const Index = () => {
                 swiper.navigation.update();
               }}
             >
-              {trips.map((trip, idx) => (
+              {filteredTrips.length > 0 ? filteredTrips.map((trip, idx) => (
                 <SwiperSlide key={idx}>
                   <div
-                    className="relative group rounded-2xl overflow-hidden h-[420px] flex flex-col justify-end"
+                    className="relative group rounded-2xl overflow-hidden h-[350px] sm:h-[400px] md:h-[420px] flex flex-col justify-end"
                     style={{
                       backgroundImage: `url(${trip.img})`,
                       backgroundSize: "cover",
                       backgroundPosition: "center",
                     }}
                   >
-                    {/* Black Gradient Overlay */}
+                    {/* Overlay */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent z-0" />
-
                     {/* Price Badge */}
-                    <div className="absolute top-5 left-5 z-10">
+                    <div className="absolute top-4 left-4 z-10">
                       <div className="bg-yellow-300/95 text-gray-900 font-semibold px-4 py-1 rounded-full flex items-center gap-2 text-base shadow">
                         <span className="line-through text-gray-600">{trip.oldPrice}</span>
                         <span className="font-bold">{trip.price}/-</span>
                         <span className="text-xs">Onwards</span>
                       </div>
                     </div>
-
                     {/* Info */}
-                    <div className="relative z-10 p-6 pb-4 flex flex-col justify-end">
+                    <div className="relative z-10 p-5 pb-4 flex flex-col justify-end">
                       <div className="text-white font-bold text-base leading-snug mb-2 line-clamp-2 drop-shadow">
                         {trip.title}
                       </div>
@@ -1042,7 +1048,13 @@ const Index = () => {
                     </div>
                   </div>
                 </SwiperSlide>
-              ))}
+              )) : (
+                <SwiperSlide>
+                  <div className="flex items-center justify-center h-[350px] sm:h-[400px] md:h-[420px] bg-gray-100 rounded-2xl">
+                    <span className="text-gray-400 font-semibold">No trips for this month</span>
+                  </div>
+                </SwiperSlide>
+              )}
             </Swiper>
           </div>
         </div>
@@ -1246,18 +1258,21 @@ const Index = () => {
           </div>
         </div>
       </section>
-    <div className="container mx-auto py-8">
-      <section className="custom-swiper-slider relative">
-        {/* Arrow Buttons */}
+    <div className="container mx-auto py-12">
+      <div className="text-center mb-6">
+        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-1 tracking-tight">
+          JOURNEY IN FRAMES
+        </h2>
+        <p className="text-lg text-gray-500">Pictures Perfect Moments</p>
+      </div>
+
+      <section className="relative custom-swiper-slider">
         <Swiper
-          spaceBetween={10}
-          slidesPerView={6}
-          modules={[Autoplay, Navigation]}
-          autoplay={true}
-          navigation={{
-            prevEl: prevRef.current,
-            nextEl: nextRef.current,
-          }}
+          modules={[Navigation, Autoplay]}
+          spaceBetween={16}
+          slidesPerView={4}
+          autoplay={{ delay: 2500, disableOnInteraction: false }}
+          navigation={{ prevEl: prevRef.current, nextEl: nextRef.current }}
           onInit={(swiper) => {
             // @ts-ignore
             swiper.params.navigation.prevEl = prevRef.current;
@@ -1266,26 +1281,42 @@ const Index = () => {
             swiper.navigation.init();
             swiper.navigation.update();
           }}
-              breakpoints={{
-      0: { slidesPerView: 1 },
-      640: { slidesPerView: 1 },
-      768: { slidesPerView: 2 },
-      1024: { slidesPerView: 4 },  // Show 4 slides from 1024px+
-      1280: { slidesPerView: 4 },  // Optional: 4 slides on extra large screens too
-    }}
+          breakpoints={{
+            0: { slidesPerView: 1 },
+            640: { slidesPerView: 2 },
+            1024: { slidesPerView: 4 },
+          }}
         >
-          {Array.from({ length: 20 }).map((_, index) => (
+          {images.map((dest, index) => (
             <SwiperSlide key={index}>
-              <img
-                alt=""
-                src={`https://picsum.photos/seed/picsum${index}/300`}
-              />
+              <div className="journey-frame-slide">
+                <img
+                  src={dest.src}
+                  alt={dest.label}
+                  className="journey-frame-img"
+                />
+                <div className="journey-frame-label">
+                  <MapPin size={16} style={{ marginRight: 4, marginBottom: 1 }} />
+                  {dest.label}
+                </div>
+              </div>
             </SwiperSlide>
           ))}
         </Swiper>
+        <button
+          ref={prevRef}
+          className="swiper-button-custom absolute left-0 top-1/2 transform -translate-y-1/2 z-20"
+        >
+          ‹
+        </button>
+        <button
+          ref={nextRef}
+          className="swiper-button-custom absolute right-0 top-1/2 transform -translate-y-1/2 z-20"
+        >
+          ›
+        </button>
       </section>
     </div>
-
       <section className="py-20 px-4">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">

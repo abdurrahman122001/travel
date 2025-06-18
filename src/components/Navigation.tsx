@@ -152,7 +152,7 @@ const Navigations: React.FC<NavigationProps> = ({ onContactClick }) => {
         <div className="flex items-center justify-between">
           {/* Logo + Search */}
           <div className="flex items-center gap-3">
-            <img src={logo} alt="Logo" className="h-24 w-auto" />
+            <Link to="/"><img src={logo} alt="Logo" className="h-24 w-auto" /></Link>
             {/* Desktop Search */}
             <div className="relative hidden lg:block ml-6">
               <input
