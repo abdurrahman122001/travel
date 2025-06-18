@@ -761,18 +761,55 @@ export default function Package() {
                 ref={prevRef}
                 className="hidden md:block absolute left-[-35px] top-1/2 -translate-y-1/2 z-10 w-[54px] h-[54px] bg-white rounded-full flex items-center justify-center shadow border border-gray-200 hover:bg-blue-100 transition-all"
                 aria-label="Previous"
-                style={{ boxShadow: "0 2px 18px rgba(32,60,132,0.12)" }}
+                style={{
+                  boxShadow: "0 2px 18px rgba(32,60,132,0.12)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  padding: 0,
+                  lineHeight: 1,
+                }}
               >
-                <FaArrowLeft className="text-[#87bdd8] text-3xl" />
+                <FaArrowLeft
+                  className="text-[#87bdd8] text-3xl"
+                  style={{
+                    display: "block",
+                    margin: 0,
+                    lineHeight: 1,
+                    verticalAlign: "middle",
+                    position: "relative",
+                    top: "0px", // tweak if needed e.g. "-1px"
+                  }}
+                />
               </button>
+
               <button
                 ref={nextRef}
                 className="hidden md:block absolute right-[-35px] top-1/2 -translate-y-1/2 z-10 w-[54px] h-[54px] bg-white rounded-full flex items-center justify-center shadow border border-gray-200 hover:bg-blue-100 transition-all"
                 aria-label="Next"
-                style={{ boxShadow: "0 2px 18px rgba(32,60,132,0.12)" }}
+                style={{
+                  boxShadow: "0 2px 18px rgba(32,60,132,0.12)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  padding: 0,
+                  lineHeight: 1,
+                }}
               >
-                <FaArrowRight className="text-[#87bdd8] text-3xl" />
+                <FaArrowRight
+                  className="text-[#87bdd8] text-3xl"
+                  style={{
+                    display: "block",
+                    margin: 0,
+                    lineHeight: 1,
+                    verticalAlign: "middle",
+                    position: "relative",
+                    top: "0px", // tweak if needed
+                  }}
+                />
               </button>
+
+
 
               <Swiper
                 modules={[Navigation]}
@@ -884,26 +921,58 @@ export default function Package() {
             {/* Slider */}
             <div className="relative">
               {/* Navigation */}
-              {trips2.length >= 4 && (
-                <button
-                  ref={prevRef}
-                  className="hidden md:block absolute left-[-35px] top-1/2 -translate-y-1/2 z-10 w-[54px] h-[54px] bg-white rounded-full flex items-center justify-center shadow border border-gray-200 hover:bg-blue-100 transition-all"
-                  aria-label="Previous"
-                  style={{ boxShadow: "0 2px 18px rgba(32,60,132,0.12)" }}
-                >
-                  <FaArrowLeft className="text-[#87bdd8] text-3xl" />
-                </button>
-              )}
-              {trips2.length >= 4 && (
-                <button
-                  ref={nextRef}
-                  className="hidden md:block absolute right-[-35px] top-1/2 -translate-y-1/2 z-10 w-[54px] h-[54px] bg-white rounded-full flex items-center justify-center shadow border border-gray-200 hover:bg-blue-100 transition-all"
-                  aria-label="Next"
-                  style={{ boxShadow: "0 2px 18px rgba(32,60,132,0.12)" }}
-                >
-                  <FaArrowRight className="text-[#87bdd8] text-3xl" />
-                </button>
-              )}
+              <button
+                ref={prevRef}
+                className="hidden md:block absolute left-[-35px] top-1/2 -translate-y-1/2 z-10 w-[54px] h-[54px] bg-white rounded-full flex items-center justify-center shadow border border-gray-200 hover:bg-blue-100 transition-all"
+                aria-label="Previous"
+                style={{
+                  boxShadow: "0 2px 18px rgba(32,60,132,0.12)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  padding: 0,
+                  lineHeight: 1,
+                }}
+              >
+                <FaArrowLeft
+                  className="text-[#87bdd8] text-3xl"
+                  style={{
+                    display: "block",
+                    margin: 0,
+                    lineHeight: 1,
+                    verticalAlign: "middle",
+                    position: "relative",
+                    top: "0px", // tweak if needed e.g. "-1px"
+                  }}
+                />
+              </button>
+
+              <button
+                ref={nextRef}
+                className="hidden md:block absolute right-[-35px] top-1/2 -translate-y-1/2 z-10 w-[54px] h-[54px] bg-white rounded-full flex items-center justify-center shadow border border-gray-200 hover:bg-blue-100 transition-all"
+                aria-label="Next"
+                style={{
+                  boxShadow: "0 2px 18px rgba(32,60,132,0.12)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  padding: 0,
+                  lineHeight: 1,
+                }}
+              >
+                <FaArrowRight
+                  className="text-[#87bdd8] text-3xl"
+                  style={{
+                    display: "block",
+                    margin: 0,
+                    lineHeight: 1,
+                    verticalAlign: "middle",
+                    position: "relative",
+                    top: "0px", // tweak if needed
+                  }}
+                />
+              </button>
+
 
               <Swiper
                 modules={[Navigation]}
@@ -1404,7 +1473,7 @@ export default function Package() {
                 900: { slidesPerView: 2, spaceBetween: 22 },
                 1200: { slidesPerView: 3, spaceBetween: 28 },
               }}
-              //   className="!px-10"
+            //   className="!px-10"
             >
               {activities.map((item, i) => (
                 <SwiperSlide key={i}>
@@ -1496,7 +1565,7 @@ export default function Package() {
                 900: { slidesPerView: 2, spaceBetween: 22 },
                 1200: { slidesPerView: 3, spaceBetween: 28 },
               }}
-              //   className="!px-10"
+            //   className="!px-10"
             >
               {VisitActivities.map((item, i) => (
                 <SwiperSlide key={i}>
@@ -1651,16 +1720,14 @@ export default function Package() {
                       {item.question}
                     </span>
                     <ChevronRight
-                      className={`text-gray-400 transition-transform duration-200 ${
-                        openIdx === idx ? "rotate-90" : ""
-                      }`}
+                      className={`text-gray-400 transition-transform duration-200 ${openIdx === idx ? "rotate-90" : ""
+                        }`}
                       size={24}
                     />
                   </button>
                   <div
-                    className={`overflow-hidden transition-all duration-200 px-5 ${
-                      openIdx === idx ? "max-h-40 py-3" : "max-h-0 py-0"
-                    }`}
+                    className={`overflow-hidden transition-all duration-200 px-5 ${openIdx === idx ? "max-h-40 py-3" : "max-h-0 py-0"
+                      }`}
                     style={{
                       background: openIdx === idx ? "#f9fafb" : "white",
                     }}
