@@ -996,6 +996,7 @@ const Index = () => {
               {filteredTrips.length > 0 ? (
                 filteredTrips.map((trip, idx) => (
                   <SwiperSlide key={idx}>
+                   <Link to="/packages/1">
                     <div
                       className="relative group rounded-2xl overflow-hidden h-[350px] sm:h-[400px] md:h-[420px] flex flex-col justify-end"
                       style={{
@@ -1036,6 +1037,7 @@ const Index = () => {
                         </div>
                       </div>
                     </div>
+                    </Link>
                   </SwiperSlide>
                 ))
               ) : (
