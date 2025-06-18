@@ -238,6 +238,16 @@ const Index = () => {
 
     return () => clearInterval(interval);
   }, []);
+
+
+    useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsContactModalOpen(true);
+    }, 14000); // 14 seconds (can set between 12000 to 15000)
+
+    return () => clearTimeout(timer); // Cleanup on unmount
+  }, []);
+  
   const typingTexts = [
     "Create Your Own Journey, Your Own Story...",
     "Find Adventures That Match Your Soul...",
