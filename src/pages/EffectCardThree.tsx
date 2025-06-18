@@ -59,7 +59,7 @@ export default function EffectCardThree() {
           Romantic Escapes
         </h2>
         <img
-          src="https://images.wanderon.in/new-homepage-data/assets/international-image"
+          src="https://images.wanderon.in/new-homepage-data/assets/romantic-escape"
           alt="International SVG"
           className="ml-auto w-[170px] h-[60px] object-contain"
         />
