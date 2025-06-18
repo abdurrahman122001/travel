@@ -14,18 +14,8 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "@/components/ui/carousel";
-import {
-  MapPin,
-  Star,
-  Users,
-  Calendar,
-  Phone,
-  Mail,
-  MessageCircle,
-} from "lucide-react";
+import { MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import ContactModal from "@/components/ContactModal";
@@ -40,8 +30,8 @@ import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-// import "swiper/swiper.min.css";
-// import "swiper/swiper.scss"; // core Swiper
+import Features from "@/components/FeaturedComponent";
+
 const Index = () => {
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const [email, setEmail] = useState("");
@@ -49,7 +39,6 @@ const Index = () => {
   const AUTO_SLIDE_INTERVAL = 3000;
   const prevRef = useRef(null);
   const nextRef = useRef(null);
-
 
   const heroSlides = [
     {
@@ -162,28 +151,6 @@ const Index = () => {
       text: "Perfect honeymoon destination! The beaches were pristine and the accommodations were luxurious.",
     },
   ];
-  const features = [
-    {
-      title: "No Third Party Mess",
-      desc: "100 percent in-house operations for all trips! No third parties involved, hence no fishy claims!",
-      bg: "https://wanderon.in/assets/images/sauceBg1.svg", // Unique background for this card
-    },
-    {
-      title: "Transparency & Security",
-      desc: "Real time monitoring of all trips by ground team! All routes and weather conditions are accurately updated!",
-      bg: "https://wanderon.in/assets/images/sauceBg2.svg",
-    },
-    {
-      title: "Co-Travelers Filtering",
-      desc: "Multi-step filtering to bring only like-minded people together! That’s our key to have fuss-free trips!",
-      bg: "https://wanderon.in/assets/images/sauceBg3.svg",
-    },
-    {
-      title: "One Stop Hassle Free Experience",
-      desc: "Comfortable stays, trained drivers, hospitable staff and friendly trip leaders put together that one memorable trip for you!",
-      bg: "https://wanderon.in/assets/images/sauceBg4.svg",
-    },
-  ];
   const reviews = [
     {
       name: "Google",
@@ -239,15 +206,14 @@ const Index = () => {
     return () => clearInterval(interval);
   }, []);
 
-
-    useEffect(() => {
+  useEffect(() => {
     const timer = setTimeout(() => {
       setIsContactModalOpen(true);
     }, 14000); // 14 seconds (can set between 12000 to 15000)
 
     return () => clearTimeout(timer); // Cleanup on unmount
   }, []);
-  
+
   const typingTexts = [
     "Create Your Own Journey, Your Own Story...",
     "Find Adventures That Match Your Soul...",
@@ -458,11 +424,15 @@ const Index = () => {
     },
   ];
   const months = [
-    "JUN '25", "JUL '25", "AUG '25", "SEP '25", "OCT '25", "NOV '25", "DEC '25"
+    "JUN '25",
+    "JUL '25",
+    "AUG '25",
+    "SEP '25",
+    "OCT '25",
+    "NOV '25",
+    "DEC '25",
   ];
-  const monthMap = [
-    "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"
-  ];
+  const monthMap = ["JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
 
   const trips = [
     {
@@ -511,16 +481,33 @@ const Index = () => {
     },
   ];
   const [activeMonth, setActiveMonth] = useState(monthMap[0]);
-  const filteredTrips = trips.filter(trip => trip.month === activeMonth);
+  const filteredTrips = trips.filter((trip) => trip.month === activeMonth);
 
   const images = [
-    { src: "https://images.wanderon.in/new-homepage-data/Gallery/vietnam%202", label: "Vietnam" },
-    { src: "https://images.wanderon.in/new-homepage-data/Gallery/dubai%20re%2001?updatedAt=1711452484035/images/slide2.jpg", label: "Dubai" },
-    { src: "https://images.wanderon.in/new-homepage-data/Gallery/bhutan%204", label: "Bhutan" },
-    { src: "https://images.wanderon.in/new-homepage-data/Gallery/kerala-trips-1", label: "Kerala" },
-    { src: "https://images.wanderon.in/new-homepage-data/Gallery/meghalaya%201?updatedAt=1711451040355", label: "Meghalaya" },
-    { src: "https://images.wanderon.in/new-homepage-data/Gallery/uttarakhand-re-2?updatedAt=1711452678546", label: "Uttarakhand" },
-
+    {
+      src: "https://images.wanderon.in/new-homepage-data/Gallery/vietnam%202",
+      label: "Vietnam",
+    },
+    {
+      src: "https://images.wanderon.in/new-homepage-data/Gallery/dubai%20re%2001?updatedAt=1711452484035/images/slide2.jpg",
+      label: "Dubai",
+    },
+    {
+      src: "https://images.wanderon.in/new-homepage-data/Gallery/bhutan%204",
+      label: "Bhutan",
+    },
+    {
+      src: "https://images.wanderon.in/new-homepage-data/Gallery/kerala-trips-1",
+      label: "Kerala",
+    },
+    {
+      src: "https://images.wanderon.in/new-homepage-data/Gallery/meghalaya%201?updatedAt=1711451040355",
+      label: "Meghalaya",
+    },
+    {
+      src: "https://images.wanderon.in/new-homepage-data/Gallery/uttarakhand-re-2?updatedAt=1711452678546",
+      label: "Uttarakhand",
+    },
   ];
 
   return (
@@ -615,9 +602,9 @@ const Index = () => {
           <img src={uct} alt="WanderOn Logo" className="w-full" />
         </div>
       </section>
-      <section className="py-12 bg-[#FFFBEF] relative">
+      <section className="py-12 relative">
         <div className="max-w-[1500px] mx-auto px-4 flex flex-col items-center">
-          {/* --- Hero Banner --- */}
+          {/* Hero Banner */}
           <div
             className="w-full bg-cover bg-center rounded-2xl mb-[-60px] relative"
             style={{
@@ -630,7 +617,7 @@ const Index = () => {
             <div className="absolute inset-0 bg-black/20 rounded-2xl"></div>
             <div className="relative z-10 flex flex-col justify-center h-full px-12 py-12 md:px-24 md:py-20">
               <h1
-                className="text-white text-5xl md:text-6xl font-bold mb-6"
+                className="text-white text-5xl md:text-6xl font-bold mb-6 drop-shadow"
                 style={{ fontFamily: "Roboto, sans-serif" }}
               >
                 International Trips
@@ -643,64 +630,70 @@ const Index = () => {
               </p>
               <button
                 className="bg-yellow-300 hover:bg-yellow-400 text-black font-semibold rounded-md px-12 py-3 text-lg shadow-md border border-yellow-400 transition-all duration-150 focus:outline-none"
-                style={{ width: 180 }}
+                style={{ width: 140 }}
               >
                 Explore
               </button>
             </div>
           </div>
 
-          {/* --- Swiper Slider --- */}
-          <div className="relative w-full max-w-7xl">
-            {/* LEFT ARROW */}
+          {/* Swiper Slider */}
+          <div className="relative w-full max-w-[1300px] min-h-[430px] flex items-center">
+            {/* LEFT ARROW - align to slide */}
             <button
               ref={prevRef}
-              className="swiper-button-custom absolute left-0 top-1/2 -translate-y-1/2 z-10"
+              className="z-20 absolute left-[-25px] top-1/2 -translate-y-1/2 bg-[#74bdda] hover:bg-[#52aec5] w-[45px] h-[45px] rounded-full flex items-center justify-center"
               aria-label="Previous"
+              style={{
+                boxShadow: "0 4px 24px rgba(80,160,180,0.16)",
+              }}
             >
-              <svg viewBox="0 0 24 24" fill="none">
+              {/* Arrow Icon */}
+              <svg width={28} height={28} fill="none" viewBox="0 0 24 24">
                 <path
                   d="M15.5 19L8.5 12L15.5 5"
-                  stroke="currentColor"
-                  strokeWidth="2"
+                  stroke="white"
+                  strokeWidth={3}
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
               </svg>
             </button>
 
-            {/* RIGHT ARROW */}
+            {/* RIGHT ARROW - align to slide */}
             <button
               ref={nextRef}
-              className="swiper-button-custom absolute right-0 top-1/2 -translate-y-1/2 z-10"
+              className="z-20 absolute right-[-25px] top-1/2 -translate-y-1/2 bg-[#74bdda] hover:bg-[#52aec5] w-[45px] h-[45px] rounded-full flex items-center justify-center shadow-lg"
               aria-label="Next"
+              style={{
+                boxShadow: "0 4px 24px rgba(80,160,180,0.16)",
+              }}
             >
-              <svg viewBox="0 0 24 24" fill="none">
+              {/* Arrow Icon */}
+              <svg width={28} height={28} fill="none" viewBox="0 0 24 24">
                 <path
                   d="M8.5 5L15.5 12L8.5 19"
-                  stroke="currentColor"
-                  strokeWidth="2"
+                  stroke="white"
+                  strokeWidth={3}
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
               </svg>
             </button>
 
-            {/* Swiper: clipped between arrows */}
-            <div className="overflow-hidden px-[56px]">
-              {/* px-[56px] = 42px (arrow) + 14px (gap), match to your arrow size */}
+            {/* Swiper slides */}
+            <div className="overflow-visible w-full">
               <Swiper
                 modules={[Navigation, Pagination]}
                 spaceBetween={20}
-                slidesPerView={"auto"}
-                centeredSlides={false}
+                slidesPerView={5}
                 navigation={{
                   prevEl: prevRef.current,
                   nextEl: nextRef.current,
                 }}
                 pagination={{
                   clickable: true,
-                  el: ".swiper-pagination-custom",
+                  el: ".swiper-pagination-romantic",
                 }}
                 onInit={(swiper) => {
                   // @ts-ignore
@@ -710,80 +703,68 @@ const Index = () => {
                   swiper.navigation.init();
                   swiper.navigation.update();
                 }}
+                breakpoints={{
+                  0: { slidesPerView: 1.2 },
+                  600: { slidesPerView: 2.2 },
+                  900: { slidesPerView: 3 },
+                  1200: { slidesPerView: 5 },
+                }}
                 className="w-full"
               >
                 {InternattionalDestinations.map((item, idx) => (
                   <SwiperSlide
                     key={idx}
-                    className="w-[260px] md:w-[300px] flex-shrink-0"
+                    className="w-[250px] md:w-[270px] flex-shrink-0"
                   >
-                    <div className="rounded-xl overflow-hidden shadow-lg border bg-white">
-                      <div className="relative h-[350px]">
-                        <img
-                          src={item.image}
-                          alt={item.title}
-                          className="w-full h-full object-cover"
-                        />
-                        <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black via-black/50 to-transparent">
-                          <h3 className="text-white text-center text-2xl font-bold">
-                            {item.title}
-                          </h3>
-                          <p className="text-white text-center text-sm font-medium">
-                            Starting Price Rs. {item.price}/-
-                          </p>
-                        </div>
+                    <div className="rounded-xl overflow-hidden shadow-lg border border-white bg-white relative group transition-all">
+                      <img
+                        src={item.image}
+                        alt={item.title}
+                        className="w-full h-[330px] object-cover"
+                        draggable={false}
+                      />
+                      <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black via-black/50 to-transparent">
+                        <h3 className="text-white text-center text-2xl font-bold drop-shadow">
+                          {item.title}
+                        </h3>
+                        <p className="text-white text-center text-sm font-medium drop-shadow">
+                          Starting Price Rs. {item.price}/-
+                        </p>
                       </div>
                     </div>
                   </SwiperSlide>
                 ))}
               </Swiper>
+              {/* Pagination Dots */}
+              {/* <div className="swiper-pagination-romantic mt-6"></div> */}
             </div>
-            {/* Pagination Dots */}
-            {/* <div className="swiper-pagination-custom mt-5"></div> */}
           </div>
-        </div>
 
-        {/* Swiper custom styles */}
-        <style>{`
-        .swiper-button-custom {
-          background: white;
-          border-radius: 50%;
-          box-shadow: 0 4px 16px rgba(0,0,0,0.15);
-          width: 42px;
-          height: 42px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          transition: box-shadow 0.2s;
-        }
-        .swiper-button-custom:after { display: none; }
-        .swiper-button-custom svg {
-          width: 28px;
-          height: 28px;
-          color: #4bb2e8;
-        }
-        .swiper-pagination-custom {
-          display: flex;
-          justify-content: center;
-          gap: 8px;
-          margin-top: 18px;
-        }
-        .swiper-pagination-bullet {
-          width: 44px;
-          height: 8px;
-          border-radius: 8px;
-          background: #e0e6ea;
-          opacity: 1;
-          transition: background 0.3s;
-        }
-        .swiper-pagination-bullet-active {
-          background: #4bb2e8;
-        }
-      `}</style>
+          {/* Swiper custom styles */}
+          <style>{`
+          .swiper-pagination-romantic {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 18px;
+          }
+          .swiper-pagination-bullet {
+            width: 44px;
+            height: 8px;
+            border-radius: 8px;
+            background: #e0e6ea;
+            opacity: 1;
+            transition: background 0.3s;
+          }
+          .swiper-pagination-bullet-active {
+            background: #74bdda;
+          }
+        `}</style>
+        </div>
       </section>
-      <section className="py-12 bg-[#FFFBEF] relative">
+      <section className="py-12 relative">
         <div className="max-w-[1500px] mx-auto px-4 flex flex-col items-center">
-          {/* --- Hero Banner --- */}
+          {/* Hero Banner */}
           <div
             className="w-full bg-cover bg-center rounded-2xl mb-[-60px] relative"
             style={{
@@ -796,77 +777,83 @@ const Index = () => {
             <div className="absolute inset-0 bg-black/20 rounded-2xl"></div>
             <div className="relative z-10 flex flex-col justify-center h-full px-12 py-12 md:px-24 md:py-20">
               <h1
-                className="text-white text-3xl md:text-6xl font-bold mb-6"
+                className="text-white text-5xl md:text-6xl font-bold mb-6 drop-shadow"
                 style={{ fontFamily: "Roboto, sans-serif" }}
               >
                 Local Trips
               </h1>
               <p
-                className="text-white text-md md:text-2xl mb-8 font-medium"
+                className="text-white text-lg md:text-2xl mb-8 font-medium"
                 style={{ fontFamily: "Roboto, sans-serif" }}
               >
                 Discover the world, one destination at a time
               </p>
               <button
                 className="bg-yellow-300 hover:bg-yellow-400 text-black font-semibold rounded-md px-12 py-3 text-lg shadow-md border border-yellow-400 transition-all duration-150 focus:outline-none"
-                style={{ width: 180 }}
+                style={{ width: 140 }}
               >
                 Explore
               </button>
             </div>
           </div>
 
-          {/* --- Swiper Slider --- */}
-          <div className="relative w-full max-w-7xl">
-            {/* LEFT ARROW */}
+          {/* Swiper Slider */}
+          <div className="relative w-full max-w-[1300px] min-h-[430px] flex items-center">
+            {/* LEFT ARROW - align to slide */}
             <button
               ref={prevRef}
-              className="swiper-button-custom absolute left-0 top-1/2 -translate-y-1/2 z-10"
+              className="z-20 absolute left-[-25px] top-1/2 -translate-y-1/2 bg-[#74bdda] hover:bg-[#52aec5] w-[45px] h-[45px] rounded-full flex items-center justify-center"
               aria-label="Previous"
+              style={{
+                boxShadow: "0 4px 24px rgba(80,160,180,0.16)",
+              }}
             >
-              <svg viewBox="0 0 24 24" fill="none">
+              {/* Arrow Icon */}
+              <svg width={28} height={28} fill="none" viewBox="0 0 24 24">
                 <path
                   d="M15.5 19L8.5 12L15.5 5"
-                  stroke="currentColor"
-                  strokeWidth="2"
+                  stroke="white"
+                  strokeWidth={3}
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
               </svg>
             </button>
 
-            {/* RIGHT ARROW */}
+            {/* RIGHT ARROW - align to slide */}
             <button
               ref={nextRef}
-              className="swiper-button-custom absolute right-0 top-1/2 -translate-y-1/2 z-10"
+              className="z-20 absolute right-[-25px] top-1/2 -translate-y-1/2 bg-[#74bdda] hover:bg-[#52aec5] w-[45px] h-[45px] rounded-full flex items-center justify-center shadow-lg"
               aria-label="Next"
+              style={{
+                boxShadow: "0 4px 24px rgba(80,160,180,0.16)",
+              }}
             >
-              <svg viewBox="0 0 24 24" fill="none">
+              {/* Arrow Icon */}
+              <svg width={28} height={28} fill="none" viewBox="0 0 24 24">
                 <path
                   d="M8.5 5L15.5 12L8.5 19"
-                  stroke="currentColor"
-                  strokeWidth="2"
+                  stroke="white"
+                  strokeWidth={3}
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
               </svg>
             </button>
 
-            {/* Swiper: clipped between arrows */}
-            <div className="overflow-hidden px-[56px]">
-              {/* px-[56px] = 42px (arrow) + 14px (gap), match to your arrow size */}
+            {/* Swiper slides */}
+            <div className="overflow-visible w-full">
               <Swiper
                 modules={[Navigation, Pagination]}
                 spaceBetween={20}
-                slidesPerView={"auto"}
-                centeredSlides={false}
+                slidesPerView={5}
                 navigation={{
                   prevEl: prevRef.current,
                   nextEl: nextRef.current,
                 }}
                 pagination={{
                   clickable: true,
-                  el: ".swiper-pagination-custom",
+                  el: ".swiper-pagination-romantic",
                 }}
                 onInit={(swiper) => {
                   // @ts-ignore
@@ -876,76 +863,64 @@ const Index = () => {
                   swiper.navigation.init();
                   swiper.navigation.update();
                 }}
+                breakpoints={{
+                  0: { slidesPerView: 1.2 },
+                  600: { slidesPerView: 2.2 },
+                  900: { slidesPerView: 3 },
+                  1200: { slidesPerView: 5 },
+                }}
                 className="w-full"
               >
                 {LocalDestination.map((item, idx) => (
                   <SwiperSlide
                     key={idx}
-                    className="w-[260px] md:w-[300px] flex-shrink-0"
+                    className="w-[250px] md:w-[270px] flex-shrink-0"
                   >
-                    <div className="rounded-xl overflow-hidden shadow-lg border bg-white">
-                      <div className="relative h-[350px]">
-                        <img
-                          src={item.image}
-                          alt={item.title}
-                          className="w-full h-full object-cover"
-                        />
-                        <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black via-black/50 to-transparent">
-                          <h3 className="text-white text-center text-2xl font-bold">
-                            {item.title}
-                          </h3>
-                          <p className="text-white text-center text-sm font-medium">
-                            Starting Price Rs. {item.price}/-
-                          </p>
-                        </div>
+                    <div className="rounded-xl overflow-hidden shadow-lg border border-white bg-white relative group transition-all">
+                      <img
+                        src={item.image}
+                        alt={item.title}
+                        className="w-full h-[330px] object-cover"
+                        draggable={false}
+                      />
+                      <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black via-black/50 to-transparent">
+                        <h3 className="text-white text-center text-2xl font-bold drop-shadow">
+                          {item.title}
+                        </h3>
+                        <p className="text-white text-center text-sm font-medium drop-shadow">
+                          Starting Price Rs. {item.price}/-
+                        </p>
                       </div>
                     </div>
                   </SwiperSlide>
                 ))}
               </Swiper>
+              {/* Pagination Dots */}
+              {/* <div className="swiper-pagination-romantic mt-6"></div> */}
             </div>
-            {/* Pagination Dots */}
-            {/* <div className="swiper-pagination-custom mt-5"></div> */}
           </div>
-        </div>
 
-        {/* Swiper custom styles */}
-        <style>{`
-        .swiper-button-custom {
-          background: white;
-          border-radius: 50%;
-          box-shadow: 0 4px 16px rgba(0,0,0,0.15);
-          width: 42px;
-          height: 42px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          transition: box-shadow 0.2s;
-        }
-        .swiper-button-custom:after { display: none; }
-        .swiper-button-custom svg {
-          width: 28px;
-          height: 28px;
-          color: #4bb2e8;
-        }
-        .swiper-pagination-custom {
-          display: flex;
-          justify-content: center;
-          gap: 8px;
-          margin-top: 18px;
-        }
-        .swiper-pagination-bullet {
-          width: 44px;
-          height: 8px;
-          border-radius: 8px;
-          background: #e0e6ea;
-          opacity: 1;
-          transition: background 0.3s;
-        }
-        .swiper-pagination-bullet-active {
-          background: #4bb2e8;
-        }
-      `}</style>
+          {/* Swiper custom styles */}
+          <style>{`
+          .swiper-pagination-romantic {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 18px;
+          }
+          .swiper-pagination-bullet {
+            width: 44px;
+            height: 8px;
+            border-radius: 8px;
+            background: #e0e6ea;
+            opacity: 1;
+            transition: background 0.3s;
+          }
+          .swiper-pagination-bullet-active {
+            background: #74bdda;
+          }
+        `}</style>
+        </div>
       </section>
       <section className="py-10 md:py-14 bg-white">
         <div className="max-w-7xl mx-auto px-4">
@@ -968,10 +943,11 @@ const Index = () => {
               <button
                 key={m}
                 onClick={() => setActiveMonth(monthMap[i])}
-                className={`whitespace-nowrap rounded-full px-5 py-2 border text-sm md:text-base font-medium transition-all ${activeMonth === monthMap[i]
-                  ? "bg-blue-50 border-blue-400 text-blue-800 shadow-sm"
-                  : "bg-white border-gray-200 text-gray-600 hover:border-blue-300"
-                  }`}
+                className={`whitespace-nowrap rounded-full px-5 py-2 border text-sm md:text-base font-medium transition-all ${
+                  activeMonth === monthMap[i]
+                    ? "bg-blue-50 border-blue-400 text-blue-800 shadow-sm"
+                    : "bg-white border-gray-200 text-gray-600 hover:border-blue-300"
+                }`}
               >
                 {m}
               </button>
@@ -1017,51 +993,57 @@ const Index = () => {
                 swiper.navigation.update();
               }}
             >
-              {filteredTrips.length > 0 ? filteredTrips.map((trip, idx) => (
-                <SwiperSlide key={idx}>
-                  <div
-                    className="relative group rounded-2xl overflow-hidden h-[350px] sm:h-[400px] md:h-[420px] flex flex-col justify-end"
-                    style={{
-                      backgroundImage: `url(${trip.img})`,
-                      backgroundSize: "cover",
-                      backgroundPosition: "center",
-                    }}
-                  >
-                    {/* Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent z-0" />
-                    {/* Price Badge */}
-                    <div className="absolute top-4 left-4 z-10">
-                      <div className="bg-yellow-300/95 text-gray-900 font-semibold px-4 py-1 rounded-full flex items-center gap-2 text-base shadow">
-                        <span className="line-through text-gray-600">{trip.oldPrice}</span>
-                        <span className="font-bold">{trip.price}/-</span>
-                        <span className="text-xs">Onwards</span>
+              {filteredTrips.length > 0 ? (
+                filteredTrips.map((trip, idx) => (
+                  <SwiperSlide key={idx}>
+                    <div
+                      className="relative group rounded-2xl overflow-hidden h-[350px] sm:h-[400px] md:h-[420px] flex flex-col justify-end"
+                      style={{
+                        backgroundImage: `url(${trip.img})`,
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                      }}
+                    >
+                      {/* Overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent z-0" />
+                      {/* Price Badge */}
+                      <div className="absolute top-4 left-4 z-10">
+                        <div className="bg-yellow-300/95 text-gray-900 font-semibold px-4 py-1 rounded-full flex items-center gap-2 text-base shadow">
+                          <span className="line-through text-gray-600">
+                            {trip.oldPrice}
+                          </span>
+                          <span className="font-bold">{trip.price}/-</span>
+                          <span className="text-xs">Onwards</span>
+                        </div>
+                      </div>
+                      {/* Info */}
+                      <div className="relative z-10 p-5 pb-4 flex flex-col justify-end">
+                        <div className="text-white font-bold text-base leading-snug mb-2 line-clamp-2 drop-shadow">
+                          {trip.title}
+                        </div>
+                        <div className="flex flex-wrap items-center text-white/90 text-xs mb-1 gap-x-4 gap-y-1">
+                          <span className="flex items-center gap-1">
+                            <span className="text-lg">⏱️</span> {trip.days}
+                          </span>
+                          <span className="flex items-center gap-1">
+                            <span className="text-lg">📍</span> {trip.location}
+                          </span>
+                        </div>
+                        <div className="flex items-center text-white/90 text-xs gap-2">
+                          <span className="flex items-center gap-1">
+                            <span className="text-lg">📅</span> {trip.date}
+                          </span>
+                        </div>
                       </div>
                     </div>
-                    {/* Info */}
-                    <div className="relative z-10 p-5 pb-4 flex flex-col justify-end">
-                      <div className="text-white font-bold text-base leading-snug mb-2 line-clamp-2 drop-shadow">
-                        {trip.title}
-                      </div>
-                      <div className="flex flex-wrap items-center text-white/90 text-xs mb-1 gap-x-4 gap-y-1">
-                        <span className="flex items-center gap-1">
-                          <span className="text-lg">⏱️</span> {trip.days}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <span className="text-lg">📍</span> {trip.location}
-                        </span>
-                      </div>
-                      <div className="flex items-center text-white/90 text-xs gap-2">
-                        <span className="flex items-center gap-1">
-                          <span className="text-lg">📅</span> {trip.date}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </SwiperSlide>
-              )) : (
+                  </SwiperSlide>
+                ))
+              ) : (
                 <SwiperSlide>
                   <div className="flex items-center justify-center h-[350px] sm:h-[400px] md:h-[420px] bg-gray-100 rounded-2xl">
-                    <span className="text-gray-400 font-semibold">No trips for this month</span>
+                    <span className="text-gray-400 font-semibold">
+                      No trips for this month
+                    </span>
                   </div>
                 </SwiperSlide>
               )}
@@ -1069,9 +1051,10 @@ const Index = () => {
           </div>
         </div>
       </section>
-      <section className="py-12 bg-[#FFFBEF] relative">
+
+      <section className="py-12 relative">
         <div className="max-w-[1500px] mx-auto px-4 flex flex-col items-center">
-          {/* --- Hero Banner --- */}
+          {/* Hero Banner */}
           <div
             className="w-full bg-cover bg-center rounded-2xl mb-[-60px] relative"
             style={{
@@ -1084,76 +1067,101 @@ const Index = () => {
             <div className="absolute inset-0 bg-black/20 rounded-2xl"></div>
             <div className="relative z-10 flex flex-col justify-center h-full px-12 py-12 md:px-24 md:py-20">
               <h1
-                className="text-white text-3xl md:text-6xl font-bold mb-6"
+                className="text-white text-5xl md:text-6xl font-bold mb-6 drop-shadow"
                 style={{ fontFamily: "Roboto, sans-serif" }}
               >
                 Romantic Escapes
               </h1>
               <p
-                className="text-white text-md md:text-2xl mb-8 font-medium"
+                className="text-white text-lg md:text-2xl mb-8 font-medium"
                 style={{ fontFamily: "Roboto, sans-serif" }}
               >
-                Where Forever Begins...Together!              </p>
-              <button
-                className="bg-yellow-300 hover:bg-yellow-400 text-black font-semibold rounded-md px-12 py-3 text-lg shadow-md border border-yellow-400 transition-all duration-150 focus:outline-none"
-                style={{ width: 180 }}
-              >
+                Where Forever Begins...Together!{" "}
+              </p>
+              <button className="bg-yellow-300 hover:bg-yellow-400 text-black font-semibold rounded-md py-3 text-lg shadow-md border border-yellow-400 transition-all duration-150 focus:outline-none w-36 flex justify-center items-center">
                 Explore
               </button>
             </div>
           </div>
 
-          {/* --- Swiper Slider --- */}
-          <div className="relative w-full max-w-7xl">
-            {/* LEFT ARROW */}
+          {/* Swiper Slider */}
+          <div className="relative w-full max-w-[1300px] min-h-[430px] flex items-center">
+            {/* LEFT ARROW - align to slide */}
             <button
               ref={prevRef}
-              className="swiper-button-custom absolute left-0 top-1/2 -translate-y-1/2 z-10"
+              className="z-20 absolute left-[-25px] top-1/2 -translate-y-1/2 bg-[#74bdda] hover:bg-[#52aec5] w-[45px] h-[45px] rounded-full flex items-center justify-center"
               aria-label="Previous"
+              style={{
+                boxShadow: "0 4px 24px rgba(80,160,180,0.16)",
+              }}
             >
-              <svg viewBox="0 0 24 24" fill="none">
+              {/* Arrow Icon */}
+              <svg width={28} height={28} fill="none" viewBox="0 0 24 24">
                 <path
                   d="M15.5 19L8.5 12L15.5 5"
-                  stroke="currentColor"
-                  strokeWidth="2"
+                  stroke="white"
+                  strokeWidth={3}
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
               </svg>
             </button>
 
-            {/* RIGHT ARROW */}
+            {/* RIGHT ARROW - align to slide */}
             <button
               ref={nextRef}
-              className="swiper-button-custom absolute right-0 top-1/2 -translate-y-1/2 z-10"
+              className="z-20 absolute right-[-25px] top-1/2 -translate-y-1/2 bg-[#74bdda] hover:bg-[#52aec5] w-[45px] h-[45px] rounded-full flex items-center justify-center shadow-lg"
               aria-label="Next"
+              style={{
+                boxShadow: "0 4px 24px rgba(80,160,180,0.16)",
+              }}
             >
-              <svg viewBox="0 0 24 24" fill="none">
+              {/* Arrow Icon */}
+              <svg width={28} height={28} fill="none" viewBox="0 0 24 24">
                 <path
                   d="M8.5 5L15.5 12L8.5 19"
-                  stroke="currentColor"
-                  strokeWidth="2"
+                  stroke="white"
+                  strokeWidth={3}
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
               </svg>
             </button>
 
-            {/* Swiper: clipped between arrows */}
-            <div className="overflow-hidden px-[56px]">
-              {/* px-[56px] = 42px (arrow) + 14px (gap), match to your arrow size */}
+            {/* RIGHT ARROW - align to slide */}
+            <button
+              ref={nextRef}
+              className="z-20 absolute right-[-25px] top-1/2 -translate-y-1/2 bg-[#74bdda] hover:bg-[#52aec5] w-[45px] h-[45px] rounded-full flex items-center justify-center shadow-lg"
+              aria-label="Next"
+              style={{
+                boxShadow: "0 4px 24px rgba(80,160,180,0.16)",
+              }}
+            >
+              {/* Arrow Icon */}
+              <svg width={28} height={28} fill="none" viewBox="0 0 24 24">
+                <path
+                  d="M8.5 5L15.5 12L8.5 19"
+                  stroke="white"
+                  strokeWidth={3}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
+
+            {/* Swiper slides */}
+            <div className="overflow-visible w-full">
               <Swiper
                 modules={[Navigation, Pagination]}
                 spaceBetween={20}
-                slidesPerView={"auto"}
-                centeredSlides={false}
+                slidesPerView={5}
                 navigation={{
                   prevEl: prevRef.current,
                   nextEl: nextRef.current,
                 }}
                 pagination={{
                   clickable: true,
-                  el: ".swiper-pagination-custom",
+                  el: ".swiper-pagination-romantic",
                 }}
                 onInit={(swiper) => {
                   // @ts-ignore
@@ -1163,170 +1171,128 @@ const Index = () => {
                   swiper.navigation.init();
                   swiper.navigation.update();
                 }}
+                breakpoints={{
+                  0: { slidesPerView: 1.2 },
+                  600: { slidesPerView: 2.2 },
+                  900: { slidesPerView: 3 },
+                  1200: { slidesPerView: 5 },
+                }}
                 className="w-full"
               >
                 {LocalDestination.map((item, idx) => (
                   <SwiperSlide
                     key={idx}
-                    className="w-[260px] md:w-[300px] flex-shrink-0"
+                    className="w-[250px] md:w-[270px] flex-shrink-0"
                   >
-                    <div className="rounded-xl overflow-hidden shadow-lg border bg-white">
-                      <div className="relative h-[350px]">
-                        <img
-                          src={item.image}
-                          alt={item.title}
-                          className="w-full h-full object-cover"
-                        />
-                        <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black via-black/50 to-transparent">
-                          <h3 className="text-white text-center text-2xl font-bold">
-                            {item.title}
-                          </h3>
-                          <p className="text-white text-center text-sm font-medium">
-                            Starting Price Rs. {item.price}/-
-                          </p>
-                        </div>
+                    <div className="rounded-xl overflow-hidden shadow-lg border border-white bg-white relative group transition-all">
+                      <img
+                        src={item.image}
+                        alt={item.title}
+                        className="w-full h-[330px] object-cover"
+                        draggable={false}
+                      />
+                      <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black via-black/50 to-transparent">
+                        <h3 className="text-white text-center text-2xl font-bold drop-shadow">
+                          {item.title}
+                        </h3>
+                        <p className="text-white text-center text-sm font-medium drop-shadow">
+                          Starting Price Rs. {item.price}/-
+                        </p>
                       </div>
                     </div>
                   </SwiperSlide>
                 ))}
               </Swiper>
+              {/* Pagination Dots */}
+              {/* <div className="swiper-pagination-romantic mt-6"></div> */}
             </div>
-            {/* Pagination Dots */}
-            {/* <div className="swiper-pagination-custom mt-5"></div> */}
           </div>
-        </div>
 
-        {/* Swiper custom styles */}
-        <style>{`
-        .swiper-button-custom {
-          background: white;
-          border-radius: 50%;
-          box-shadow: 0 4px 16px rgba(0,0,0,0.15);
-          width: 42px;
-          height: 42px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          transition: box-shadow 0.2s;
-        }
-        .swiper-button-custom:after { display: none; }
-        .swiper-button-custom svg {
-          width: 28px;
-          height: 28px;
-          color: #4bb2e8;
-        }
-        .swiper-pagination-custom {
-          display: flex;
-          justify-content: center;
-          gap: 8px;
-          margin-top: 18px;
-        }
-        .swiper-pagination-bullet {
-          width: 44px;
-          height: 8px;
-          border-radius: 8px;
-          background: #e0e6ea;
-          opacity: 1;
-          transition: background 0.3s;
-        }
-        .swiper-pagination-bullet-active {
-          background: #4bb2e8;
-        }
-      `}</style>
-      </section>
-      <section className="py-12 md:py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4">
-          {/* Heading */}
-          <div className="text-center mb-10">
-            <div className="text-[#12a5c4] font-semibold text-lg mb-1">
-              Why WanderOn?
-            </div>
-            <h2 className="text-3xl md:text-5xl font-bold text-[#066980]">
-              WanderOn’s Secret Sauce
-            </h2>
-            <div className="flex justify-center mt-4">
-              <span className="block w-32 h-1 bg-yellow-400 rounded"></span>
-            </div>
-          </div>
-          {/* Cards Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
-            {features.map((item, idx) => (
-              <div
-                key={item.title}
-                className="relative rounded-2xl border border-blue-200 bg-white p-6 pt-8 pb-24 min-h-[340px] shadow-sm hover:shadow-lg transition-shadow flex flex-col"
-                style={{
-                  backgroundImage: `url('${item.bg}')`,
-                  backgroundRepeat: "no-repeat",
-                  backgroundPosition: "left bottom",
-                  backgroundSize: "contain",
-                }}
-              >
-                <h3 className="text-[#12a5c4] text-xl font-bold mb-2">{item.title}</h3>
-                <p className="text-gray-600 text-base mb-4">{item.desc}</p>
-              </div>
-            ))}
-          </div>
+          {/* Swiper custom styles */}
+          <style>{`
+          .swiper-pagination-romantic {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 18px;
+          }
+          .swiper-pagination-bullet {
+            width: 44px;
+            height: 8px;
+            border-radius: 8px;
+            background: #e0e6ea;
+            opacity: 1;
+            transition: background 0.3s;
+          }
+          .swiper-pagination-bullet-active {
+            background: #74bdda;
+          }
+        `}</style>
         </div>
       </section>
-    <div className="container mx-auto py-12">
-      <div className="text-center mb-6">
-        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-1 tracking-tight">
-          JOURNEY IN FRAMES
-        </h2>
-        <p className="text-lg text-gray-500">Pictures Perfect Moments</p>
-      </div>
+      <Features />
+      <div className="container mx-auto py-12">
+        <div className="text-center mb-6">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-1 tracking-tight">
+            JOURNEY IN FRAMES
+          </h2>
+          <p className="text-lg text-gray-500">Pictures Perfect Moments</p>
+        </div>
 
-      <section className="relative custom-swiper-slider">
-        <Swiper
-          modules={[Navigation, Autoplay]}
-          spaceBetween={16}
-          slidesPerView={4}
-          autoplay={{ delay: 2500, disableOnInteraction: false }}
-          navigation={{ prevEl: prevRef.current, nextEl: nextRef.current }}
-          onInit={(swiper) => {
-            // @ts-ignore
-            swiper.params.navigation.prevEl = prevRef.current;
-            // @ts-ignore
-            swiper.params.navigation.nextEl = nextRef.current;
-            swiper.navigation.init();
-            swiper.navigation.update();
-          }}
-          breakpoints={{
-            0: { slidesPerView: 1 },
-            640: { slidesPerView: 2 },
-            1024: { slidesPerView: 4 },
-          }}
-        >
-          {images.map((dest, index) => (
-            <SwiperSlide key={index}>
-              <div className="journey-frame-slide">
-                <img
-                  src={dest.src}
-                  alt={dest.label}
-                  className="journey-frame-img"
-                />
-                <div className="journey-frame-label">
-                  <MapPin size={16} style={{ marginRight: 4, marginBottom: 1 }} />
-                  {dest.label}
+        <section className="relative custom-swiper-slider">
+          <Swiper
+            modules={[Navigation, Autoplay]}
+            spaceBetween={16}
+            slidesPerView={4}
+            autoplay={{ delay: 2500, disableOnInteraction: false }}
+            navigation={{ prevEl: prevRef.current, nextEl: nextRef.current }}
+            onInit={(swiper) => {
+              // @ts-ignore
+              swiper.params.navigation.prevEl = prevRef.current;
+              // @ts-ignore
+              swiper.params.navigation.nextEl = nextRef.current;
+              swiper.navigation.init();
+              swiper.navigation.update();
+            }}
+            breakpoints={{
+              0: { slidesPerView: 1 },
+              640: { slidesPerView: 2 },
+              1024: { slidesPerView: 4 },
+            }}
+          >
+            {images.map((dest, index) => (
+              <SwiperSlide key={index}>
+                <div className="journey-frame-slide">
+                  <img
+                    src={dest.src}
+                    alt={dest.label}
+                    className="journey-frame-img"
+                  />
+                  <div className="journey-frame-label">
+                    <MapPin
+                      size={16}
+                      style={{ marginRight: 4, marginBottom: 1 }}
+                    />
+                    {dest.label}
+                  </div>
                 </div>
-              </div>
-            </SwiperSlide>
-          ))}
-        </Swiper>
-        <button
-          ref={prevRef}
-          className="swiper-button-custom absolute left-0 top-1/2 transform -translate-y-1/2 z-20"
-        >
-          ‹
-        </button>
-        <button
-          ref={nextRef}
-          className="swiper-button-custom absolute right-0 top-1/2 transform -translate-y-1/2 z-20"
-        >
-          ›
-        </button>
-      </section>
-    </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+          <button
+            ref={prevRef}
+            className="swiper-button-custom absolute left-0 top-1/2 transform -translate-y-1/2 z-20"
+          >
+            ‹
+          </button>
+          <button
+            ref={nextRef}
+            className="swiper-button-custom absolute right-0 top-1/2 transform -translate-y-1/2 z-20"
+          >
+            ›
+          </button>
+        </section>
+      </div>
       <section className="py-20 px-4">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
@@ -1429,7 +1395,7 @@ const Index = () => {
       </section> */}
 
       {/* Footer */}
-        <Footer setIsContactModalOpen={setIsContactModalOpen} />
+      <Footer setIsContactModalOpen={setIsContactModalOpen} />
 
       <ContactModal
         isOpen={isContactModalOpen}
