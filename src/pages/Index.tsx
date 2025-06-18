@@ -840,7 +840,6 @@ const Index = () => {
                 />
               </svg>
             </button>
-
             {/* Swiper slides */}
             <div className="overflow-visible w-full">
               <Swiper

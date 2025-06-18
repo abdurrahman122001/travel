@@ -70,7 +70,7 @@ const Navigations: React.FC<NavigationProps> = ({ onContactClick }) => {
               📅 Upcoming Trips
             </Link>
             <Link to="/" className="hover:text-blue-600">Home</Link>
-            <Link to="/packages" className="hover:text-blue-600">Packages</Link>
+            <Link to="/package" className="hover:text-blue-600">Packages</Link>
             <Link to="/about" className="hover:text-blue-600">About Us</Link>
             <Link to="/blog" className="hover:text-blue-600">Blog</Link>
             <Link to="/payments" className="hover:text-blue-600">Payments</Link>
