@@ -13,6 +13,8 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsAndConditions from "./pages/Terms&Condition";
 import SearchHero from "./pages/SearchHero";
 import Package from "./pages/Packages";
+import EffectCard from "./pages/EffectCard";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -31,6 +33,7 @@ const App = () => (
           <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
           <Route path="/search" element={<SearchHero />} />
           <Route path="/package" element={<Package />} />
+          <Route path="/effect" element={<EffectCard/>}/>
           {/* Add more routes as needed */}
           <Route path="*" element={<NotFound />} />
         </Routes>

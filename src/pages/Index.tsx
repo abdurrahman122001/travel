@@ -31,6 +31,9 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import Features from "@/components/FeaturedComponent";
+import EffectCard from "./EffectCard";
+import EffectCardTwo from "./EffectCardTwo";
+import EffectCardThree from "./EffectCardThree";
 
 const Index = () => {
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
@@ -591,18 +594,19 @@ const Index = () => {
           ))}
         </div>
       </section>
-      <section className="py-20 px-4 flex items-center justify-center">
+      <section className="py-20 px-4 flex items-center justify-center hidden md:block">
         <div className="w-[80%] mx-auto text-center">
           <img src={abc} alt="WanderOn Logo" className="w-full" />
         </div>
       </section>
 
-      <section className="py-20 px-4 flex items-center justify-center">
+      <section className="py-20 px-4 flex items-center justify-center hidden md:block">
         <div className="w-[80%] mx-auto text-center">
           <img src={uct} alt="WanderOn Logo" className="w-full" />
         </div>
       </section>
-      <section className="py-12 relative">
+      <EffectCard/>
+      <section className="py-12 relative hidden md:block bg-[#fffbe0]" style={{marginBottom: '100px'}}>
         <div className="max-w-[1500px] mx-auto px-4 flex flex-col items-center">
           {/* Hero Banner */}
           <div
@@ -762,7 +766,8 @@ const Index = () => {
         `}</style>
         </div>
       </section>
-      <section className="py-12 relative">
+      <EffectCardTwo/>
+      <section className="py-12 relative hidden md:block mt-15 bg-[#FFECE2]">
         <div className="max-w-[1500px] mx-auto px-4 flex flex-col items-center">
           {/* Hero Banner */}
           <div
@@ -780,7 +785,7 @@ const Index = () => {
                 className="text-white text-5xl md:text-6xl font-bold mb-6 drop-shadow"
                 style={{ fontFamily: "Roboto, sans-serif" }}
               >
-                Local Trips
+                Explore India
               </h1>
               <p
                 className="text-white text-lg md:text-2xl mb-8 font-medium"
@@ -921,7 +926,8 @@ const Index = () => {
         `}</style>
         </div>
       </section>
-      <section className="py-10 md:py-14 bg-white">
+      <EffectCardThree/>
+      <section className="py-10 md:py-14 bg-white hidden md:block">
         <div className="max-w-7xl mx-auto px-4">
           {/* Header */}
           <div className="flex flex-col sm:flex-row items-center justify-between mb-6 gap-2">
@@ -1051,7 +1057,7 @@ const Index = () => {
         </div>
       </section>
 
-      <section className="py-12 relative">
+      <section className="py-12 relative hidden md:block bg-[#E5F8FF]">
         <div className="max-w-[1500px] mx-auto px-4 flex flex-col items-center">
           {/* Hero Banner */}
           <div
@@ -1292,7 +1298,7 @@ const Index = () => {
           </button>
         </section>
       </div>
-      <section className="py-20 px-4">
+      {/* <section className="py-20 px-4">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-4 text-blue-900">
@@ -1304,7 +1310,6 @@ const Index = () => {
             </p>
           </div>
 
-          {/* Package Grid */}
           <div className="px-4 py-10">
             <Swiper
               modules={[Navigation, Pagination]}
@@ -1327,7 +1332,7 @@ const Index = () => {
             </Swiper>
           </div>
         </div>
-      </section>
+      </section> */}
       {/* Customer Testimonials */}
       <section className="py-20 bg-blue-50">
         <div className="max-w-7xl mx-auto px-4">
