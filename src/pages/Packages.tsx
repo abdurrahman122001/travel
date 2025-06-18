@@ -1674,8 +1674,8 @@ export default function Package() {
             </div>
           </div>
         </section>
-        <section className="w-full px-4 pt-10 pb-12 flex justify-center">
-          <div className="w-[1400px] w-full">
+        <section className="px-4 pt-10 pb-12 flex justify-center">
+          <div className="w-[1400px]">
             {/* Heading */}
             <div className="flex items-center mb-4">
               <span className="h-7 w-1.5 bg-yellow-400 mr-3 rounded-sm" />
@@ -1739,24 +1739,26 @@ export default function Package() {
             </span>
             <span className="block w-40 h-1 rounded bg-yellow-300 mb-2" />
           </div>
-          <div className="w-[1400px] mx-auto flex gap-6 px-4">
+
+          {/* Responsive Flex: column on mobile, row on md+ */}
+          <div className="flex flex-col md:flex-row gap-6 md:w-[1400px] w-full mx-auto px-2 md:px-4">
             {/* Left: List of Blogs */}
-            <div className="flex flex-col gap-4  flex-1 min-w-[340px]">
+            <div className="flex flex-col gap-4 flex-1 min-w-0 md:min-w-[340px]">
               {blogData.map((item, i) => (
                 <div
                   key={i}
-                  className="flex bg-white border p-7 border-sky-200 rounded-md overflow-hidden transition hover:shadow-md"
+                  className="flex flex-col md:flex-row bg-white border p-5 md:p-7 border-sky-200 rounded-md overflow-hidden transition hover:shadow-md"
                 >
                   <img
                     src={item.image}
                     alt={item.title}
-                    className="h-[110px] w-[220px] object-cover"
+                    className="w-full h-[170px] md:w-[220px] md:h-[110px] object-cover rounded-md"
                   />
-                  <div className="pl-4 py-4 flex flex-col justify-center w-full">
-                    <h3 className="font-bold text-[1.7rem] leading-tight text-[#29323d] mb-2">
+                  <div className="pl-0 pt-3 md:pl-4 md:py-4 flex flex-col justify-center w-full">
+                    <h3 className="font-bold text-lg md:text-[1.7rem] leading-tight text-[#29323d] mb-2">
                       {item.title}
                     </h3>
-                    <div className="text-gray-500 text-base">
+                    <div className="text-gray-500 text-sm md:text-base">
                       {item.date} | {item.time}
                     </div>
                   </div>
@@ -1764,24 +1766,33 @@ export default function Package() {
               ))}
             </div>
             {/* Right: Featured Blog */}
-            <div className="flex-1 min-w-[380px]">
+            <div className="flex-1 min-w-0 md:min-w-[380px]">
               <div className="h-full bg-white border border-sky-200 rounded-md overflow-hidden flex flex-col transition hover:shadow-md">
                 <img
                   src={featured.image}
                   alt={featured.title}
-                  className="w-full h-[330px] object-cover"
+                  className="w-full h-[200px] md:h-[330px] object-cover"
                 />
-                <div className="flex flex-col flex-1 px-5 py-5 relative">
-                  <h3 className="font-bold text-3xl text-[#29323d] leading-snug mb-3">
+                <div className="flex flex-col flex-1 px-4 md:px-5 py-4 md:py-5 relative">
+                  <h3 className="font-bold text-xl md:text-3xl text-[#29323d] leading-snug mb-3">
                     {featured.title}
                   </h3>
-                  <div className="text-gray-500 text-base mb-5">
+                  <div className="text-gray-500 text-sm md:text-base mb-5">
                     {featured.date} | {featured.time}
                   </div>
-                  <div className="absolute bottom-4 right-6 flex items-center">
+                  <div className="absolute bottom-4 right-6 flex items-center hidden md:flex">
                     <a
                       href="#"
                       className="text-sky-700 font-semibold text-lg flex items-center gap-1 hover:underline"
+                    >
+                      Read Full <ArrowRight className="ml-0.5 w-5 h-5" />
+                    </a>
+                  </div>
+                  {/* Show 'Read Full' below on mobile */}
+                  <div className="mt-3 flex md:hidden">
+                    <a
+                      href="#"
+                      className="text-sky-700 font-semibold text-base flex items-center gap-1 hover:underline"
                     >
                       Read Full <ArrowRight className="ml-0.5 w-5 h-5" />
                     </a>
@@ -1791,6 +1802,7 @@ export default function Package() {
             </div>
           </div>
         </section>
+
         <Features />
         <section className="w-full py-14 bg-white">
           <div className="max-w-[1200px] mx-auto">
