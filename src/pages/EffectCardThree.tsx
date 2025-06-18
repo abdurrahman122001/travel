@@ -61,7 +61,7 @@ export default function EffectCardThree() {
         <img
           src="https://images.wanderon.in/new-homepage-data/assets/romantic-escape"
           alt="International SVG"
-          className="ml-auto w-[170px] h-[60px] object-contain"
+          className="ml-auto w-[60px] h-[60px] object-contain"
         />
       </div>
       {/* Centered swiper */}

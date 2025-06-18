@@ -646,7 +646,7 @@ const Index = () => {
             {/* LEFT ARROW - align to slide */}
             <button
               ref={prevRef}
-              className="z-20 absolute left-[-25px] top-1/2 -translate-y-1/2 bg-[#74bdda] hover:bg-[#52aec5] w-[45px] h-[45px] rounded-full flex items-center justify-center"
+              className="z-20 absolute  left-[-25px] top-1/2 -translate-y-1/2 bg-[#74bdda] hover:bg-[#52aec5] w-[45px] h-[45px] rounded-full flex items-center justify-center"
               aria-label="Previous"
               style={{
                 boxShadow: "0 4px 24px rgba(80,160,180,0.16)",

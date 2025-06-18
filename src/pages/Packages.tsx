@@ -691,10 +691,10 @@ export default function Package() {
             ))}
 
             {/* Navigation Arrows */}
-            <button className="hero-swiper-prev absolute z-10 top-1/2 left-4 -translate-y-1/2 bg-black/40 hover:bg-black/60 text-white rounded-full p-2 md:p-3 transition">
+            <button className="hidden md:block hero-swiper-prev absolute z-10 top-1/2 left-4 -translate-y-1/2 bg-black/40 hover:bg-black/60 text-white rounded-full p-2 md:p-3 transition">
               <ChevronLeft size={28} />
             </button>
-            <button className="hero-swiper-next absolute z-10 top-1/2 right-4 -translate-y-1/2 bg-black/40 hover:bg-black/60 text-white rounded-full p-2 md:p-3 transition">
+            <button className="hidden md:block hero-swiper-next absolute z-10 top-1/2 right-4 -translate-y-1/2 bg-black/40 hover:bg-black/60 text-white rounded-full p-2 md:p-3 transition">
               <ChevronRight size={28} />
             </button>
           </Swiper>
@@ -759,7 +759,7 @@ export default function Package() {
               {/* Navigation */}
               <button
                 ref={prevRef}
-                className="absolute left-[-35px] top-1/2 -translate-y-1/2 z-10 w-[54px] h-[54px] bg-white rounded-full flex items-center justify-center shadow border border-gray-200 hover:bg-blue-100 transition-all"
+                className="hidden md:block absolute left-[-35px] top-1/2 -translate-y-1/2 z-10 w-[54px] h-[54px] bg-white rounded-full flex items-center justify-center shadow border border-gray-200 hover:bg-blue-100 transition-all"
                 aria-label="Previous"
                 style={{ boxShadow: "0 2px 18px rgba(32,60,132,0.12)" }}
               >
@@ -767,7 +767,7 @@ export default function Package() {
               </button>
               <button
                 ref={nextRef}
-                className="absolute right-[-35px] top-1/2 -translate-y-1/2 z-10 w-[54px] h-[54px] bg-white rounded-full flex items-center justify-center shadow border border-gray-200 hover:bg-blue-100 transition-all"
+                className="hidden md:block absolute right-[-35px] top-1/2 -translate-y-1/2 z-10 w-[54px] h-[54px] bg-white rounded-full flex items-center justify-center shadow border border-gray-200 hover:bg-blue-100 transition-all"
                 aria-label="Next"
                 style={{ boxShadow: "0 2px 18px rgba(32,60,132,0.12)" }}
               >
@@ -887,7 +887,7 @@ export default function Package() {
               {trips2.length >= 4 && (
                 <button
                   ref={prevRef}
-                  className="absolute left-[-35px] top-1/2 -translate-y-1/2 z-10 w-[54px] h-[54px] bg-white rounded-full flex items-center justify-center shadow border border-gray-200 hover:bg-blue-100 transition-all"
+                  className="hidden md:block absolute left-[-35px] top-1/2 -translate-y-1/2 z-10 w-[54px] h-[54px] bg-white rounded-full flex items-center justify-center shadow border border-gray-200 hover:bg-blue-100 transition-all"
                   aria-label="Previous"
                   style={{ boxShadow: "0 2px 18px rgba(32,60,132,0.12)" }}
                 >
@@ -897,7 +897,7 @@ export default function Package() {
               {trips2.length >= 4 && (
                 <button
                   ref={nextRef}
-                  className="absolute right-[-35px] top-1/2 -translate-y-1/2 z-10 w-[54px] h-[54px] bg-white rounded-full flex items-center justify-center shadow border border-gray-200 hover:bg-blue-100 transition-all"
+                  className="hidden md:block absolute right-[-35px] top-1/2 -translate-y-1/2 z-10 w-[54px] h-[54px] bg-white rounded-full flex items-center justify-center shadow border border-gray-200 hover:bg-blue-100 transition-all"
                   aria-label="Next"
                   style={{ boxShadow: "0 2px 18px rgba(32,60,132,0.12)" }}
                 >
@@ -1369,7 +1369,7 @@ export default function Package() {
             {/* Custom Left Arrow */}
             <button
               ref={prevRef}
-              className="absolute z-20 -left-6 top-1/2 -translate-y-1/2 w-11 h-11 flex items-center justify-center bg-[#ffff] shadow-lg rounded-full border-4 border-white hover:bg-white-400 transition-all"
+              className="hidden md:block absolute z-20 -left-6 top-1/2 -translate-y-1/2 w-11 h-11 flex items-center justify-center bg-[#ffff] shadow-lg rounded-full border-4 border-white hover:bg-white-400 transition-all"
               style={{ boxShadow: "0 1.5px 10px rgba(0,0,0,.12)" }}
             >
               <ChevronLeft className="text-black" size={33} />
@@ -1378,7 +1378,7 @@ export default function Package() {
             {/* Custom Right Arrow */}
             <button
               ref={nextRef}
-              className="absolute z-20 -right-6 top-1/2 -translate-y-1/2 w-11 h-11 flex items-center justify-center bg-[#ffff] shadow-lg rounded-full border-4 border-white hover:bg-white-400 transition-all"
+              className="hidden md:block absolute z-20 -right-6 top-1/2 -translate-y-1/2 w-11 h-11 flex items-center justify-center bg-[#ffff] shadow-lg rounded-full border-4 border-white hover:bg-white-400 transition-all"
               style={{ boxShadow: "0 1.5px 10px rgba(0,0,0,.12)" }}
             >
               <ChevronRight className="text-black" size={33} />
@@ -1458,7 +1458,7 @@ export default function Package() {
             {/* Custom Left Arrow */}
             <button
               ref={prevRef}
-              className="absolute z-20 -left-6 top-1/2 -translate-y-1/2 w-11 h-11 flex items-center justify-center bg-[#ffff] shadow-lg rounded-full border-4 border-white hover:bg-white-400 transition-all"
+              className="hidden md:block absolute z-20 -left-6 top-1/2 -translate-y-1/2 w-11 h-11 flex items-center justify-center bg-[#ffff] shadow-lg rounded-full border-4 border-white hover:bg-white-400 transition-all"
               style={{ boxShadow: "0 1.5px 10px rgba(0,0,0,.12)" }}
             >
               <ChevronLeft className="text-black" size={33} />
@@ -1467,7 +1467,7 @@ export default function Package() {
             {/* Custom Right Arrow */}
             <button
               ref={nextRef}
-              className="absolute z-20 -right-6 top-1/2 -translate-y-1/2 w-11 h-11 flex items-center justify-center bg-[#ffff] shadow-lg rounded-full border-4 border-white hover:bg-white-400 transition-all"
+              className="hidden md:block absolute z-20 -right-6 top-1/2 -translate-y-1/2 w-11 h-11 flex items-center justify-center bg-[#ffff] shadow-lg rounded-full border-4 border-white hover:bg-white-400 transition-all"
               style={{ boxShadow: "0 1.5px 10px rgba(0,0,0,.12)" }}
             >
               <ChevronRight className="text-black" size={33} />
@@ -1551,7 +1551,7 @@ export default function Package() {
             {/* Custom Left Arrow */}
             <button
               ref={prevRef}
-              className="absolute z-20 -left-6 top-1/2 -translate-y-1/2 w-11 h-11 flex items-center justify-center bg-[#ffff] shadow-lg rounded-full border-4 border-white hover:bg-white-400 transition-all"
+              className="hidden md:block absolute z-20 -left-6 top-1/2 -translate-y-1/2 w-11 h-11 flex items-center justify-center bg-[#ffff] shadow-lg rounded-full border-4 border-white hover:bg-white-400 transition-all"
               style={{ boxShadow: "0 1.5px 10px rgba(0,0,0,.12)" }}
             >
               <ChevronLeft className="text-black" size={33} />
@@ -1560,7 +1560,7 @@ export default function Package() {
             {/* Custom Right Arrow */}
             <button
               ref={nextRef}
-              className="absolute z-20 -right-6 top-1/2 -translate-y-1/2 w-11 h-11 flex items-center justify-center bg-[#ffff] shadow-lg rounded-full border-4 border-white hover:bg-white-400 transition-all"
+              className="hidden md:block absolute z-20 -right-6 top-1/2 -translate-y-1/2 w-11 h-11 flex items-center justify-center bg-[#ffff] shadow-lg rounded-full border-4 border-white hover:bg-white-400 transition-all"
               style={{ boxShadow: "0 1.5px 10px rgba(0,0,0,.12)" }}
             >
               <ChevronRight className="text-black" size={33} />
@@ -1821,7 +1821,7 @@ export default function Package() {
               {/* Left Arrow */}
               <button
                 ref={prevRef}
-                className="absolute left-[-35px] z-10 bg-white border-2 border-gray-700 w-12 h-12 rounded-full flex items-center justify-center transition hover:bg-gray-100"
+                className="hidden md:block absolute left-[-35px] z-10 bg-white border-2 border-gray-700 w-12 h-12 rounded-full flex items-center justify-center transition hover:bg-gray-100"
                 style={{ top: "42%" }}
                 aria-label="Previous"
               >
