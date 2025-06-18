@@ -38,6 +38,9 @@ const Footer = ({ setIsContactModalOpen }: FooterProps) => {
                 <Link to="/privacy-policy" className="hover:text-[#20e0ff] transition">Privacy Policy</Link>
               </li>
               <li>
+                <Link to="/desclaimer" className="hover:text-[#20e0ff] transition">Desclaimer</Link>
+              </li>
+              <li>
                 <Link to="/terms-and-conditions" className="hover:text-[#20e0ff] transition">Teams & Condition</Link>
               </li>
             </ul>

@@ -2,9 +2,10 @@ import React, { useState } from "react";
 
 // If you have a Navigations component, import it like this:
 import Navigations from "@/components/Navigation";
+import { Footer } from "react-day-picker";
 
 export default function PrivacyPolicy() {
-  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+    const [isContactModalOpen, setIsContactModalOpen] = useState(false);
 
   return (
     <>
@@ -18,7 +19,7 @@ export default function PrivacyPolicy() {
           <div className="flex justify-center mt-3 mb-10">
             <span className="block w-24 h-1 bg-yellow-400 rounded"></span>
           </div>
-          
+
           <section className="mb-10">
             <p className="mb-4">
               At <b>Breakout Wanderers</b>, your privacy is important to us. This Privacy Policy explains how we collect, use, and protect your personal information.
