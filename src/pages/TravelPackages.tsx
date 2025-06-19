@@ -454,60 +454,50 @@ const PackageDetailsPage = () => {
             </div>
           </div>
 
-          <div className="scroll-mt-24">
-            <h2 className="flex items-center text-lg font-bold text-sky-700 mb-1">
-              <span className="border-l-4 border-sky-500 pl-2 mr-2" />
-              Itinerary
-            </h2>
-            <div className="bg-white rounded-lg shadow mb-8">
-              {packageDetails.itinerary.map((day, idx) => {
-                const isOpen = openItineraryIndexes.includes(idx);
-                return (
-                  <div
-                    key={idx}
-                    className={`border-b last:border-0 ${isOpen ? "bg-blue-50" : ""
-                      }`}
-                  >
-                    <button
-                      onClick={() => toggleDay(idx)}
-                      className={`flex items-center justify-between w-full px-5 py-4 focus:outline-none text-left
+    <div className="bg-white rounded-lg shadow mb-8">
+      <div className="space-y-4"> {/* <-- this adds a gap between each FAQ */}
+        {packageDetails.itinerary.map((day, idx) => {
+          const isOpen = openItineraryIndexes.includes(idx);
+          return (
+            <div
+              key={idx}
+              className={`border-b last:border-0 ${isOpen ? "bg-blue-50" : ""}`}
+            >
+              <button
+                onClick={() => toggleDay(idx)}
+                className={`flex items-center justify-between w-full px-5 py-4 focus:outline-none text-left
                 ${isOpen ? "bg-blue-50" : "bg-sky-50"}
                 hover:bg-sky-100 transition`}
-                    >
-                      <span>
-                        <span className="bg-[#09c2e7] text-white rounded px-3 py-1 mr-2 text-xs font-bold inline-block">
-                          {day.day}
-                        </span>
-                        <span className="text-base font-semibold">
-                          {day.title}
-                        </span>
-                      </span>
-                      {isOpen ? (
-                        <ChevronUp className="w-6 h-6 text-sky-600" />
-                      ) : (
-                        <ChevronDown className="w-6 h-6 text-sky-600" />
-                      )}
-                    </button>
-                    <div
-                      className={`overflow-hidden transition-all duration-200 px-5
-                  ${isOpen
-                          ? "max-h-40 py-3 bg-blue-50"
-                          : "max-h-0 py-0 bg-white"
-                        }`}
-                    >
-                      {isOpen && day.details && day.details.length > 0 && (
-                        <ul className="list-disc ml-8 text-sm text-gray-700 space-y-2">
-                          {day.details.map((detail, i) => (
-                            <li key={i}>{detail}</li>
-                          ))}
-                        </ul>
-                      )}
-                    </div>
-                  </div>
-                );
-              })}
+              >
+                <span className="flex items-center">
+                  <span className="bg-[#09c2e7] text-white rounded px-3 py-1 mr-2 text-xs font-bold inline-block">
+                    {day.day}
+                  </span>
+                  <span className="text-base font-semibold">{day.title}</span>
+                </span>
+                {isOpen ? (
+                  <ChevronUp className="w-6 h-6 text-sky-600" />
+                ) : (
+                  <ChevronDown className="w-6 h-6 text-sky-600" />
+                )}
+              </button>
+              <div
+                className={`overflow-hidden transition-all duration-200 px-5
+                ${isOpen ? "max-h-96 py-3 bg-blue-50" : "max-h-0 py-0 bg-white"}`}
+              >
+                {isOpen && day.details && day.details.length > 0 && (
+                  <ul className="list-disc ml-8 text-sm text-gray-700 space-y-2">
+                    {day.details.map((detail, i) => (
+                      <li key={i}>{detail}</li>
+                    ))}
+                  </ul>
+                )}
+              </div>
             </div>
-          </div>
+          );
+        })}
+      </div>
+    </div>
           <div ref={inclusionsRef} className="scroll-mt-24">
             <h2 className="flex items-center text-lg font-bold text-green-700 mb-1">
               <span className="border-l-4 border-green-400 pl-2 mr-2" />
@@ -572,7 +562,7 @@ const PackageDetailsPage = () => {
               <span className="text-xs text-gray-500 mb-3">
                 {packageDetails.perPerson}
               </span>
-              <Button className="w-full bg-cyan-400 hover:bg-cyan-500 text-white font-semibold rounded transition">
+              <Button className="w-full bg-[#01AFD1] hover:bg-cyan-500 text-white font-semibold rounded-full transition">
                 Dates & Costing
               </Button>
             </div>
@@ -628,7 +618,7 @@ const PackageDetailsPage = () => {
                 />
               </div>
               <Button
-                className="w-full bg-yellow-300 hover:bg-yellow-400 text-sky-900 font-bold mt-2"
+                className="w-full rounded-full bg-[#FEE60E] hover:bg-yellow-400 text-black font-bold mt-2"
                 type="submit"
                 disabled={formStatus === "submitted"}
               >
