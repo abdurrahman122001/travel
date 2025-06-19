@@ -24,7 +24,7 @@ import {
   FaCalendarAlt,
 } from "react-icons/fa";
 import Footer from "@/components/Footer";
-
+import {Link} from "react-router-dom"
 const slides = [
   {
     image:
@@ -836,68 +836,70 @@ export default function Package() {
               >
                 {trips.map((trip, i) => (
                   <SwiperSlide key={i}>
-                    <div className="relative h-[470px] rounded-[15px] overflow-hidden group shadow border bg-black/80">
-                      {/* BG Image */}
-                      <img
-                        src={trip.img}
-                        alt={trip.title}
-                        className="w-full h-full object-cover"
-                      />
-                      {/* Gradient overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
-                      {/* Price badge */}
-                      <div className="absolute top-5 left-5 z-20">
-                        <div className="flex items-center gap-1 px-3 py-1 rounded-full bg-yellow-300/95 text-gray-900 font-semibold text-[15px] shadow min-w-[175px] justify-center">
-                          <span className="line-through text-gray-600 text-sm">
-                            {trip.oldPrice}
-                          </span>
-                          <span className="font-bold">{trip.price}/-</span>
-                          <span className="text-xs">{trip.priceText}</span>
-                        </div>
-                      </div>
-                      {/* Tag */}
-                      <div className="absolute left-5 top-[62px] z-30">
-                        <span
-                          className={`text-xs font-bold px-3 py-1 rounded-md ${trip.tagColor} text-gray-800 shadow`}
-                        >
-                          {trip.tagText}
-                        </span>
-                      </div>
-                      {/* Card Content */}
-                      <div className="absolute bottom-0 left-0 w-full px-5 pb-5 pt-3 z-10 text-white">
-                        <div className="font-bold text-[1.08rem] leading-tight mb-2 min-h-[48px]">
-                          {trip.title}
-                        </div>
-                        <div className="text-xs bg-white/15 rounded px-2 py-1 mb-2 max-w-full overflow-x-auto whitespace-nowrap">
-                          {trip.subtitle}
-                        </div>
-
-                        {/* Row 1: Duration & Airport */}
-                        <div className="flex items-center justify-between text-xs text-white/90 gap-6 mb-1">
-                          <span className="flex items-center font-bold">
-                            <FaClock className="text-[#00AFD1] text-base mr-2" />
-                            <span className="text-white">{trip.days}</span>
-                          </span>
-                          <span className="flex items-center font-bold">
-                            <FaMapMarkerAlt className="text-[#00AFD1] text-base mr-2" />
-                            <span className="text-white">{trip.airport}</span>
-                          </span>
-                        </div>
-
-                        {/* Row 2: Dates & Batch */}
-                        <div className="flex items-center text-xs mt-1">
-                          <span className="flex items-center font-bold mr-2">
-                            <FaCalendarAlt className="text-[#00AFD1] text-base mr-2" />
-                            <span className="text-white">{trip.start}</span>
-                          </span>
-                          {trip.batch && (
-                            <span className="text-green-400 font-bold ml-1">
-                              {trip.batch}
+                    <Link to="/packages/1">
+                      <div className="relative h-[470px] rounded-[15px] overflow-hidden group shadow border bg-black/80">
+                        {/* BG Image */}
+                        <img
+                          src={trip.img}
+                          alt={trip.title}
+                          className="w-full h-full object-cover"
+                        />
+                        {/* Gradient overlay */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
+                        {/* Price badge */}
+                        <div className="absolute top-5 left-5 z-20">
+                          <div className="flex items-center gap-1 px-3 py-1 rounded-full bg-yellow-300/95 text-gray-900 font-semibold text-[15px] shadow min-w-[175px] justify-center">
+                            <span className="line-through text-gray-600 text-sm">
+                              {trip.oldPrice}
                             </span>
-                          )}
+                            <span className="font-bold">{trip.price}/-</span>
+                            <span className="text-xs">{trip.priceText}</span>
+                          </div>
+                        </div>
+                        {/* Tag */}
+                        <div className="absolute left-5 top-[62px] z-30">
+                          <span
+                            className={`text-xs font-bold px-3 py-1 rounded-md ${trip.tagColor} text-gray-800 shadow`}
+                          >
+                            {trip.tagText}
+                          </span>
+                        </div>
+                        {/* Card Content */}
+                        <div className="absolute bottom-0 left-0 w-full px-5 pb-5 pt-3 z-10 text-white">
+                          <div className="font-bold text-[1.08rem] leading-tight mb-2 min-h-[48px]">
+                            {trip.title}
+                          </div>
+                          <div className="text-xs bg-white/15 rounded px-2 py-1 mb-2 max-w-full overflow-x-auto whitespace-nowrap">
+                            {trip.subtitle}
+                          </div>
+
+                          {/* Row 1: Duration & Airport */}
+                          <div className="flex items-center justify-between text-xs text-white/90 gap-6 mb-1">
+                            <span className="flex items-center font-bold">
+                              <FaClock className="text-[#00AFD1] text-base mr-2" />
+                              <span className="text-white">{trip.days}</span>
+                            </span>
+                            <span className="flex items-center font-bold">
+                              <FaMapMarkerAlt className="text-[#00AFD1] text-base mr-2" />
+                              <span className="text-white">{trip.airport}</span>
+                            </span>
+                          </div>
+
+                          {/* Row 2: Dates & Batch */}
+                          <div className="flex items-center text-xs mt-1">
+                            <span className="flex items-center font-bold mr-2">
+                              <FaCalendarAlt className="text-[#00AFD1] text-base mr-2" />
+                              <span className="text-white">{trip.start}</span>
+                            </span>
+                            {trip.batch && (
+                              <span className="text-green-400 font-bold ml-1">
+                                {trip.batch}
+                              </span>
+                            )}
+                          </div>
                         </div>
                       </div>
-                    </div>
+                    </Link>
                   </SwiperSlide>
                 ))}
               </Swiper>
@@ -999,6 +1001,7 @@ export default function Package() {
               >
                 {trips2.map((trip, i) => (
                   <SwiperSlide key={i}>
+                    <Link to="/packages/1">
                     <div className="relative h-[470px] rounded-[15px] overflow-hidden group shadow border bg-black/80">
                       {/* BG Image */}
                       <img
@@ -1061,6 +1064,7 @@ export default function Package() {
                         </div>
                       </div>
                     </div>
+                    </Link>
                   </SwiperSlide>
                 ))}
               </Swiper>
