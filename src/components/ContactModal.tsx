@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -21,8 +20,7 @@ const ContactModal = ({ isOpen, onClose }: ContactModalProps) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Contact form submitted:", formData);
-    // Here you would typically send the data to your backend
+    // Submit your form here
     onClose();
     setFormData({ name: "", email: "", phone: "", message: "" });
   };
@@ -36,12 +34,14 @@ const ContactModal = ({ isOpen, onClose }: ContactModalProps) => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div className="absolute inset-0 bg-black/50" onClick={onClose} />
-      <Card className="relative w-full max-w-2xl mx-4 max-h-[90vh] overflow-y-auto">
+      <Card className="relative w-full max-w-sm mx-2 max-h-[90vh] overflow-y-auto shadow-lg">
         <CardHeader>
           <div className="flex items-center justify-between">
             <div>
-              <CardTitle className="text-2xl">Get in Touch</CardTitle>
-              <CardDescription>We'd love to hear from you. Send us a message!</CardDescription>
+              <CardTitle className="text-lg">Get in Touch</CardTitle>
+              <CardDescription>
+                We'd love to hear from you. Send us a message!
+              </CardDescription>
             </div>
             <button
               onClick={onClose}
@@ -51,62 +51,60 @@ const ContactModal = ({ isOpen, onClose }: ContactModalProps) => {
             </button>
           </div>
         </CardHeader>
-        
-        <CardContent className="space-y-6">
+        <CardContent className="space-y-4 pb-4">
           {/* Contact Information */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 bg-muted/30 rounded-lg">
+          <div className="space-y-2 p-4 bg-muted/30 rounded-lg">
             <div className="flex items-center gap-2">
               <Phone className="w-5 h-5 text-primary" />
               <div>
-                <p className="font-medium">Phone</p>
-                <p className="text-sm text-muted-foreground">+1 (555) 123-4567</p>
+                <p className="font-medium text-sm">Phone</p>
+                <p className="text-xs text-muted-foreground">
+                  +1 (555) 123-4567
+                </p>
               </div>
             </div>
-            
             <div className="flex items-center gap-2">
               <Mail className="w-5 h-5 text-primary" />
               <div>
-                <p className="font-medium">Email</p>
-                <p className="text-sm text-muted-foreground">info@wanderlust.com</p>
+                <p className="font-medium text-sm">Email</p>
+                <p className="text-xs text-muted-foreground">
+                  info@wanderlust.com
+                </p>
               </div>
             </div>
-            
             <div className="flex items-center gap-2">
               <MapPin className="w-5 h-5 text-primary" />
               <div>
-                <p className="font-medium">Address</p>
-                <p className="text-sm text-muted-foreground">123 Travel St, City</p>
+                <p className="font-medium text-sm">Address</p>
+                <p className="text-xs text-muted-foreground">
+                  123 Travel St, City
+                </p>
               </div>
             </div>
           </div>
-          
           {/* Contact Form */}
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <Label htmlFor="name">Full Name</Label>
-                <Input
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              
-              <div>
-                <Label htmlFor="email">Email</Label>
-                <Input
-                  id="email"
-                  name="email"
-                  type="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
+          <form onSubmit={handleSubmit} className="space-y-3">
+            <div>
+              <Label htmlFor="name">Full Name</Label>
+              <Input
+                id="name"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                required
+              />
             </div>
-            
+            <div>
+              <Label htmlFor="email">Email</Label>
+              <Input
+                id="email"
+                name="email"
+                type="email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+              />
+            </div>
             <div>
               <Label htmlFor="phone">Phone Number</Label>
               <Input
@@ -117,7 +115,6 @@ const ContactModal = ({ isOpen, onClose }: ContactModalProps) => {
                 onChange={handleChange}
               />
             </div>
-            
             <div>
               <Label htmlFor="message">Message</Label>
               <textarea
@@ -126,12 +123,11 @@ const ContactModal = ({ isOpen, onClose }: ContactModalProps) => {
                 value={formData.message}
                 onChange={handleChange}
                 required
-                className="w-full min-h-[120px] px-3 py-2 border border-input bg-background rounded-md text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                className="w-full min-h-[80px] px-3 py-2 border border-input bg-background rounded-md text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 placeholder="Tell us about your travel plans..."
               />
             </div>
-            
-            <div className="flex gap-3 pt-4">
+            <div className="flex gap-2 pt-2">
               <Button type="submit" className="flex-1">
                 Send Message
               </Button>

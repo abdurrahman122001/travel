@@ -1,13 +1,21 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Menu, X, Search, ChevronDown } from "lucide-react";
+import {
+  Menu,
+  X,
+  Search,
+  ChevronDown,
+  Facebook,
+  Instagram,
+  Youtube,
+  Phone,
+} from "lucide-react";
 import logo from "../../public/logo.png";
 
 interface NavigationProps {
   onContactClick: () => void;
 }
 
-// Dummy dropdowns for each menu
 const skyMenuDropdowns: Record<string, string[]> = {
   "International Trips": ["Europe", "Dubai", "Thailand", "Singapore"],
   "Indian Trips": ["Kashmir", "Goa", "Himachal", "Kerala"],
@@ -45,12 +53,11 @@ const Navigations: React.FC<NavigationProps> = ({ onContactClick }) => {
       {/* Top Header */}
       <div className="bg-white px-4 md:px-12 py-3 border-b border-blue-200">
         <div className="flex items-center justify-between">
-          {/* Logo + Desktop Search */}
+          {/* Logo + Search */}
           <div className="flex items-center gap-3">
             <Link to="/">
               <img src={logo} alt="Logo" className="h-24 w-auto" />
             </Link>
-            {/* Desktop Search */}
             <div className="relative hidden lg:block ml-6">
               <input
                 type="text"
@@ -66,29 +73,31 @@ const Navigations: React.FC<NavigationProps> = ({ onContactClick }) => {
               />
             </div>
           </div>
+
           {/* Desktop Nav */}
           <div className="hidden lg:flex items-center space-x-6 text-sm text-gray-800">
-            <Link
-              to="/upcoming-trips"
-              className="hover:text-blue-600 flex items-center gap-1"
-            >
+            <Link to="/upcoming-trips" className="hover:text-blue-600 flex items-center gap-1">
               📅 Upcoming Trips
             </Link>
-            <Link to="/" className="hover:text-blue-600">
-              Home
-            </Link>
-            <Link to="/package" className="hover:text-blue-600">
-              Packages
-            </Link>
-            <Link to="/about" className="hover:text-blue-600">
-              About Us
-            </Link>
-            <Link to="/blog" className="hover:text-blue-600">
-              Blog
-            </Link>
-            <Link to="/payments" className="hover:text-blue-600">
-              Payments
-            </Link>
+            <Link to="/" className="hover:text-blue-600">Home</Link>
+            <Link to="/package" className="hover:text-blue-600">Packages</Link>
+            <Link to="/about" className="hover:text-blue-600">About Us</Link>
+            <Link to="/blog" className="hover:text-blue-600">Blog</Link>
+            {/* Social Icons */}
+            <div className="flex gap-4 items-center text-blue-600">
+              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+                <Facebook className="w-4 h-4 hover:text-blue-800" />
+              </a>
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+                <Instagram className="w-4 h-4 hover:text-pink-600" />
+              </a>
+              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer">
+                <Youtube className="w-4 h-4 hover:text-red-600" />
+              </a>
+              <a href="https://wa.me/1234567890" target="_blank" rel="noopener noreferrer">
+                <Phone className="w-4 h-4 hover:text-green-600" />
+              </a>
+            </div>
             <button
               onClick={onContactClick}
               className="px-5 py-2 rounded-full transition font-semibold border border-sky-400 text-sky-400 hover:bg-sky-50"
@@ -96,6 +105,7 @@ const Navigations: React.FC<NavigationProps> = ({ onContactClick }) => {
               Contact Us
             </button>
           </div>
+
           {/* Mobile Menu */}
           <button onClick={() => setIsSidebarOpen(true)} className="lg:hidden">
             <Menu className="w-6 h-6 text-blue-600" />
@@ -103,7 +113,7 @@ const Navigations: React.FC<NavigationProps> = ({ onContactClick }) => {
         </div>
       </div>
 
-      {/* Sky Blue Menu: only handwritten options */}
+      {/* Sky Menu */}
       <div className="bg-sky-400 text-white text-[15px] font-medium py-4 hidden lg:flex justify-center items-center space-x-7 relative z-40">
         {skyMenuOrder.map((label) => (
           <div className="group relative" key={label}>
@@ -114,11 +124,7 @@ const Navigations: React.FC<NavigationProps> = ({ onContactClick }) => {
             <div className="absolute left-1/2 -translate-x-1/2 mt-3 bg-white text-black rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 min-w-[220px] p-4 z-50">
               <div className="flex flex-col gap-2 text-sm">
                 {skyMenuDropdowns[label].map((item, index) => (
-                  <Link
-                    key={index}
-                    to="#"
-                    className="hover:text-blue-600 whitespace-nowrap"
-                  >
+                  <Link key={index} to="#" className="hover:text-blue-600 whitespace-nowrap">
                     {item}
                   </Link>
                 ))}
@@ -138,6 +144,7 @@ const Navigations: React.FC<NavigationProps> = ({ onContactClick }) => {
                 <X className="w-6 h-6 text-blue-700" />
               </button>
             </div>
+
             {/* Sidebar Search */}
             <div className="relative">
               <input
@@ -159,22 +166,16 @@ const Navigations: React.FC<NavigationProps> = ({ onContactClick }) => {
                 }}
               />
             </div>
-            {/* Links */}
+
+            {/* Navigation Links */}
             <nav className="flex flex-col space-y-3 text-sm text-gray-800">
-              <Link
-                to="/upcoming-trips"
-                onClick={() => setIsSidebarOpen(false)}
-              >
+              <Link to="/upcoming-trips" onClick={() => setIsSidebarOpen(false)}>
                 📅 Upcoming Trips
               </Link>
-              <Link to="/package" className="hover:text-blue-600">
+              <Link to="/package" onClick={() => setIsSidebarOpen(false)}>
                 Packages
               </Link>
-
-              <Link
-                to="/corporate-tours"
-                onClick={() => setIsSidebarOpen(false)}
-              >
+              <Link to="/corporate-tours" onClick={() => setIsSidebarOpen(false)}>
                 Corporate Tours
               </Link>
               <Link to="/blogs" onClick={() => setIsSidebarOpen(false)}>
@@ -182,9 +183,6 @@ const Navigations: React.FC<NavigationProps> = ({ onContactClick }) => {
               </Link>
               <Link to="/about" onClick={() => setIsSidebarOpen(false)}>
                 About Us
-              </Link>
-              <Link to="/payments" onClick={() => setIsSidebarOpen(false)}>
-                Payments
               </Link>
               <button
                 onClick={() => {
@@ -196,8 +194,24 @@ const Navigations: React.FC<NavigationProps> = ({ onContactClick }) => {
                 Contact Us
               </button>
             </nav>
+
             <hr className="border-gray-300" />
-            {/* For simplicity, you can also add the sky menu items here if you want */}
+
+            {/* Social Media Icons - Mobile */}
+            <div className="flex justify-center gap-5 text-blue-600 mt-2">
+              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+                <Facebook className="w-5 h-5 hover:text-blue-800" />
+              </a>
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+                <Instagram className="w-5 h-5 hover:text-pink-600" />
+              </a>
+              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer">
+                <Youtube className="w-5 h-5 hover:text-red-600" />
+              </a>
+              <a href="https://wa.me/1234567890" target="_blank" rel="noopener noreferrer">
+                <Phone className="w-5 h-5 hover:text-green-600" />
+              </a>
+            </div>
           </div>
           <div className="flex-1" onClick={() => setIsSidebarOpen(false)} />
         </div>

@@ -1,0 +1,19 @@
+# Force HTTPS (optional, only if your domain has SSL)
+# RewriteEngine On
+# RewriteCond %{HTTPS} !=on
+# RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Enable Rewrite Engine
+RewriteEngine On
+
+# Handle SPA routes (React Router support)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.html [QSA,L]
+
+# Optional: Allow CORS for your API (replace with your API IP or domain)
+<IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "http://168.231.101.206:4000"
+    Header set Access-Control-Allow-Methods "GET, POST, OPTIONS, PUT, DELETE"
+    Header set Access-Control-Allow-Headers "Content-Type, Authorization"
+</IfModule>
