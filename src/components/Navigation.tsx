@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import {
   Menu,
   X,
@@ -43,10 +43,12 @@ const Navigations: React.FC<NavigationProps> = ({ onContactClick }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [sidebarSearchTerm, setSidebarSearchTerm] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
 
-  const handleSearch = () => {
-    navigate("/search");
-  };
+  const onSearchNavigate = () => navigate("/search");
+
+  // Check if current path starts with "/search"
+  const isOnSearchRoute = location.pathname === "/search";
 
   return (
     <header className="w-full z-50">
@@ -58,18 +60,27 @@ const Navigations: React.FC<NavigationProps> = ({ onContactClick }) => {
             <Link to="/">
               <img src={logo} alt="Logo" className="h-24 w-auto" />
             </Link>
-            <div className="relative hidden lg:block ml-6">
+
+            {/* Desktop Search: hidden/disabled on /search */}
+            <div
+              className={`relative hidden lg:block ml-6 ${
+                isOnSearchRoute ? "opacity-50 pointer-events-none" : ""
+              }`}
+            >
               <input
                 type="text"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                onFocus={handleSearch}
+                onFocus={() => !isOnSearchRoute && onSearchNavigate()}
                 placeholder="Where do you want to go?"
-                className="w-72 px-4 py-2 pl-5 pr-10 text-sm rounded-full border border-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-400 placeholder:text-gray-500"
+                disabled={isOnSearchRoute}
+                className="w-72 px-4 py-2 pl-5 pr-10 text-sm rounded-full border border-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-400 placeholder:text-gray-500 disabled:bg-gray-100 disabled:placeholder-gray-400"
               />
               <Search
-                className="absolute right-3 top-2.5 w-4 h-4 text-blue-400 cursor-pointer"
-                onClick={handleSearch}
+                className={`absolute right-3 top-2.5 w-4 h-4 text-blue-400 cursor-pointer ${
+                  isOnSearchRoute ? "text-gray-400 cursor-default" : ""
+                }`}
+                onClick={() => !isOnSearchRoute && onSearchNavigate()}
               />
             </div>
           </div>
@@ -83,7 +94,6 @@ const Navigations: React.FC<NavigationProps> = ({ onContactClick }) => {
             <Link to="/package" className="hover:text-blue-600">Packages</Link>
             <Link to="/about" className="hover:text-blue-600">About Us</Link>
             <Link to="/blog" className="hover:text-blue-600">Blog</Link>
-            {/* Social Icons */}
             <div className="flex gap-4 items-center text-blue-600">
               <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
                 <Facebook className="w-4 h-4 hover:text-blue-800" />
@@ -106,7 +116,7 @@ const Navigations: React.FC<NavigationProps> = ({ onContactClick }) => {
             </button>
           </div>
 
-          {/* Mobile Menu */}
+          {/* Mobile Menu Button */}
           <button onClick={() => setIsSidebarOpen(true)} className="lg:hidden">
             <Menu className="w-6 h-6 text-blue-600" />
           </button>
@@ -123,8 +133,8 @@ const Navigations: React.FC<NavigationProps> = ({ onContactClick }) => {
             </div>
             <div className="absolute left-1/2 -translate-x-1/2 mt-3 bg-white text-black rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 min-w-[220px] p-4 z-50">
               <div className="flex flex-col gap-2 text-sm">
-                {skyMenuDropdowns[label].map((item, index) => (
-                  <Link key={index} to="#" className="hover:text-blue-600 whitespace-nowrap">
+                {skyMenuDropdowns[label].map((item, idx) => (
+                  <Link key={idx} to="#" className="hover:text-blue-600 whitespace-nowrap">
                     {item}
                   </Link>
                 ))}
@@ -134,7 +144,7 @@ const Navigations: React.FC<NavigationProps> = ({ onContactClick }) => {
         ))}
       </div>
 
-      {/* Sidebar for Mobile */}
+      {/* Mobile Sidebar */}
       {isSidebarOpen && (
         <div className="fixed inset-0 z-50 bg-black/50 flex">
           <div className="w-80 bg-white p-5 flex flex-col space-y-4">
@@ -145,51 +155,35 @@ const Navigations: React.FC<NavigationProps> = ({ onContactClick }) => {
               </button>
             </div>
 
-            {/* Sidebar Search */}
-            <div className="relative">
+            {/* Sidebar Search: hidden/disabled on /search */}
+            <div className={`${isOnSearchRoute ? "opacity-50 pointer-events-none" : ""}`}>
               <input
                 type="text"
                 value={sidebarSearchTerm}
                 onChange={(e) => setSidebarSearchTerm(e.target.value)}
-                onFocus={() => {
-                  setIsSidebarOpen(false);
-                  navigate("/search");
-                }}
+                onFocus={() => !isOnSearchRoute && (setIsSidebarOpen(false), onSearchNavigate())}
                 placeholder="Where do you want to go?"
-                className="w-full px-4 pl-5 pr-10 py-2 text-sm rounded-full border border-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                disabled={isOnSearchRoute}
+                className="w-full px-4 pl-5 pr-10 py-2 text-sm rounded-full border border-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-400 disabled:bg-gray-100 disabled:placeholder-gray-400"
               />
               <Search
-                className="absolute right-3 top-2.5 w-4 h-4 text-blue-400 cursor-pointer"
-                onClick={() => {
-                  setIsSidebarOpen(false);
-                  navigate("/search");
-                }}
+                className={`absolute right-3 top-[92px] w-4 h-4 text-blue-400 cursor-pointer ${
+                  isOnSearchRoute ? "text-gray-400 cursor-default" : ""
+                }`}
+                onClick={() => !isOnSearchRoute && (setIsSidebarOpen(false), onSearchNavigate())}
               />
             </div>
 
-            {/* Navigation Links */}
+            {/* Links */}
             <nav className="flex flex-col space-y-3 text-sm text-gray-800">
-              <Link to="/upcoming-trips" onClick={() => setIsSidebarOpen(false)}>
-                📅 Upcoming Trips
-              </Link>
-              <Link to="/package" onClick={() => setIsSidebarOpen(false)}>
-                Packages
-              </Link>
-              <Link to="/corporate-tours" onClick={() => setIsSidebarOpen(false)}>
-                Corporate Tours
-              </Link>
-              <Link to="/blogs" onClick={() => setIsSidebarOpen(false)}>
-                Blogs
-              </Link>
-              <Link to="/about" onClick={() => setIsSidebarOpen(false)}>
-                About Us
-              </Link>
+              <Link to="/upcoming-trips" onClick={() => setIsSidebarOpen(false)}>📅 Upcoming Trips</Link>
+              <Link to="/package" onClick={() => setIsSidebarOpen(false)}>Packages</Link>
+              <Link to="/corporate-tours" onClick={() => setIsSidebarOpen(false)}>Corporate Tours</Link>
+              <Link to="/blogs" onClick={() => setIsSidebarOpen(false)}>Blogs</Link>
+              <Link to="/about" onClick={() => setIsSidebarOpen(false)}>About Us</Link>
               <button
-                onClick={() => {
-                  setIsSidebarOpen(false);
-                  onContactClick();
-                }}
-                className="bg-blue-600 hover:bg-blue-700 text-white w-full px-5 py-2 rounded-full transition font-semibold shadow border-0 mt-1"
+                onClick={() => { setIsSidebarOpen(false); onContactClick(); }}
+                className="bg-blue-600 hover:bg-blue-700 text-white w-full px-5 py-2 rounded-full transition font-semibold shadow mt-1"
               >
                 Contact Us
               </button>
@@ -197,20 +191,12 @@ const Navigations: React.FC<NavigationProps> = ({ onContactClick }) => {
 
             <hr className="border-gray-300" />
 
-            {/* Social Media Icons - Mobile */}
+            {/* Social Icons */}
             <div className="flex justify-center gap-5 text-blue-600 mt-2">
-              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
-                <Facebook className="w-5 h-5 hover:text-blue-800" />
-              </a>
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
-                <Instagram className="w-5 h-5 hover:text-pink-600" />
-              </a>
-              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer">
-                <Youtube className="w-5 h-5 hover:text-red-600" />
-              </a>
-              <a href="https://wa.me/1234567890" target="_blank" rel="noopener noreferrer">
-                <Phone className="w-5 h-5 hover:text-green-600" />
-              </a>
+              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer"><Facebook className="w-5 h-5 hover:text-blue-800" /></a>
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"><Instagram className="w-5 h-5 hover:text-pink-600" /></a>
+              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer"><Youtube className="w-5 h-5 hover:text-red-600" /></a>
+              <a href="https://wa.me/1234567890" target="_blank" rel="noopener noreferrer"><Phone className="w-5 h-5 hover:text-green-600" /></a>
             </div>
           </div>
           <div className="flex-1" onClick={() => setIsSidebarOpen(false)} />

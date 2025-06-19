@@ -18,7 +18,7 @@ import {
 import DownloadModal from "@/components/DownloadModal";
 import Navigations from "@/components/Navigation";
 // --- DEMO DATA ---
-
+import Footer from "@/components/Footer";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import "swiper/css";
@@ -420,10 +420,9 @@ const PackageDetailsPage = () => {
                 key={tab.key}
                 onClick={() => handleTabClick(tab.key)}
                 className={`flex-1 min-w-[180px] py-3 px-4 font-semibold text-base transition
-                  border-b-2 ${
-                    activeTab === tab.key
-                      ? "border-sky-400 text-sky-500 bg-[#f3fdff]"
-                      : "border-transparent text-slate-700 hover:bg-slate-50"
+                  border-b-2 ${activeTab === tab.key
+                    ? "border-sky-400 text-sky-500 bg-[#f3fdff]"
+                    : "border-transparent text-slate-700 hover:bg-slate-50"
                   } rounded-lg first:rounded-l-lg last:rounded-r-lg`}
                 style={{ outline: "none" }}
               >
@@ -466,9 +465,8 @@ const PackageDetailsPage = () => {
                 return (
                   <div
                     key={idx}
-                    className={`border-b last:border-0 ${
-                      isOpen ? "bg-blue-50" : ""
-                    }`}
+                    className={`border-b last:border-0 ${isOpen ? "bg-blue-50" : ""
+                      }`}
                   >
                     <button
                       onClick={() => toggleDay(idx)}
@@ -492,11 +490,10 @@ const PackageDetailsPage = () => {
                     </button>
                     <div
                       className={`overflow-hidden transition-all duration-200 px-5
-                  ${
-                    isOpen
-                      ? "max-h-40 py-3 bg-blue-50"
-                      : "max-h-0 py-0 bg-white"
-                  }`}
+                  ${isOpen
+                          ? "max-h-40 py-3 bg-blue-50"
+                          : "max-h-0 py-0 bg-white"
+                        }`}
                     >
                       {isOpen && day.details && day.details.length > 0 && (
                         <ul className="list-disc ml-8 text-sm text-gray-700 space-y-2">
@@ -865,6 +862,8 @@ const PackageDetailsPage = () => {
           </div>
         </section>
       </div>
+      <Footer setIsContactModalOpen={setIsContactModalOpen} />
+
     </div>
   );
 };
