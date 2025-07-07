@@ -42,7 +42,42 @@ const Index = () => {
   const AUTO_SLIDE_INTERVAL = 3000;
   const prevRef = useRef(null);
   const nextRef = useRef(null);
+  const [internationalTrips, setInternationalTrips] = useState([]);
+  const [loadingIntl, setLoadingIntl] = useState(true);
+  const [indiaTrips, setIndiaTrips] = useState([]);
+  const [loadingIndia, setLoadingIndia] = useState(true);
+  const prevIntlRef = useRef(null);
+  const nextIntlRef = useRef(null);
+  const prevIndiaRef = useRef(null);
+  const nextIndiaRef = useRef(null);
+  const [romanticTrips, setRomanticTrips] = useState([]);
+  const [loadingRomantic, setLoadingRomantic] = useState(true);
+  const prevRomanticRef = useRef(null);
+  const nextRomanticRef = useRef(null);
+  useEffect(() => {
+    // Fetch International Trips
+    setLoadingIntl(true);
+    fetch(`${import.meta.env.VITE_API_URL}/trips/international`)
+      .then(res => res.json())
+      .then(data => setInternationalTrips(Array.isArray(data) ? data : []))
+      .catch(() => setInternationalTrips([]))
+      .finally(() => setLoadingIntl(false));
 
+    // Fetch India Trips
+    setLoadingIndia(true);
+    fetch(`${import.meta.env.VITE_API_URL}/trips/explore-india`)
+      .then(res => res.json())
+      .then(data => setIndiaTrips(Array.isArray(data) ? data : []))
+      .catch(() => setIndiaTrips([]))
+      .finally(() => setLoadingIndia(false));
+
+    setLoadingRomantic(true);
+    fetch(`${import.meta.env.VITE_API_URL}/trips/romantic-escapes`)
+      .then(res => res.json())
+      .then(data => setRomanticTrips(Array.isArray(data) ? data : []))
+      .catch(() => setRomanticTrips([]))
+      .finally(() => setLoadingRomantic(false));
+  }, []);
   const heroSlides = [
     {
       image:
@@ -62,58 +97,6 @@ const Index = () => {
         "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1920&q=80",
       title: "Paradise Found",
       subtitle: "Relax on pristine beaches and enjoy luxury accommodations",
-    },
-  ];
-
-  const featuredPackages = [
-    {
-      id: 1,
-      title: "Bali Paradise",
-      description:
-        "Experience the magic of Bali with pristine beaches and cultural wonders",
-      image:
-        "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=500&q=80",
-      price: 1299,
-      duration: "7 Days",
-      location: "Bali, Indonesia",
-      rating: 4.8,
-      reviews: 156,
-    },
-    {
-      id: 2,
-      title: "Swiss Alps Adventure",
-      description: "Breathtaking mountain views and alpine adventures await",
-      image:
-        "https://images.unsplash.com/photo-1433086966358-54859d0ed716?auto=format&fit=crop&w=500&q=80",
-      price: 1899,
-      duration: "10 Days",
-      location: "Switzerland",
-      rating: 4.9,
-      reviews: 203,
-    },
-    {
-      id: 3,
-      title: "African Safari",
-      description: "Witness incredible wildlife in their natural habitat",
-      image:
-        "https://images.unsplash.com/photo-1466721591366-2d5fba72006d?auto=format&fit=crop&w=500&q=80",
-      price: 2499,
-      duration: "12 Days",
-      location: "Kenya & Tanzania",
-      rating: 4.7,
-      reviews: 98,
-    },
-    {
-      id: 4,
-      title: "Patagonia Expedition",
-      description: "Explore the untamed wilderness of South America",
-      image:
-        "https://images.unsplash.com/photo-1482938289607-e9573fc25ebb?auto=format&fit=crop&w=500&q=80",
-      price: 2199,
-      duration: "14 Days",
-      location: "Argentina & Chile",
-      rating: 4.6,
-      reviews: 87,
     },
   ];
 
@@ -262,170 +245,6 @@ const Index = () => {
     };
   }, [currentTextIndex, typing]);
 
-  const InternattionalDestinations = [
-    {
-      title: "Europe",
-      price: "1,49,999",
-      image:
-        "https://images.wanderon.in/new-homepage-data/Explore%20India/kerala",
-    },
-    {
-      title: "Georgia",
-      price: "58,999",
-      image:
-        "https://images.wanderon.in/new-homepage-data/Explore%20India/ladakh",
-    },
-    {
-      title: "Bali",
-      price: "49,999",
-      image:
-        "https://images.wanderon.in/new-homepage-data/Explore%20India/rajasthan",
-    },
-    {
-      title: "Vietnam",
-      price: "59,999",
-      image:
-        "https://images.wanderon.in/new-homepage-data/Explore%20India/andaman",
-    },
-    {
-      title: "Thailand",
-      price: "44,999",
-      image:
-        "https://images.wanderon.in/new-homepage-data/Explore%20India/ladakh",
-    },
-    {
-      title: "Kashmir",
-      price: "29,999",
-      image:
-        "https://images.wanderon.in/new-homepage-data/romantic%20escapes/kashmir-romantic-02",
-    },
-    {
-      title: "Leh-Ladakh",
-      price: "39,999",
-      image:
-        "https://images.wanderon.in/new-homepage-data/Explore%20India/ladakh",
-    },
-    {
-      title: "Spiti Valley",
-      price: "34,999",
-      image:
-        "https://images.wanderon.in/new-homepage-data/Explore%20India/spiti",
-    },
-    {
-      title: "Meghalaya",
-      price: "33,999",
-      image:
-        "https://images.wanderon.in/new-homepage-data/Explore%20India/meghalaya",
-    },
-  ];
-
-  const RomanticTrips = [
-    {
-      title: "Europe",
-      price: "1,49,999",
-      image:
-        "https://images.wanderon.in/new-homepage-data/Explore%20India/kerala",
-    },
-    {
-      title: "Georgia",
-      price: "58,999",
-      image:
-        "https://images.wanderon.in/new-homepage-data/Explore%20India/ladakh",
-    },
-    {
-      title: "Bali",
-      price: "49,999",
-      image:
-        "https://images.wanderon.in/new-homepage-data/Explore%20India/rajasthan",
-    },
-    {
-      title: "Vietnam",
-      price: "59,999",
-      image:
-        "https://images.wanderon.in/new-homepage-data/Explore%20India/andaman",
-    },
-    {
-      title: "Thailand",
-      price: "44,999",
-      image:
-        "https://images.wanderon.in/new-homepage-data/Explore%20India/ladakh",
-    },
-    {
-      title: "Kashmir",
-      price: "29,999",
-      image:
-        "https://images.wanderon.in/new-homepage-data/romantic%20escapes/kashmir-romantic-02",
-    },
-    {
-      title: "Leh-Ladakh",
-      price: "39,999",
-      image:
-        "https://images.wanderon.in/new-homepage-data/Explore%20India/ladakh",
-    },
-    {
-      title: "Spiti Valley",
-      price: "34,999",
-      image:
-        "https://images.wanderon.in/new-homepage-data/Explore%20India/spiti",
-    },
-    {
-      title: "Meghalaya",
-      price: "33,999",
-      image:
-        "https://images.wanderon.in/new-homepage-data/Explore%20India/meghalaya",
-    },
-  ];
-
-  const LocalDestination = [
-    {
-      title: "Kerala",
-      price: "1,49,999",
-      image:
-        "https://images.wanderon.in/new-homepage-data/Explore%20India/kerala",
-    },
-    {
-      title: "Ladakh",
-      price: "58,999",
-      image:
-        "https://images.wanderon.in/new-homepage-data/Explore%20India/ladakh",
-    },
-    {
-      title: "Rajasthan",
-      price: "49,999",
-      image:
-        "https://images.wanderon.in/new-homepage-data/Explore%20India/rajasthan",
-    },
-    {
-      title: "Andaman",
-      price: "59,999",
-      image:
-        "https://images.wanderon.in/new-homepage-data/Explore%20India/andaman",
-    },
-    {
-      title: "Himachal",
-      price: "44,999",
-      image:
-        "https://images.wanderon.in/new-homepage-data/Explore%20India/ladakh",
-    },
-    {
-      title: "Kashmir",
-      price: "29,999",
-      image:
-        "https://images.wanderon.in/new-homepage-data/romantic%20escapes/kashmir-romantic-02",
-    },
-    {
-      title: "Leh-Ladakh",
-      price: "39,999",
-      image:
-        "https://images.wanderon.in/new-homepage-data/Explore%20India/ladakh",
-    },
-    {
-      title: "Spiti Valley",
-      price: "34,999",
-      image:
-        "https://images.wanderon.in/new-homepage-data/Explore%20India/spiti",
-    },
-  ];
   const months = [
     "JUN '25",
     "JUL '25",
@@ -641,16 +460,15 @@ const Index = () => {
 
           {/* Swiper Slider */}
           <div className="relative w-full max-w-[1150px] min-h-[430px] flex items-center">
-            {/* LEFT ARROW - align to slide */}
+            {/* LEFT ARROW */}
             <button
-              ref={prevRef}
-              className="z-20 absolute  left-[-25px] top-1/2 -translate-y-1/2 bg-[#74bdda] hover:bg-[#52aec5] w-[45px] h-[45px] rounded-full flex items-center justify-center"
+              ref={prevIntlRef}
+              className="z-20 absolute left-[-25px] top-1/2 -translate-y-1/2 bg-[#74bdda] hover:bg-[#52aec5] w-[45px] h-[45px] rounded-full flex items-center justify-center"
               aria-label="Previous"
               style={{
                 boxShadow: "0 4px 24px rgba(80,160,180,0.16)",
               }}
             >
-              {/* Arrow Icon */}
               <svg width={28} height={28} fill="none" viewBox="0 0 24 24">
                 <path
                   d="M15.5 19L8.5 12L15.5 5"
@@ -662,16 +480,15 @@ const Index = () => {
               </svg>
             </button>
 
-            {/* RIGHT ARROW - align to slide */}
+            {/* RIGHT ARROW */}
             <button
-              ref={nextRef}
+              ref={nextIntlRef}
               className="z-20 absolute right-[-25px] top-1/2 -translate-y-1/2 bg-[#74bdda] hover:bg-[#52aec5] w-[45px] h-[45px] rounded-full flex items-center justify-center shadow-lg"
               aria-label="Next"
               style={{
                 boxShadow: "0 4px 24px rgba(80,160,180,0.16)",
               }}
             >
-              {/* Arrow Icon */}
               <svg width={28} height={28} fill="none" viewBox="0 0 24 24">
                 <path
                   d="M8.5 5L15.5 12L8.5 19"
@@ -690,18 +507,18 @@ const Index = () => {
                 spaceBetween={20}
                 slidesPerView={5}
                 navigation={{
-                  prevEl: prevRef.current,
-                  nextEl: nextRef.current,
+                  prevEl: prevIntlRef.current,
+                  nextEl: nextIntlRef.current,
                 }}
                 pagination={{
                   clickable: true,
-                  el: ".swiper-pagination-romantic",
+                  el: ".swiper-pagination-international",
                 }}
                 onInit={(swiper) => {
                   // @ts-ignore
-                  swiper.params.navigation.prevEl = prevRef.current;
+                  swiper.params.navigation.prevEl = prevIntlRef.current;
                   // @ts-ignore
-                  swiper.params.navigation.nextEl = nextRef.current;
+                  swiper.params.navigation.nextEl = nextIntlRef.current;
                   swiper.navigation.init();
                   swiper.navigation.update();
                 }}
@@ -713,57 +530,46 @@ const Index = () => {
                 }}
                 className="w-full"
               >
-                {InternattionalDestinations.map((item, idx) => (
-                  <SwiperSlide
-                    key={idx}
-                    className="w-[250px] md:w-[270px] flex-shrink-0"
-                  >
-                    <div className="rounded-xl overflow-hidden shadow-lg border border-white bg-white relative group transition-all">
-                      <img
-                        src={item.image}
-                        alt={item.title}
-                        className="w-full h-[330px] object-cover"
-                        draggable={false}
-                      />
-                      <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black via-black/50 to-transparent">
-                        <h3 className="text-white text-center text-2xl font-bold drop-shadow">
-                          {item.title}
-                        </h3>
-                        <p className="text-white text-center text-sm font-medium drop-shadow">
-                          Starting Price Rs. {item.price}/-
-                        </p>
-                      </div>
+                {loadingIntl ? (
+                  <SwiperSlide>
+                    <div className="flex items-center justify-center h-[330px] text-lg">
+                      Loading international trips...
                     </div>
                   </SwiperSlide>
-                ))}
+                ) : internationalTrips.length === 0 ? (
+                  <SwiperSlide>
+                    <div className="flex items-center justify-center h-[330px] text-lg">
+                      No International Trips available at the moment.
+                    </div>
+                  </SwiperSlide>
+                ) : (
+                  internationalTrips.map((trip, idx) => (
+                    <SwiperSlide key={trip._id || idx} className="w-[250px] md:w-[270px] flex-shrink-0">
+                      <div className="rounded-xl overflow-hidden shadow-lg border border-white bg-white relative group transition-all">
+                        <img
+                          src={trip.image}
+                          alt={trip.title}
+                          className="w-full h-[330px] object-cover"
+                          draggable={false}
+                        />
+                        <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black via-black/50 to-transparent">
+                          <h3 className="text-white text-center text-2xl font-bold drop-shadow">
+                            {trip.title}
+                          </h3>
+                          <p className="text-white text-center text-sm font-medium drop-shadow">
+                            Starting Price Rs. {trip.price}/-
+                          </p>
+                        </div>
+                      </div>
+                    </SwiperSlide>
+                  ))
+                )}
               </Swiper>
-              {/* Pagination Dots */}
-              {/* <div className="swiper-pagination-romantic mt-6"></div> */}
             </div>
           </div>
-
-          {/* Swiper custom styles */}
-          <style>{`
-          .swiper-pagination-romantic {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            margin-top: 18px;
-          }
-          .swiper-pagination-bullet {
-            width: 44px;
-            height: 8px;
-            border-radius: 8px;
-            background: #e0e6ea;
-            opacity: 1;
-            transition: background 0.3s;
-          }
-          .swiper-pagination-bullet-active {
-            background: #74bdda;
-          }
-        `}</style>
         </div>
       </section>
+
       <EffectCardTwo />
       <section className="py-12 relative hidden md:block mt-15 bg-[#FFECE2]">
         <div className="max-w-[1500px] mx-auto px-4 flex flex-col items-center">
@@ -790,7 +596,7 @@ const Index = () => {
                 className="text-white text-lg md:text-2xl mb-8 font-medium"
                 style={{ fontFamily: "Roboto, sans-serif" }}
               >
-                Discover the world, one destination at a time
+                Discover the beauty of India, one destination at a time
               </p>
               <button className="bg-yellow-300 hover:bg-yellow-400 text-black font-semibold rounded-md py-3 text-lg shadow-md border border-yellow-400 transition-all duration-150 focus:outline-none w-36 flex justify-center items-center">
                 Explore
@@ -800,16 +606,15 @@ const Index = () => {
 
           {/* Swiper Slider */}
           <div className="relative w-full max-w-[1150px] min-h-[430px] flex items-center" style={{ marginTop: '-45px', zIndex: 20 }}>
-            {/* LEFT ARROW - align to slide */}
+            {/* LEFT ARROW */}
             <button
-              ref={prevRef}
+              ref={prevIndiaRef}
               className="z-20 absolute left-[-25px] top-1/2 -translate-y-1/2 bg-[#74bdda] hover:bg-[#52aec5] w-[45px] h-[45px] rounded-full flex items-center justify-center"
               aria-label="Previous"
               style={{
                 boxShadow: "0 4px 24px rgba(80,160,180,0.16)",
               }}
             >
-              {/* Arrow Icon */}
               <svg width={28} height={28} fill="none" viewBox="0 0 24 24">
                 <path
                   d="M15.5 19L8.5 12L15.5 5"
@@ -821,16 +626,15 @@ const Index = () => {
               </svg>
             </button>
 
-            {/* RIGHT ARROW - align to slide */}
+            {/* RIGHT ARROW */}
             <button
-              ref={nextRef}
+              ref={nextIndiaRef}
               className="z-20 absolute right-[-25px] top-1/2 -translate-y-1/2 bg-[#74bdda] hover:bg-[#52aec5] w-[45px] h-[45px] rounded-full flex items-center justify-center shadow-lg"
               aria-label="Next"
               style={{
                 boxShadow: "0 4px 24px rgba(80,160,180,0.16)",
               }}
             >
-              {/* Arrow Icon */}
               <svg width={28} height={28} fill="none" viewBox="0 0 24 24">
                 <path
                   d="M8.5 5L15.5 12L8.5 19"
@@ -841,6 +645,7 @@ const Index = () => {
                 />
               </svg>
             </button>
+
             {/* Swiper slides */}
             <div className="overflow-visible w-full">
               <Swiper
@@ -848,18 +653,18 @@ const Index = () => {
                 spaceBetween={20}
                 slidesPerView={5}
                 navigation={{
-                  prevEl: prevRef.current,
-                  nextEl: nextRef.current,
+                  prevEl: prevIndiaRef.current,
+                  nextEl: nextIndiaRef.current,
                 }}
                 pagination={{
                   clickable: true,
-                  el: ".swiper-pagination-romantic",
+                  el: ".swiper-pagination-explore-india",
                 }}
                 onInit={(swiper) => {
                   // @ts-ignore
-                  swiper.params.navigation.prevEl = prevRef.current;
+                  swiper.params.navigation.prevEl = prevIndiaRef.current;
                   // @ts-ignore
-                  swiper.params.navigation.nextEl = nextRef.current;
+                  swiper.params.navigation.nextEl = nextIndiaRef.current;
                   swiper.navigation.init();
                   swiper.navigation.update();
                 }}
@@ -871,57 +676,46 @@ const Index = () => {
                 }}
                 className="w-full"
               >
-                {LocalDestination.map((item, idx) => (
-                  <SwiperSlide
-                    key={idx}
-                    className="w-[250px] md:w-[270px] flex-shrink-0"
-                  >
-                    <div className="rounded-xl overflow-hidden shadow-lg border border-white bg-white relative group transition-all">
-                      <img
-                        src={item.image}
-                        alt={item.title}
-                        className="w-full h-[330px] object-cover"
-                        draggable={false}
-                      />
-                      <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black via-black/50 to-transparent">
-                        <h3 className="text-white text-center text-2xl font-bold drop-shadow">
-                          {item.title}
-                        </h3>
-                        <p className="text-white text-center text-sm font-medium drop-shadow">
-                          Starting Price Rs. {item.price}/-
-                        </p>
-                      </div>
+                {loadingIndia ? (
+                  <SwiperSlide>
+                    <div className="flex items-center justify-center h-[330px] text-lg">
+                      Loading India trips...
                     </div>
                   </SwiperSlide>
-                ))}
+                ) : indiaTrips.length === 0 ? (
+                  <SwiperSlide>
+                    <div className="flex items-center justify-center h-[330px] text-lg">
+                      No Explore India trips available at the moment.
+                    </div>
+                  </SwiperSlide>
+                ) : (
+                  indiaTrips.map((trip, idx) => (
+                    <SwiperSlide key={trip._id || idx} className="w-[250px] md:w-[270px] flex-shrink-0">
+                      <div className="rounded-xl overflow-hidden shadow-lg border border-white bg-white relative group transition-all">
+                        <img
+                          src={trip.image}
+                          alt={trip.title}
+                          className="w-full h-[330px] object-cover"
+                          draggable={false}
+                        />
+                        <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black via-black/50 to-transparent">
+                          <h3 className="text-white text-center text-2xl font-bold drop-shadow">
+                            {trip.title}
+                          </h3>
+                          <p className="text-white text-center text-sm font-medium drop-shadow">
+                            Starting Price Rs. {trip.price}/-
+                          </p>
+                        </div>
+                      </div>
+                    </SwiperSlide>
+                  ))
+                )}
               </Swiper>
-              {/* Pagination Dots */}
-              {/* <div className="swiper-pagination-romantic mt-6"></div> */}
             </div>
           </div>
-
-          {/* Swiper custom styles */}
-          <style>{`
-          .swiper-pagination-romantic {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            margin-top: 18px;
-          }
-          .swiper-pagination-bullet {
-            width: 44px;
-            height: 8px;
-            border-radius: 8px;
-            background: #e0e6ea;
-            opacity: 1;
-            transition: background 0.3s;
-          }
-          .swiper-pagination-bullet-active {
-            background: #74bdda;
-          }
-        `}</style>
         </div>
       </section>
+
       <EffectCardThree />
       <section className="py-10 md:py-14 bg-white hidden md:block">
         <div className="max-w-7xl mx-auto px-4">
@@ -996,47 +790,47 @@ const Index = () => {
               {filteredTrips.length > 0 ? (
                 filteredTrips.map((trip, idx) => (
                   <SwiperSlide key={idx}>
-                   <Link to="/packages/1">
-                    <div
-                      className="relative group rounded-2xl overflow-hidden h-[350px] sm:h-[400px] md:h-[420px] flex flex-col justify-end"
-                      style={{
-                        backgroundImage: `url(${trip.img})`,
-                        backgroundSize: "cover",
-                        backgroundPosition: "center",
-                      }}
-                    >
-                      {/* Overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent z-0" />
-                      {/* Price Badge */}
-                      <div className="absolute top-4 left-4 z-10">
-                        <div className="bg-yellow-300/95 text-gray-900 font-semibold px-4 py-1 rounded-full flex items-center gap-2 text-base shadow">
-                          <span className="line-through text-gray-600">
-                            {trip.oldPrice}
-                          </span>
-                          <span className="font-bold">{trip.price}/-</span>
-                          <span className="text-xs">Onwards</span>
+                    <Link to="/packages/1">
+                      <div
+                        className="relative group rounded-2xl overflow-hidden h-[350px] sm:h-[400px] md:h-[420px] flex flex-col justify-end"
+                        style={{
+                          backgroundImage: `url(${trip.img})`,
+                          backgroundSize: "cover",
+                          backgroundPosition: "center",
+                        }}
+                      >
+                        {/* Overlay */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent z-0" />
+                        {/* Price Badge */}
+                        <div className="absolute top-4 left-4 z-10">
+                          <div className="bg-yellow-300/95 text-gray-900 font-semibold px-4 py-1 rounded-full flex items-center gap-2 text-base shadow">
+                            <span className="line-through text-gray-600">
+                              {trip.oldPrice}
+                            </span>
+                            <span className="font-bold">{trip.price}/-</span>
+                            <span className="text-xs">Onwards</span>
+                          </div>
+                        </div>
+                        {/* Info */}
+                        <div className="relative z-10 p-5 pb-4 flex flex-col justify-end">
+                          <div className="text-white font-bold text-base leading-snug mb-2 line-clamp-2 drop-shadow">
+                            {trip.title}
+                          </div>
+                          <div className="flex flex-wrap items-center text-white/90 text-xs mb-1 gap-x-4 gap-y-1">
+                            <span className="flex items-center gap-1">
+                              <span className="text-lg">⏱️</span> {trip.days}
+                            </span>
+                            <span className="flex items-center gap-1">
+                              <span className="text-lg">📍</span> {trip.location}
+                            </span>
+                          </div>
+                          <div className="flex items-center text-white/90 text-xs gap-2">
+                            <span className="flex items-center gap-1">
+                              <span className="text-lg">📅</span> {trip.date}
+                            </span>
+                          </div>
                         </div>
                       </div>
-                      {/* Info */}
-                      <div className="relative z-10 p-5 pb-4 flex flex-col justify-end">
-                        <div className="text-white font-bold text-base leading-snug mb-2 line-clamp-2 drop-shadow">
-                          {trip.title}
-                        </div>
-                        <div className="flex flex-wrap items-center text-white/90 text-xs mb-1 gap-x-4 gap-y-1">
-                          <span className="flex items-center gap-1">
-                            <span className="text-lg">⏱️</span> {trip.days}
-                          </span>
-                          <span className="flex items-center gap-1">
-                            <span className="text-lg">📍</span> {trip.location}
-                          </span>
-                        </div>
-                        <div className="flex items-center text-white/90 text-xs gap-2">
-                          <span className="flex items-center gap-1">
-                            <span className="text-lg">📅</span> {trip.date}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
                     </Link>
                   </SwiperSlide>
                 ))
@@ -1158,8 +952,8 @@ const Index = () => {
                 spaceBetween={20}
                 slidesPerView={5}
                 navigation={{
-                  prevEl: prevRef.current,
-                  nextEl: nextRef.current,
+                  prevEl: prevRomanticRef.current,
+                  nextEl: nextRomanticRef.current,
                 }}
                 pagination={{
                   clickable: true,
@@ -1167,9 +961,9 @@ const Index = () => {
                 }}
                 onInit={(swiper) => {
                   // @ts-ignore
-                  swiper.params.navigation.prevEl = prevRef.current;
+                  swiper.params.navigation.prevEl = prevRomanticRef.current;
                   // @ts-ignore
-                  swiper.params.navigation.nextEl = nextRef.current;
+                  swiper.params.navigation.nextEl = nextRomanticRef.current;
                   swiper.navigation.init();
                   swiper.navigation.update();
                 }}
@@ -1181,30 +975,42 @@ const Index = () => {
                 }}
                 className="w-full"
               >
-                {LocalDestination.map((item, idx) => (
-                  <SwiperSlide
-                    key={idx}
-                    className="w-[250px] md:w-[270px] flex-shrink-0"
-                  >
-                    <div className="rounded-xl overflow-hidden shadow-lg border border-white bg-white relative group transition-all">
-                      <img
-                        src={item.image}
-                        alt={item.title}
-                        className="w-full h-[330px] object-cover"
-                        draggable={false}
-                      />
-                      <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black via-black/50 to-transparent">
-                        <h3 className="text-white text-center text-2xl font-bold drop-shadow">
-                          {item.title}
-                        </h3>
-                        <p className="text-white text-center text-sm font-medium drop-shadow">
-                          Starting Price Rs. {item.price}/-
-                        </p>
-                      </div>
+                {loadingRomantic ? (
+                  <SwiperSlide>
+                    <div className="flex items-center justify-center h-[330px] text-lg">
+                      Loading romantic escapes...
                     </div>
                   </SwiperSlide>
-                ))}
+                ) : romanticTrips.length === 0 ? (
+                  <SwiperSlide>
+                    <div className="flex items-center justify-center h-[330px] text-lg">
+                      No Romantic Escapes available at the moment.
+                    </div>
+                  </SwiperSlide>
+                ) : (
+                  romanticTrips.map((trip, idx) => (
+                    <SwiperSlide key={trip._id || idx} className="w-[250px] md:w-[270px] flex-shrink-0">
+                      <div className="rounded-xl overflow-hidden shadow-lg border border-white bg-white relative group transition-all">
+                        <img
+                          src={trip.image}
+                          alt={trip.title}
+                          className="w-full h-[330px] object-cover"
+                          draggable={false}
+                        />
+                        <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black via-black/50 to-transparent">
+                          <h3 className="text-white text-center text-2xl font-bold drop-shadow">
+                            {trip.title}
+                          </h3>
+                          <p className="text-white text-center text-sm font-medium drop-shadow">
+                            Starting Price Rs. {trip.price}/-
+                          </p>
+                        </div>
+                      </div>
+                    </SwiperSlide>
+                  ))
+                )}
               </Swiper>
+
               {/* Pagination Dots */}
               {/* <div className="swiper-pagination-romantic mt-6"></div> */}
             </div>
@@ -1294,6 +1100,7 @@ const Index = () => {
             ›
           </button>
         </section>
+
       </div>
       {/* <section className="py-20 px-4">
         <div className="max-w-7xl mx-auto">
@@ -1355,46 +1162,6 @@ const Index = () => {
           </Carousel>
         </div>
       </section>
-
-      {/* Newsletter Section */}
-      {/* <section className="py-20 bg-blue-600 text-white">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <h2 className="text-4xl font-bold mb-4">Stay Updated</h2>
-          <p className="text-xl mb-8 opacity-90">
-            Subscribe to our newsletter for exclusive deals and travel
-            inspiration
-          </p>
-
-          <form
-            onSubmit={handleNewsletterSubmit}
-            className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto"
-          >
-            <div className="flex-1">
-              <Label htmlFor="email" className="sr-only">
-                Email
-              </Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="Enter your email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                className="bg-white text-blue-900 border-white"
-              />
-            </div>
-            <Button
-              type="submit"
-              variant="secondary"
-              size="default"
-              className="bg-white text-blue-600 hover:bg-blue-50"
-            >
-              Subscribe
-            </Button>
-          </form>
-        </div>
-      </section> */}
-
       {/* Footer */}
       <Footer setIsContactModalOpen={setIsContactModalOpen} />
 

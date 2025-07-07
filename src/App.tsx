@@ -15,6 +15,7 @@ import SearchHero from "./pages/SearchHero";
 import Package from "./pages/Packages";
 import EffectCard from "./pages/EffectCard";
 import Desclaimer from "./pages/Desclaimer";
+import BlogDetails from "./pages/BlogDetails";
 
 const queryClient = new QueryClient();
 
@@ -36,6 +37,7 @@ const App = () => (
           <Route path="/package" element={<Package />} />
           <Route path="/effect" element={<EffectCard />} />
           <Route path="/desclaimer" element={<Desclaimer />} />
+<Route path="/blog/:id" element={<BlogDetails />} />
 
           {/* Add more routes as needed */}
           <Route path="*" element={<NotFound />} />

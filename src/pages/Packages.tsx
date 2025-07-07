@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import {
@@ -24,7 +24,7 @@ import {
   FaCalendarAlt,
 } from "react-icons/fa";
 import Footer from "@/components/Footer";
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom"
 const slides = [
   {
     image:
@@ -296,7 +296,7 @@ const trips = [
     days: "10N/11D",
     airport: "Paris Airport - Prague",
     start: "9 Aug, 27 Sep",
-    // batch: "+1 batch",
+    batch: "",
     icon: "fa-solid fa-location-dot",
     badgeColor: "bg-yellow-400",
     tagColor: "bg-yellow-400",
@@ -419,215 +419,6 @@ const trips = [
     tagText: "Recommended",
   },
 ];
-const trips2 = [
-  {
-    img: "https://images.wanderon.in/gallery/new/2024/12/13/summer-european-grandeur-tour-package-14n-15d-new.avif",
-    oldPrice: "₹2,29,990/-",
-    price: "₹1,69,990",
-    priceText: "onwards",
-    tag: "Recommended",
-    title:
-      "11 Days European Pathways Community Trip - France, Netherlands, Germany, Czechia",
-    subtitle: "3N Paris · 3N Amsterdam· 2N Prague",
-    days: "10N/11D",
-    airport: "Paris Airport - Prague",
-    start: "9 Aug, 27 Sep",
-    // batch: "+1 batch",
-    icon: "fa-solid fa-location-dot",
-    badgeColor: "bg-yellow-400",
-    tagColor: "bg-yellow-400",
-    tagText: "Recommended",
-  },
-  {
-    img: "https://images.wanderon.in/gallery/new/2024/12/13/summer-splendid-europe-tour-package-12n-13d.avif",
-    oldPrice: "₹2,09,990/-",
-    price: "₹1,49,999",
-    priceText: "onwards",
-    tag: "Popular",
-    title: "10 Days Spain Community Trip | La Tomatina Special",
-    subtitle: "Barcelona · Ibiza · Valencia · Bunol ",
-    days: "9N/10D",
-    airport: "Barcelona - Madrid",
-    start: "21 Aug",
-    batch: "",
-    badgeColor: "bg-yellow-400",
-    tagColor: "bg-green-300",
-    tagText: "Popular",
-  },
-  {
-    img: "https://images.wanderon.in/gallery/new/2024/12/13/swiss-paris-europe-trip-package-7n-8d.avif",
-    oldPrice: "₹2,29,990/-",
-    price: "₹1,89,990",
-    priceText: "onwards",
-    tag: "Recommended",
-    title: "Live Europe’s Best Moments: 11-Day Oktoberfest Community Trip",
-    subtitle: "Amsterdam · Paris · Eiffel Tower",
-    days: "10N/11D",
-    airport: "Amsterdam Airport - Prague",
-    start: "16 Sep",
-    batch: "",
-    badgeColor: "bg-yellow-400",
-    tagColor: "bg-yellow-400",
-    tagText: "Recommended",
-  },
-  {
-    img: "https://images.wanderon.in/gallery/new/2024/12/16/highlights-of-europe-summer-tour-package-new.avif",
-    oldPrice: "₹2,09,990/-",
-    price: "₹1,44,990",
-    priceText: "onwards",
-    tag: "Recommended",
-    title:
-      "8 Days European Trails Community Trip - Netherlands, Germany, Czechia",
-    subtitle: "3N Amsterdam · 2N Berlin · 2N Prague",
-    days: "7N/8D",
-    airport: "Amsterdam Airport - Prague",
-    start: "12 Aug, 30 Sep",
-    // batch: "+1 batch",
-    badgeColor: "bg-yellow-400",
-    tagColor: "bg-yellow-400",
-    tagText: "Recommended",
-  },
-  {
-    img: "https://images.wanderon.in/gallery/new/2024/12/13/summer-european-grandeur-tour-package-14n-15d-new.avif",
-    oldPrice: "₹2,29,990/-",
-    price: "₹1,69,990",
-    priceText: "onwards",
-    tag: "Recommended",
-    title:
-      "11 Days European Pathways Community Trip - France, Netherlands, Germany, Czechia",
-    subtitle: "3N Paris · 3N Amsterdam· 2N Prague",
-    days: "10N/11D",
-    airport: "Paris Airport - Prague",
-    start: "9 Aug, 27 Sep",
-    // batch: "+1 batch",
-    icon: "fa-solid fa-location-dot",
-    badgeColor: "bg-yellow-400",
-    tagColor: "bg-yellow-400",
-    tagText: "Recommended",
-  },
-  {
-    img: "https://images.wanderon.in/gallery/new/2024/12/13/summer-splendid-europe-tour-package-12n-13d.avif",
-    oldPrice: "₹2,09,990/-",
-    price: "₹1,49,999",
-    priceText: "onwards",
-    tag: "Popular",
-    title: "10 Days Spain Community Trip | La Tomatina Special",
-    subtitle: "Barcelona · Ibiza · Valencia · Bunol ",
-    days: "9N/10D",
-    airport: "Barcelona - Madrid",
-    start: "21 Aug",
-    batch: "",
-    badgeColor: "bg-yellow-400",
-    tagColor: "bg-green-300",
-    tagText: "Popular",
-  },
-  {
-    img: "https://images.wanderon.in/gallery/new/2024/12/13/swiss-paris-europe-trip-package-7n-8d.avif",
-    oldPrice: "₹2,29,990/-",
-    price: "₹1,89,990",
-    priceText: "onwards",
-    tag: "Recommended",
-    title: "Live Europe’s Best Moments: 11-Day Oktoberfest Community Trip",
-    subtitle: "Amsterdam · Paris · Eiffel Tower",
-    days: "10N/11D",
-    airport: "Amsterdam Airport - Prague",
-    start: "16 Sep",
-    batch: "",
-    badgeColor: "bg-yellow-400",
-    tagColor: "bg-yellow-400",
-    tagText: "Recommended",
-  },
-  {
-    img: "https://images.wanderon.in/gallery/new/2024/12/16/highlights-of-europe-summer-tour-package-new.avif",
-    oldPrice: "₹2,09,990/-",
-    price: "₹1,44,990",
-    priceText: "onwards",
-    tag: "Recommended",
-    title:
-      "8 Days European Trails Community Trip - Netherlands, Germany, Czechia",
-    subtitle: "3N Amsterdam · 2N Berlin · 2N Prague",
-    days: "7N/8D",
-    airport: "Amsterdam Airport - Prague",
-    start: "12 Aug, 30 Sep",
-    // batch: "+1 batch",
-    badgeColor: "bg-yellow-400",
-    tagColor: "bg-yellow-400",
-    tagText: "Recommended",
-  },
-];
-const affordablePackage = [
-  {
-    img: "https://images.wanderon.in/gallery/new/2024/12/13/europe-community-trip-7n-8d.avif",
-    oldPrice: "₹2,29,990/-",
-    price: "₹1,69,990",
-    priceText: "onwards",
-    tag: "Recommended",
-    title:
-      "11 Days European Pathways Community Trip - France, Netherlands, Germany, Czechia",
-    subtitle: "3N Paris · 3N Amsterdam· 2N Prague",
-    days: "10N/11D",
-    airport: "Paris Airport - Prague",
-    start: "9 Aug, 27 Sep",
-    // batch: "+1 batch",
-    icon: "fa-solid fa-location-dot",
-    badgeColor: "bg-yellow-400",
-    tagColor: "bg-yellow-400",
-    tagText: "Recommended",
-  },
-];
-
-const EuropeWithUK = [
-  {
-    img: "https://images.wanderon.in/gallery/new/2024/12/13/amazing-summer-europe-trip-package-12n-13d.avif",
-    oldPrice: "₹2,29,990/-",
-    price: "₹1,69,990",
-    priceText: "onwards",
-    tag: "Recommended",
-    title:
-      "11 Days European Pathways Community Trip - France, Netherlands, Germany, Czechia",
-    subtitle: "3N Paris · 3N Amsterdam· 2N Prague",
-    days: "10N/11D",
-    airport: "Paris Airport - Prague",
-    start: "9 Aug, 27 Sep",
-    // batch: "+1 batch",
-    icon: "fa-solid fa-location-dot",
-    badgeColor: "bg-yellow-400",
-    tagColor: "bg-yellow-400",
-    tagText: "Recommended",
-  },
-  {
-    img: "https://images.wanderon.in/gallery/new/2024/12/13/summer-european-grandeur-tour-package-14n-15d-new.avif",
-    oldPrice: "₹2,09,990/-",
-    price: "₹1,49,999",
-    priceText: "onwards",
-    tag: "Popular",
-    title: "10 Days Spain Community Trip | La Tomatina Special",
-    subtitle: "Barcelona · Ibiza · Valencia · Bunol ",
-    days: "9N/10D",
-    airport: "Barcelona - Madrid",
-    start: "21 Aug",
-    batch: "",
-    badgeColor: "bg-yellow-400",
-    tagColor: "bg-green-300",
-    tagText: "Popular",
-  },
-  {
-    img: "https://images.wanderon.in/gallery/new/2024/12/13/charming-europe-tour-package-9n-10d-new.avif",
-    oldPrice: "₹2,29,990/-",
-    price: "₹1,89,990",
-    priceText: "onwards",
-    tag: "Recommended",
-    title: "Live Europe’s Best Moments: 11-Day Oktoberfest Community Trip",
-    subtitle: "Amsterdam · Paris · Eiffel Tower",
-    days: "10N/11D",
-    airport: "Amsterdam Airport - Prague",
-    start: "16 Sep",
-    batch: "",
-    badgeColor: "bg-yellow-400",
-    tagColor: "bg-yellow-400",
-    tagText: "Recommended",
-  },
-];
 
 export default function Package() {
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
@@ -635,6 +426,111 @@ export default function Package() {
   const prevRef = useRef(null);
   const nextRef = useRef(null);
   const [openIdx, setOpenIdx] = useState<null | number>(null);
+  const [bestSellingTrips, setBestSellingTrips] = useState([]);
+  const [loadingTrips, setLoadingTrips] = useState(true);
+  const prevBestSellingRef = useRef(null);
+  const nextBestSellingRef = useRef(null);
+
+  const prevSummerDealsRef = useRef(null);
+  const nextSummerDealsRef = useRef(null);
+
+  const prevAffordableRef = useRef(null);
+  const nextAffordableRef = useRef(null);
+
+  const prevUKRef = useRef(null);
+  const nextUKRef = useRef(null);
+
+  const prevActivityRef = useRef(null);
+  const nextActivityRef = useRef(null);
+
+  const prevVisitRef = useRef(null);
+  const nextVisitRef = useRef(null);
+
+  const prevShopRef = useRef(null);
+  const nextShopRef = useRef(null);
+
+  const prevReviewRef = useRef(null);
+  const nextReviewRef = useRef(null);
+
+  const [summerDeals, setSummerDeals] = useState([]);
+  const [loadingSummerDeals, setLoadingSummerDeals] = useState(true);
+  const [affordablePackages, setAffordablePackages] = useState([]);
+  const [loadingAffordable, setLoadingAffordable] = useState(true);
+  const [europeWithUK, setEuropeWithUK] = useState([]);
+  const [loadingEuropeWithUK, setLoadingEuropeWithUK] = useState(true);
+  const [trips, setTrips] = useState([]);
+  const [loadingAllPackages, setLoadingAllPackages] = useState(true);
+
+  useEffect(() => {
+    setLoadingTrips(true);
+    fetch(`${import.meta.env.VITE_API_URL}/packages/best-selling-community-trips`)
+      .then((res) => res.json())
+      .then((data) => {
+        setBestSellingTrips(Array.isArray(data) ? data : []);
+        setLoadingTrips(false);
+      })
+      .catch(() => {
+        setBestSellingTrips([]);
+        setLoadingTrips(false);
+      });
+  }, []);
+
+  useEffect(() => {
+    setLoadingSummerDeals(true);
+    fetch(`${import.meta.env.VITE_API_URL}/packages/summer-deals`)
+      .then((res) => res.json())
+      .then((data) => {
+        setSummerDeals(Array.isArray(data) ? data : []);
+        setLoadingSummerDeals(false);
+      })
+      .catch(() => {
+        setSummerDeals([]);
+        setLoadingSummerDeals(false);
+      });
+  }, []);
+
+  useEffect(() => {
+    setLoadingAffordable(true);
+    fetch(`${import.meta.env.VITE_API_URL}/packages/affordable-packages`)
+      .then((res) => res.json())
+      .then((data) => {
+        setAffordablePackages(Array.isArray(data) ? data : []);
+        setLoadingAffordable(false);
+      })
+      .catch(() => {
+        setAffordablePackages([]);
+        setLoadingAffordable(false);
+      });
+  }, []);
+
+  useEffect(() => {
+    setLoadingEuropeWithUK(true);
+    fetch(`${import.meta.env.VITE_API_URL}/packages/europe-with-uk`)
+      .then((res) => res.json())
+      .then((data) => {
+        setEuropeWithUK(Array.isArray(data) ? data : []);
+        setLoadingEuropeWithUK(false);
+      })
+      .catch(() => {
+        setEuropeWithUK([]);
+        setLoadingEuropeWithUK(false);
+      });
+  }, []);
+
+  useEffect(() => {
+    setLoadingAllPackages(true);
+    fetch(`${import.meta.env.VITE_API_URL}/packages`)
+      .then((res) => res.json())
+      .then((data) => {
+        setTrips(Array.isArray(data) ? data : []);
+        setLoadingAllPackages(false);
+      })
+      .catch(() => {
+        setTrips([]);
+        setLoadingAllPackages(false);
+      });
+  }, []);
+
   return (
     <>
       <div className="min-h-screen bg-background">
@@ -742,7 +638,6 @@ export default function Package() {
             )}
           </div>
         </section>
-
         <section className="bg-white pt-8 pb-12">
           <div className="max-w-[1400px] mx-auto px-4">
             {/* Header */}
@@ -750,15 +645,12 @@ export default function Package() {
               Best-Selling Community Trips
             </h2>
             <p className="text-lg text-gray-500 mb-6">
-              Discover Europe with WanderOn: Epic Journeys, New Bonds,
-              Unforgettable Memories!
+              Discover Europe with WanderOn: Epic Journeys, New Bonds, Unforgettable Memories!
             </p>
-
             {/* Slider */}
             <div className="relative">
-              {/* Navigation */}
               <button
-                ref={prevRef}
+                ref={prevBestSellingRef}
                 className="hidden md:block absolute left-[-35px] top-1/2 -translate-y-1/2 z-10 w-[54px] h-[54px] bg-white rounded-full flex items-center justify-center shadow border border-gray-200 hover:bg-blue-100 transition-all"
                 aria-label="Previous"
                 style={{
@@ -770,21 +662,10 @@ export default function Package() {
                   lineHeight: 1,
                 }}
               >
-                <FaArrowLeft
-                  className="text-[#87bdd8] text-3xl"
-                  style={{
-                    display: "block",
-                    margin: 0,
-                    lineHeight: 1,
-                    verticalAlign: "middle",
-                    position: "relative",
-                    top: "0px", // tweak if needed e.g. "-1px"
-                  }}
-                />
+                <FaArrowLeft className="text-[#87bdd8] text-3xl" />
               </button>
-
               <button
-                ref={nextRef}
+                ref={nextBestSellingRef}
                 className="hidden md:block absolute right-[-35px] top-1/2 -translate-y-1/2 z-10 w-[54px] h-[54px] bg-white rounded-full flex items-center justify-center shadow border border-gray-200 hover:bg-blue-100 transition-all"
                 aria-label="Next"
                 style={{
@@ -796,113 +677,107 @@ export default function Package() {
                   lineHeight: 1,
                 }}
               >
-                <FaArrowRight
-                  className="text-[#87bdd8] text-3xl"
-                  style={{
-                    display: "block",
-                    margin: 0,
-                    lineHeight: 1,
-                    verticalAlign: "middle",
-                    position: "relative",
-                    top: "0px", // tweak if needed
-                  }}
-                />
+                <FaArrowRight className="text-[#87bdd8] text-3xl" />
               </button>
 
-
-
-              <Swiper
-                modules={[Navigation]}
-                slidesPerView={1}
-                spaceBetween={32}
-                breakpoints={{
-                  700: { slidesPerView: 2 },
-                  1024: { slidesPerView: 3 },
-                  1300: { slidesPerView: 4 },
-                }}
-                navigation={{
-                  prevEl: prevRef.current,
-                  nextEl: nextRef.current,
-                }}
-                onInit={(swiper) => {
-                  // @ts-ignore
-                  swiper.params.navigation.prevEl = prevRef.current;
-                  // @ts-ignore
-                  swiper.params.navigation.nextEl = nextRef.current;
-                  swiper.navigation.init();
-                  swiper.navigation.update();
-                }}
-                className="py-4"
-              >
-                {trips.map((trip, i) => (
-                  <SwiperSlide key={i}>
-                    <Link to="/packages/1">
-                      <div className="relative h-[470px] rounded-[15px] overflow-hidden group shadow border bg-black/80">
-                        {/* BG Image */}
-                        <img
-                          src={trip.img}
-                          alt={trip.title}
-                          className="w-full h-full object-cover"
-                        />
-                        {/* Gradient overlay */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
-                        {/* Price badge */}
-                        <div className="absolute top-5 left-5 z-20">
-                          <div className="flex items-center gap-1 px-3 py-1 rounded-full bg-yellow-300/95 text-gray-900 font-semibold text-[15px] shadow min-w-[175px] justify-center">
-                            <span className="line-through text-gray-600 text-sm">
-                              {trip.oldPrice}
-                            </span>
-                            <span className="font-bold">{trip.price}/-</span>
-                            <span className="text-xs">{trip.priceText}</span>
-                          </div>
-                        </div>
-                        {/* Tag */}
-                        <div className="absolute left-5 top-[62px] z-30">
-                          <span
-                            className={`text-xs font-bold px-3 py-1 rounded-md ${trip.tagColor} text-gray-800 shadow`}
-                          >
-                            {trip.tagText}
-                          </span>
-                        </div>
-                        {/* Card Content */}
-                        <div className="absolute bottom-0 left-0 w-full px-5 pb-5 pt-3 z-10 text-white">
-                          <div className="font-bold text-[1.08rem] leading-tight mb-2 min-h-[48px]">
-                            {trip.title}
-                          </div>
-                          <div className="text-xs bg-white/15 rounded px-2 py-1 mb-2 max-w-full overflow-x-auto whitespace-nowrap">
-                            {trip.subtitle}
-                          </div>
-
-                          {/* Row 1: Duration & Airport */}
-                          <div className="flex items-center justify-between text-xs text-white/90 gap-6 mb-1">
-                            <span className="flex items-center font-bold">
-                              <FaClock className="text-[#00AFD1] text-base mr-2" />
-                              <span className="text-white">{trip.days}</span>
-                            </span>
-                            <span className="flex items-center font-bold">
-                              <FaMapMarkerAlt className="text-[#00AFD1] text-base mr-2" />
-                              <span className="text-white">{trip.airport}</span>
-                            </span>
-                          </div>
-
-                          {/* Row 2: Dates & Batch */}
-                          <div className="flex items-center text-xs mt-1">
-                            <span className="flex items-center font-bold mr-2">
-                              <FaCalendarAlt className="text-[#00AFD1] text-base mr-2" />
-                              <span className="text-white">{trip.start}</span>
-                            </span>
-                            {trip.batch && (
-                              <span className="text-green-400 font-bold ml-1">
-                                {trip.batch}
+              {loadingTrips ? (
+                <div className="py-8 text-center text-lg text-gray-400">Loading...</div>
+              ) : bestSellingTrips.length === 0 ? (
+                <div className="py-8 text-center text-lg text-gray-400">
+                  No best-selling packages found.
+                </div>
+              ) : (
+                <Swiper
+                  modules={[Navigation]}
+                  slidesPerView={1}
+                  spaceBetween={24}
+                  breakpoints={{
+                    700: { slidesPerView: 2 },
+                    1024: { slidesPerView: 3 },
+                    1300: { slidesPerView: 4 },
+                  }}
+                  navigation={{
+                    prevEl: prevBestSellingRef.current,
+                    nextEl: nextBestSellingRef.current,
+                  }}
+                  onInit={(swiper) => {
+                    swiper.params.navigation.prevEl = prevBestSellingRef.current;
+                    swiper.params.navigation.nextEl = nextBestSellingRef.current;
+                    swiper.navigation.init();
+                    swiper.navigation.update();
+                  }}
+                  className="py-4"
+                >
+                  {bestSellingTrips.map((trip, i) => (
+                    <SwiperSlide key={i}>
+                      <Link to={`/packages/${trip._id}`}>
+                        <div className="relative h-[500px] rounded-[15px] overflow-hidden group shadow border bg-black/80">
+                          {/* BG Image */}
+                          <img
+                            src={trip.image}
+                            alt={trip.title}
+                            className="w-full h-full object-cover"
+                          />
+                          {/* Gradient overlay */}
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
+                          {/* Price badge */}
+                          <div className="absolute top-5 left-5 z-20">
+                            <div className="flex items-center gap-1 px-3 py-1 rounded-full bg-yellow-300/95 text-gray-900 font-semibold text-[15px] shadow min-w-[140px] justify-center">
+                              <span className="line-through text-gray-600 text-sm">
+                                {trip.price?.original ? "₹" + trip.price.original.toLocaleString() : ""}
                               </span>
-                            )}
+                              <span className="font-bold ml-2">
+                                {trip.price?.current ? "₹" + trip.price.current.toLocaleString() : ""}
+                              </span>
+                              <span className="text-xs ml-1">{trip.price?.label || "onwards"}</span>
+                            </div>
+                          </div>
+                          {/* Tag */}
+                          <div className="absolute left-5 top-[62px] z-30">
+                            <span
+                              className={`text-xs font-bold px-3 py-1 rounded-md ${trip.isRecommended ? "bg-yellow-400" : "bg-green-300"
+                                } text-gray-800 shadow`}
+                            >
+                              {trip.isRecommended ? "Recommended" : "Popular"}
+                            </span>
+                          </div>
+                          {/* Card Content */}
+                          <div className="absolute bottom-0 left-0 w-full px-5 pb-5 pt-3 z-10 text-white bg-gradient-to-t from-black/90 via-black/40 to-transparent">
+                            <div className="font-bold text-[1.08rem] leading-tight mb-1 min-h-[48px] line-clamp-2">
+                              {trip.title}
+                            </div>
+                            <div className="text-xs bg-white/15 rounded px-2 py-1 mb-2 max-w-full overflow-hidden text-ellipsis whitespace-nowrap">
+                              {trip.subtitle}
+                            </div>
+                            <div className="flex items-center justify-between text-xs text-white/90 gap-4 mb-1">
+                              <span className="flex items-center font-bold">
+                                <FaClock className="text-[#00AFD1] text-base mr-2" />
+                                <span className="text-white">
+                                  {trip.nights}N/{trip.days}D
+                                </span>
+                              </span>
+                              <span className="flex items-center font-bold">
+                                <FaMapMarkerAlt className="text-[#00AFD1] text-base mr-2" />
+                                <span className="text-white">{trip.startLocation}</span>
+                              </span>
+                            </div>
+                            <div className="flex items-center text-xs mt-1">
+                              <span className="flex items-center font-bold mr-2">
+                                <FaCalendarAlt className="text-[#00AFD1] text-base mr-2" />
+                                <span className="text-white">
+                                  {Array.isArray(trip.departureDates)
+                                    ? trip.departureDates.join(", ")
+                                    : trip.departureDates || ""}
+                                </span>
+                              </span>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </Link>
-                  </SwiperSlide>
-                ))}
-              </Swiper>
+                      </Link>
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+              )}
             </div>
           </div>
         </section>
@@ -924,7 +799,7 @@ export default function Package() {
             <div className="relative">
               {/* Navigation */}
               <button
-                ref={prevRef}
+                ref={prevSummerDealsRef}
                 className="hidden md:block absolute left-[-35px] top-1/2 -translate-y-1/2 z-10 w-[54px] h-[54px] bg-white rounded-full flex items-center justify-center shadow border border-gray-200 hover:bg-blue-100 transition-all"
                 aria-label="Previous"
                 style={{
@@ -936,21 +811,11 @@ export default function Package() {
                   lineHeight: 1,
                 }}
               >
-                <FaArrowLeft
-                  className="text-[#87bdd8] text-3xl"
-                  style={{
-                    display: "block",
-                    margin: 0,
-                    lineHeight: 1,
-                    verticalAlign: "middle",
-                    position: "relative",
-                    top: "0px", // tweak if needed e.g. "-1px"
-                  }}
-                />
+                <FaArrowLeft className="text-[#87bdd8] text-3xl" />
               </button>
 
               <button
-                ref={nextRef}
+                ref={nextSummerDealsRef}
                 className="hidden md:block absolute right-[-35px] top-1/2 -translate-y-1/2 z-10 w-[54px] h-[54px] bg-white rounded-full flex items-center justify-center shadow border border-gray-200 hover:bg-blue-100 transition-all"
                 aria-label="Next"
                 style={{
@@ -962,112 +827,109 @@ export default function Package() {
                   lineHeight: 1,
                 }}
               >
-                <FaArrowRight
-                  className="text-[#87bdd8] text-3xl"
-                  style={{
-                    display: "block",
-                    margin: 0,
-                    lineHeight: 1,
-                    verticalAlign: "middle",
-                    position: "relative",
-                    top: "0px", // tweak if needed
-                  }}
-                />
+                <FaArrowRight className="text-[#87bdd8] text-3xl" />
               </button>
 
-
-              <Swiper
-                modules={[Navigation]}
-                slidesPerView={1}
-                spaceBetween={32}
-                breakpoints={{
-                  700: { slidesPerView: 2 },
-                  1024: { slidesPerView: 3 },
-                  1300: { slidesPerView: 4 },
-                }}
-                navigation={{
-                  prevEl: prevRef.current,
-                  nextEl: nextRef.current,
-                }}
-                onInit={(swiper) => {
-                  // @ts-ignore
-                  swiper.params.navigation.prevEl = prevRef.current;
-                  // @ts-ignore
-                  swiper.params.navigation.nextEl = nextRef.current;
-                  swiper.navigation.init();
-                  swiper.navigation.update();
-                }}
-                className="py-4"
-              >
-                {trips2.map((trip, i) => (
-                  <SwiperSlide key={i}>
-                    <Link to="/packages/1">
-                    <div className="relative h-[470px] rounded-[15px] overflow-hidden group shadow border bg-black/80">
-                      {/* BG Image */}
-                      <img
-                        src={trip.img}
-                        alt={trip.title}
-                        className="w-full h-full object-cover"
-                      />
-                      {/* Gradient overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
-                      {/* Price badge */}
-                      <div className="absolute top-5 left-5 z-20">
-                        <div className="flex items-center gap-1 px-3 py-1 rounded-full bg-yellow-300/95 text-gray-900 font-semibold text-[15px] shadow min-w-[175px] justify-center">
-                          <span className="line-through text-gray-600 text-sm">
-                            {trip.oldPrice}
-                          </span>
-                          <span className="font-bold">{trip.price}/-</span>
-                          <span className="text-xs">{trip.priceText}</span>
-                        </div>
-                      </div>
-                      {/* Tag */}
-                      <div className="absolute left-5 top-[62px] z-30">
-                        <span
-                          className={`text-xs font-bold px-3 py-1 rounded-md ${trip.tagColor} text-gray-800 shadow`}
-                        >
-                          {trip.tagText}
-                        </span>
-                      </div>
-                      {/* Card Content */}
-                      <div className="absolute bottom-0 left-0 w-full px-5 pb-5 pt-3 z-10 text-white">
-                        <div className="font-bold text-[1.08rem] leading-tight mb-2 min-h-[48px]">
-                          {trip.title}
-                        </div>
-                        <div className="text-xs bg-white/15 rounded px-2 py-1 mb-2 max-w-full overflow-x-auto whitespace-nowrap">
-                          {trip.subtitle}
-                        </div>
-
-                        {/* Row 1: Duration & Airport */}
-                        <div className="flex items-center justify-between text-xs text-white/90 gap-6 mb-1">
-                          <span className="flex items-center font-bold">
-                            <FaClock className="text-[#00AFD1] text-base mr-2" />
-                            <span className="text-white">{trip.days}</span>
-                          </span>
-                          <span className="flex items-center font-bold">
-                            <FaMapMarkerAlt className="text-[#00AFD1] text-base mr-2" />
-                            <span className="text-white">{trip.airport}</span>
-                          </span>
-                        </div>
-
-                        {/* Row 2: Dates & Batch */}
-                        <div className="flex items-center text-xs mt-1">
-                          <span className="flex items-center font-bold mr-2">
-                            <FaCalendarAlt className="text-[#00AFD1] text-base mr-2" />
-                            <span className="text-white">{trip.start}</span>
-                          </span>
-                          {trip.batch && (
-                            <span className="text-green-400 font-bold ml-1">
-                              {trip.batch}
+              {loadingSummerDeals ? (
+                <div className="py-8 text-center text-lg text-gray-400">Loading...</div>
+              ) : summerDeals.length === 0 ? (
+                <div className="py-8 text-center text-lg text-gray-400">
+                  No summer deals found.
+                </div>
+              ) : (
+                <Swiper
+                  modules={[Navigation]}
+                  slidesPerView={1}
+                  spaceBetween={32}
+                  breakpoints={{
+                    700: { slidesPerView: 2 },
+                    1024: { slidesPerView: 3 },
+                    1300: { slidesPerView: 4 },
+                  }}
+                  navigation={{
+                    prevEl: prevSummerDealsRef.current,
+                    nextEl: nextSummerDealsRef.current,
+                  }}
+                  onInit={(swiper) => {
+                    // @ts-ignore
+                    swiper.params.navigation.prevEl = prevSummerDealsRef.current;
+                    // @ts-ignore
+                    swiper.params.navigation.nextEl = nextSummerDealsRef.current;
+                    swiper.navigation.init();
+                    swiper.navigation.update();
+                  }}
+                  className="py-4"
+                >
+                  {summerDeals.map((trip, i) => (
+                    <SwiperSlide key={trip._id || i}>
+                      <Link to={`/packages/${trip._id}`}>
+                        <div className="relative h-[500px] rounded-[15px] overflow-hidden group shadow border bg-black/80">
+                          {/* BG Image */}
+                          <img
+                            src={trip.image}
+                            alt={trip.title}
+                            className="w-full h-full object-cover"
+                          />
+                          {/* Gradient overlay */}
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
+                          {/* Price badge */}
+                          <div className="absolute top-5 left-5 z-20">
+                            <div className="flex items-center gap-1 px-3 py-1 rounded-full bg-yellow-300/95 text-gray-900 font-semibold text-[15px] shadow min-w-[140px] justify-center">
+                              <span className="line-through text-gray-600 text-sm">
+                                {trip.price?.original ? "₹" + trip.price.original.toLocaleString() : ""}
+                              </span>
+                              <span className="font-bold ml-2">
+                                {trip.price?.current ? "₹" + trip.price.current.toLocaleString() : ""}
+                              </span>
+                              <span className="text-xs ml-1">{trip.price?.label || "onwards"}</span>
+                            </div>
+                          </div>
+                          {/* Tag */}
+                          <div className="absolute left-5 top-[62px] z-30">
+                            <span
+                              className={`text-xs font-bold px-3 py-1 rounded-md ${trip.isRecommended ? "bg-yellow-400" : "bg-green-300"
+                                } text-gray-800 shadow`}
+                            >
+                              {trip.isRecommended ? "Recommended" : "Popular"}
                             </span>
-                          )}
+                          </div>
+                          {/* Card Content */}
+                          <div className="absolute bottom-0 left-0 w-full px-5 pb-5 pt-3 z-10 text-white bg-gradient-to-t from-black/90 via-black/40 to-transparent">
+                            <div className="font-bold text-[1.08rem] leading-tight mb-1 min-h-[48px] line-clamp-2">
+                              {trip.title}
+                            </div>
+                            <div className="text-xs bg-white/15 rounded px-2 py-1 mb-2 max-w-full overflow-hidden text-ellipsis whitespace-nowrap">
+                              {trip.subtitle}
+                            </div>
+                            <div className="flex items-center justify-between text-xs text-white/90 gap-4 mb-1">
+                              <span className="flex items-center font-bold">
+                                <FaClock className="text-[#00AFD1] text-base mr-2" />
+                                <span className="text-white">
+                                  {trip.nights}N/{trip.days}D
+                                </span>
+                              </span>
+                              <span className="flex items-center font-bold">
+                                <FaMapMarkerAlt className="text-[#00AFD1] text-base mr-2" />
+                                <span className="text-white">{trip.startLocation}</span>
+                              </span>
+                            </div>
+                            <div className="flex items-center text-xs mt-1">
+                              <span className="flex items-center font-bold mr-2">
+                                <FaCalendarAlt className="text-[#00AFD1] text-base mr-2" />
+                                <span className="text-white">
+                                  {Array.isArray(trip.departureDates)
+                                    ? trip.departureDates.join(", ")
+                                    : trip.departureDates || ""}
+                                </span>
+                              </span>
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                    </div>
-                    </Link>
-                  </SwiperSlide>
-                ))}
-              </Swiper>
+                      </Link>
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+              )}
             </div>
           </div>
         </section>
@@ -1076,131 +938,162 @@ export default function Package() {
           <div className="max-w-[1400px] mx-auto px-4">
             {/* Header */}
             <h2 className="text-3xl md:text-[2rem] font-bold text-[#34586a] mb-1">
-              Affordable Europe Packages
+              Affordable Packages
             </h2>
             <p className="text-lg text-gray-500 mb-6">
-              Get the best deals and enjoy a hassle-free trip to Europe without
-              breaking the bank.
+              Spend a perfect summer soaking in the scenic landscapes of Europe
+              with our best deals on Europe Summer packages. Combined with best
+              experiences, outdoor activities, city tours and adventures, these
+              trips are perfect for a memorable summer vacation.
             </p>
 
             {/* Slider */}
             <div className="relative">
               {/* Navigation */}
-              {affordablePackage.length >= 4 && (
-                <button
-                  ref={prevRef}
-                  className="absolute left-[-35px] top-1/2 -translate-y-1/2 z-10 w-[54px] h-[54px] bg-white rounded-full flex items-center justify-center shadow border border-gray-200 hover:bg-blue-100 transition-all"
-                  aria-label="Previous"
-                  style={{ boxShadow: "0 2px 18px rgba(32,60,132,0.12)" }}
-                >
-                  <FaArrowLeft className="text-[#87bdd8] text-3xl" />
-                </button>
-              )}
-              {affordablePackage.length >= 4 && (
-                <button
-                  ref={nextRef}
-                  className="absolute right-[-35px] top-1/2 -translate-y-1/2 z-10 w-[54px] h-[54px] bg-white rounded-full flex items-center justify-center shadow border border-gray-200 hover:bg-blue-100 transition-all"
-                  aria-label="Next"
-                  style={{ boxShadow: "0 2px 18px rgba(32,60,132,0.12)" }}
-                >
-                  <FaArrowRight className="text-[#87bdd8] text-3xl" />
-                </button>
-              )}
-
-              <Swiper
-                modules={[Navigation]}
-                slidesPerView={1}
-                spaceBetween={32}
-                breakpoints={{
-                  700: { slidesPerView: 2 },
-                  1024: { slidesPerView: 3 },
-                  1300: { slidesPerView: 4 },
+              <button
+                ref={prevAffordableRef}
+                className="hidden md:block absolute left-[-35px] top-1/2 -translate-y-1/2 z-10 w-[54px] h-[54px] bg-white rounded-full flex items-center justify-center shadow border border-gray-200 hover:bg-blue-100 transition-all"
+                aria-label="Previous"
+                style={{
+                  boxShadow: "0 2px 18px rgba(32,60,132,0.12)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  padding: 0,
+                  lineHeight: 1,
                 }}
-                navigation={{
-                  prevEl: prevRef.current,
-                  nextEl: nextRef.current,
-                }}
-                onInit={(swiper) => {
-                  // @ts-ignore
-                  swiper.params.navigation.prevEl = prevRef.current;
-                  // @ts-ignore
-                  swiper.params.navigation.nextEl = nextRef.current;
-                  swiper.navigation.init();
-                  swiper.navigation.update();
-                }}
-                className="py-4"
               >
-                {affordablePackage.map((trip, i) => (
-                  <SwiperSlide key={i}>
-                    <div className="relative h-[470px] rounded-[15px] overflow-hidden group shadow border bg-black/80">
-                      {/* BG Image */}
-                      <img
-                        src={trip.img}
-                        alt={trip.title}
-                        className="w-full h-full object-cover"
-                      />
-                      {/* Gradient overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
-                      {/* Price badge */}
-                      <div className="absolute top-5 left-5 z-20">
-                        <div className="flex items-center gap-1 px-3 py-1 rounded-full bg-yellow-300/95 text-gray-900 font-semibold text-[15px] shadow min-w-[175px] justify-center">
-                          <span className="line-through text-gray-600 text-sm">
-                            {trip.oldPrice}
-                          </span>
-                          <span className="font-bold">{trip.price}/-</span>
-                          <span className="text-xs">{trip.priceText}</span>
-                        </div>
-                      </div>
-                      {/* Tag */}
-                      <div className="absolute left-5 top-[62px] z-30">
-                        <span
-                          className={`text-xs font-bold px-3 py-1 rounded-md ${trip.tagColor} text-gray-800 shadow`}
-                        >
-                          {trip.tagText}
-                        </span>
-                      </div>
-                      {/* Card Content */}
-                      <div className="absolute bottom-0 left-0 w-full px-5 pb-5 pt-3 z-10 text-white">
-                        <div className="font-bold text-[1.08rem] leading-tight mb-2 min-h-[48px]">
-                          {trip.title}
-                        </div>
-                        <div className="text-xs bg-white/15 rounded px-2 py-1 mb-2 max-w-full overflow-x-auto whitespace-nowrap">
-                          {trip.subtitle}
-                        </div>
+                <FaArrowLeft className="text-[#87bdd8] text-3xl" />
+              </button>
 
-                        {/* Row 1: Duration & Airport */}
-                        <div className="flex items-center justify-between text-xs text-white/90 gap-6 mb-1">
-                          <span className="flex items-center font-bold">
-                            <FaClock className="text-[#00AFD1] text-base mr-2" />
-                            <span className="text-white">{trip.days}</span>
-                          </span>
-                          <span className="flex items-center font-bold">
-                            <FaMapMarkerAlt className="text-[#00AFD1] text-base mr-2" />
-                            <span className="text-white">{trip.airport}</span>
-                          </span>
-                        </div>
+              <button
+                ref={nextAffordableRef}
+                className="hidden md:block absolute right-[-35px] top-1/2 -translate-y-1/2 z-10 w-[54px] h-[54px] bg-white rounded-full flex items-center justify-center shadow border border-gray-200 hover:bg-blue-100 transition-all"
+                aria-label="Next"
+                style={{
+                  boxShadow: "0 2px 18px rgba(32,60,132,0.12)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  padding: 0,
+                  lineHeight: 1,
+                }}
+              >
+                <FaArrowRight className="text-[#87bdd8] text-3xl" />
+              </button>
 
-                        {/* Row 2: Dates & Batch */}
-                        <div className="flex items-center text-xs mt-1">
-                          <span className="flex items-center font-bold mr-2">
-                            <FaCalendarAlt className="text-[#00AFD1] text-base mr-2" />
-                            <span className="text-white">{trip.start}</span>
-                          </span>
-                          {trip.batch && (
-                            <span className="text-green-400 font-bold ml-1">
-                              {trip.batch}
+              {loadingAffordable ? (
+                <div className="py-8 text-center text-lg text-gray-400">Loading...</div>
+              ) : affordablePackages.length === 0 ? (
+                <div className="py-8 text-center text-lg text-gray-400">
+                  No affordable packages found.
+                </div>
+              ) : (
+                <Swiper
+                  modules={[Navigation]}
+                  slidesPerView={1}
+                  spaceBetween={32}
+                  breakpoints={{
+                    700: { slidesPerView: 2 },
+                    1024: { slidesPerView: 3 },
+                    1300: { slidesPerView: 4 },
+                  }}
+                  navigation={{
+                    prevEl: prevAffordableRef.current,
+                    nextEl: nextAffordableRef.current,
+                  }}
+                  onInit={(swiper) => {
+                    // @ts-ignore
+                    swiper.params.navigation.prevEl = prevAffordableRef.current;
+                    // @ts-ignore
+                    swiper.params.navigation.nextEl = nextAffordableRef.current;
+                    swiper.navigation.init();
+                    swiper.navigation.update();
+                  }}
+                  className="py-4"
+                >
+                  {affordablePackages.map((trip, i) => (
+                    <SwiperSlide key={trip._id || i}>
+                      <Link to={`/packages/${trip._id}`}>
+                        <div className="relative h-[500px] rounded-[15px] overflow-hidden group shadow border bg-black/80">
+                          {/* BG Image */}
+                          <img
+                            src={trip.image}
+                            alt={trip.title}
+                            className="w-full h-full object-cover"
+                          />
+                          {/* Gradient overlay */}
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
+                          {/* Price badge */}
+                          <div className="absolute top-5 left-5 z-20">
+                            <div className="flex items-center gap-1 px-3 py-1 rounded-full bg-yellow-300/95 text-gray-900 font-semibold text-[15px] shadow min-w-[140px] justify-center">
+                              {/* Old Price */}
+                              <span className="line-through text-gray-600 text-sm">
+                                {trip.price?.original
+                                  ? "₹" + trip.price.original.toLocaleString()
+                                  : ""}
+                              </span>
+                              {/* Current Price */}
+                              <span className="font-bold ml-2">
+                                {trip.price?.current
+                                  ? "₹" + trip.price.current.toLocaleString()
+                                  : ""}
+                              </span>
+                              {/* Label */}
+                              <span className="text-xs ml-1">
+                                {trip.price?.label || "onwards"}
+                              </span>
+                            </div>
+                          </div>
+                          {/* Tag */}
+                          <div className="absolute left-5 top-[62px] z-30">
+                            <span
+                              className={`text-xs font-bold px-3 py-1 rounded-md ${trip.isRecommended ? "bg-yellow-400" : "bg-green-300"
+                                } text-gray-800 shadow`}
+                            >
+                              {trip.isRecommended ? "Recommended" : "Popular"}
                             </span>
-                          )}
+                          </div>
+                          {/* Card Content */}
+                          <div className="absolute bottom-0 left-0 w-full px-5 pb-5 pt-3 z-10 text-white bg-gradient-to-t from-black/90 via-black/40 to-transparent">
+                            <div className="font-bold text-[1.08rem] leading-tight mb-1 min-h-[48px] line-clamp-2">
+                              {trip.title}
+                            </div>
+                            <div className="text-xs bg-white/15 rounded px-2 py-1 mb-2 max-w-full overflow-hidden text-ellipsis whitespace-nowrap">
+                              {trip.subtitle}
+                            </div>
+                            <div className="flex items-center justify-between text-xs text-white/90 gap-4 mb-1">
+                              <span className="flex items-center font-bold">
+                                <FaClock className="text-[#00AFD1] text-base mr-2" />
+                                <span className="text-white">
+                                  {trip.nights}N/{trip.days}D
+                                </span>
+                              </span>
+                              <span className="flex items-center font-bold">
+                                <FaMapMarkerAlt className="text-[#00AFD1] text-base mr-2" />
+                                <span className="text-white">{trip.startLocation}</span>
+                              </span>
+                            </div>
+                            <div className="flex items-center text-xs mt-1">
+                              <span className="flex items-center font-bold mr-2">
+                                <FaCalendarAlt className="text-[#00AFD1] text-base mr-2" />
+                                <span className="text-white">
+                                  {Array.isArray(trip.departureDates)
+                                    ? trip.departureDates.join(", ")
+                                    : trip.departureDates || ""}
+                                </span>
+                              </span>
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                    </div>
-                  </SwiperSlide>
-                ))}
-              </Swiper>
+                      </Link>
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+              )}
             </div>
           </div>
         </section>
-
         <section className="bg-white pt-8 pb-12">
           <div className="max-w-[1400px] mx-auto px-4">
             {/* Header */}
@@ -1208,16 +1101,15 @@ export default function Package() {
               Europe with UK
             </h2>
             <p className="text-lg text-gray-500 mb-6">
-              Explore Timeless Europe, Embrace Royal UK – One Epic Journey
-              Awaits!
+              Explore Timeless Europe, Embrace Royal UK – One Epic Journey Awaits!
             </p>
 
             {/* Slider */}
             <div className="relative">
               {/* Navigation */}
-              {EuropeWithUK.length >= 4 && (
+              {europeWithUK.length >= 4 && (
                 <button
-                  ref={prevRef}
+                  ref={prevUKRef}
                   className="absolute left-[-35px] top-1/2 -translate-y-1/2 z-10 w-[54px] h-[54px] bg-white rounded-full flex items-center justify-center shadow border border-gray-200 hover:bg-blue-100 transition-all"
                   aria-label="Previous"
                   style={{ boxShadow: "0 2px 18px rgba(32,60,132,0.12)" }}
@@ -1225,9 +1117,9 @@ export default function Package() {
                   <FaArrowLeft className="text-[#87bdd8] text-3xl" />
                 </button>
               )}
-              {EuropeWithUK.length >= 4 && (
+              {europeWithUK.length >= 4 && (
                 <button
-                  ref={nextRef}
+                  ref={nextUKRef}
                   className="absolute right-[-35px] top-1/2 -translate-y-1/2 z-10 w-[54px] h-[54px] bg-white rounded-full flex items-center justify-center shadow border border-gray-200 hover:bg-blue-100 transition-all"
                   aria-label="Next"
                   style={{ boxShadow: "0 2px 18px rgba(32,60,132,0.12)" }}
@@ -1235,195 +1127,267 @@ export default function Package() {
                   <FaArrowRight className="text-[#87bdd8] text-3xl" />
                 </button>
               )}
-              <Swiper
-                modules={[Navigation]}
-                slidesPerView={1}
-                spaceBetween={32}
-                breakpoints={{
-                  700: { slidesPerView: 2 },
-                  1024: { slidesPerView: 3 },
-                  1300: { slidesPerView: 4 },
-                }}
-                navigation={{
-                  prevEl: prevRef.current,
-                  nextEl: nextRef.current,
-                }}
-                onInit={(swiper) => {
-                  // @ts-ignore
-                  swiper.params.navigation.prevEl = prevRef.current;
-                  // @ts-ignore
-                  swiper.params.navigation.nextEl = nextRef.current;
-                  swiper.navigation.init();
-                  swiper.navigation.update();
-                }}
-                className="py-4"
-              >
-                {EuropeWithUK.map((trip, i) => (
-                  <SwiperSlide key={i}>
-                    <div className="relative h-[470px] rounded-[15px] overflow-hidden group shadow border bg-black/80">
-                      {/* BG Image */}
-                      <img
-                        src={trip.img}
-                        alt={trip.title}
-                        className="w-full h-full object-cover"
-                      />
-                      {/* Gradient overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
-                      {/* Price badge */}
-                      <div className="absolute top-5 left-5 z-20">
-                        <div className="flex items-center gap-1 px-3 py-1 rounded-full bg-yellow-300/95 text-gray-900 font-semibold text-[15px] shadow min-w-[175px] justify-center">
-                          <span className="line-through text-gray-600 text-sm">
-                            {trip.oldPrice}
-                          </span>
-                          <span className="font-bold">{trip.price}/-</span>
-                          <span className="text-xs">{trip.priceText}</span>
-                        </div>
-                      </div>
-                      {/* Tag */}
-                      <div className="absolute left-5 top-[62px] z-30">
-                        <span
-                          className={`text-xs font-bold px-3 py-1 rounded-md ${trip.tagColor} text-gray-800 shadow`}
-                        >
-                          {trip.tagText}
-                        </span>
-                      </div>
-                      {/* Card Content */}
-                      <div className="absolute bottom-0 left-0 w-full px-5 pb-5 pt-3 z-10 text-white">
-                        <div className="font-bold text-[1.08rem] leading-tight mb-2 min-h-[48px]">
-                          {trip.title}
-                        </div>
-                        <div className="text-xs bg-white/15 rounded px-2 py-1 mb-2 max-w-full overflow-x-auto whitespace-nowrap">
-                          {trip.subtitle}
-                        </div>
 
-                        {/* Row 1: Duration & Airport */}
-                        <div className="flex items-center justify-between text-xs text-white/90 gap-6 mb-1">
-                          <span className="flex items-center font-bold">
-                            <FaClock className="text-[#00AFD1] text-base mr-2" />
-                            <span className="text-white">{trip.days}</span>
-                          </span>
-                          <span className="flex items-center font-bold">
-                            <FaMapMarkerAlt className="text-[#00AFD1] text-base mr-2" />
-                            <span className="text-white">{trip.airport}</span>
-                          </span>
-                        </div>
-
-                        {/* Row 2: Dates & Batch */}
-                        <div className="flex items-center text-xs mt-1">
-                          <span className="flex items-center font-bold mr-2">
-                            <FaCalendarAlt className="text-[#00AFD1] text-base mr-2" />
-                            <span className="text-white">{trip.start}</span>
-                          </span>
-                          {trip.batch && (
-                            <span className="text-green-400 font-bold ml-1">
-                              {trip.batch}
+              {loadingEuropeWithUK ? (
+                <div className="py-8 text-center text-lg text-gray-400">Loading...</div>
+              ) : europeWithUK.length === 0 ? (
+                <div className="py-8 text-center text-lg text-gray-400">
+                  No Europe with UK packages found.
+                </div>
+              ) : (
+                <Swiper
+                  modules={[Navigation]}
+                  slidesPerView={1}
+                  spaceBetween={32}
+                  breakpoints={{
+                    700: { slidesPerView: 2 },
+                    1024: { slidesPerView: 3 },
+                    1300: { slidesPerView: 4 },
+                  }}
+                  navigation={{
+                    prevEl: prevUKRef.current,
+                    nextEl: nextUKRef.current,
+                  }}
+                  onInit={(swiper) => {
+                    // @ts-ignore
+                    swiper.params.navigation.prevEl = prevUKRef.current;
+                    // @ts-ignore
+                    swiper.params.navigation.nextEl = nextUKRef.current;
+                    swiper.navigation.init();
+                    swiper.navigation.update();
+                  }}
+                  className="py-4"
+                >
+                  {europeWithUK.map((trip, i) => (
+                    <SwiperSlide key={trip._id || i}>
+                      <Link to={`/packages/${trip._id}`}>
+                        <div className="relative h-[500px] rounded-[15px] overflow-hidden group shadow border bg-black/80">
+                          {/* BG Image */}
+                          <img
+                            src={trip.img || trip.image}
+                            alt={trip.title}
+                            className="w-full h-full object-cover"
+                          />
+                          {/* Gradient overlay */}
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
+                          {/* Price badge */}
+                          <div className="absolute top-5 left-5 z-20">
+                            <div className="flex items-center gap-1 px-3 py-1 rounded-full bg-yellow-300/95 text-gray-900 font-semibold text-[15px] shadow min-w-[175px] justify-center">
+                              {/* Old Price */}
+                              <span className="line-through text-gray-600 text-sm">
+                                {trip.oldPrice ||
+                                  (trip.price?.original
+                                    ? "₹" + trip.price.original.toLocaleString()
+                                    : "")}
+                              </span>
+                              {/* Current Price */}
+                              <span className="font-bold ml-2">
+                                {trip.priceText ||
+                                  (trip.price?.current
+                                    ? "₹" + trip.price.current.toLocaleString()
+                                    : trip.price?.current === 0
+                                      ? "₹0"
+                                      : trip.price?.current
+                                        ? trip.price.current
+                                        : "")}
+                              </span>
+                              {/* Label */}
+                              <span className="text-xs ml-1">
+                                {trip.price?.label || trip.priceText || "onwards"}
+                              </span>
+                            </div>
+                          </div>
+                          {/* Tag */}
+                          <div className="absolute left-5 top-[62px] z-30">
+                            <span
+                              className={`text-xs font-bold px-3 py-1 rounded-md ${trip.tagColor || (trip.isRecommended ? "bg-yellow-400" : "bg-green-300")} text-gray-800 shadow`}
+                            >
+                              {trip.tagText || (trip.isRecommended ? "Recommended" : "Popular")}
                             </span>
-                          )}
+                          </div>
+                          {/* Card Content */}
+                          <div className="absolute bottom-0 left-0 w-full px-5 pb-5 pt-3 z-10 text-white bg-gradient-to-t from-black/90 via-black/40 to-transparent">
+                            <div className="font-bold text-[1.08rem] leading-tight mb-1 min-h-[48px] line-clamp-2">
+                              {trip.title}
+                            </div>
+                            <div className="text-xs bg-white/15 rounded px-2 py-1 mb-2 max-w-full overflow-hidden text-ellipsis whitespace-nowrap">
+                              {trip.subtitle}
+                            </div>
+                            <div className="flex items-center justify-between text-xs text-white/90 gap-4 mb-1">
+                              <span className="flex items-center font-bold">
+                                <FaClock className="text-[#00AFD1] text-base mr-2" />
+                                <span className="text-white">
+                                  {trip.nights && trip.days
+                                    ? `${trip.nights}N/${trip.days}D`
+                                    : trip.days || ""}
+                                </span>
+                              </span>
+                              <span className="flex items-center font-bold">
+                                <FaMapMarkerAlt className="text-[#00AFD1] text-base mr-2" />
+                                <span className="text-white">
+                                  {trip.startLocation || trip.airport || ""}
+                                </span>
+                              </span>
+                            </div>
+                            <div className="flex items-center text-xs mt-1">
+                              <span className="flex items-center font-bold mr-2">
+                                <FaCalendarAlt className="text-[#00AFD1] text-base mr-2" />
+                                <span className="text-white">
+                                  {Array.isArray(trip.departureDates)
+                                    ? trip.departureDates.join(", ")
+                                    : trip.start ||
+                                    trip.departureDates ||
+                                    ""}
+                                </span>
+                              </span>
+                              {trip.batch && (
+                                <span className="text-green-400 font-bold ml-1">
+                                  {trip.batch}
+                                </span>
+                              )}
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                    </div>
-                  </SwiperSlide>
-                ))}
-              </Swiper>
+                      </Link>
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+              )}
             </div>
           </div>
         </section>
+
+
         <section className="bg-white py-10">
           <div className="max-w-[1400px] mx-auto px-4">
             <h2 className="text-3xl md:text-[2rem] font-bold text-[#34586a] mb-8">
               All Packages
             </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-7 gap-y-9">
-              {trips.map((trip, i) => (
-                <div
-                  key={i}
-                  className="relative h-[470px] rounded-[15px] overflow-hidden group shadow border bg-black/80"
-                >
-                  {/* BG Image */}
-                  <img
-                    src={trip.img}
-                    alt={trip.title}
-                    className="w-full h-full object-cover"
-                  />
-                  {/* Gradient overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
-                  {/* Price badge */}
-                  <div className="absolute top-5 left-5 z-20">
-                    <div className="flex items-center gap-1 px-3 py-1 rounded-full bg-yellow-300/95 text-gray-900 font-semibold text-[15px] shadow min-w-[175px] justify-center">
-                      <span className="line-through text-gray-600 text-sm">
-                        {trip.oldPrice}
-                      </span>
-                      <span className="font-bold">{trip.price}/-</span>
-                      <span className="text-xs">{trip.priceText}</span>
-                    </div>
-                  </div>
-                  {/* Tag */}
-                  <div className="absolute left-5 top-[62px] z-30">
-                    <span
-                      className={`text-xs font-bold px-3 py-1 rounded-md ${trip.tagColor} text-gray-800 shadow`}
-                    >
-                      {trip.tagText}
-                    </span>
-                  </div>
-                  {/* Card Content */}
-                  <div className="absolute bottom-0 left-0 w-full px-5 pb-5 pt-3 z-10 text-white">
-                    <div className="font-bold text-[1.08rem] leading-tight mb-2 min-h-[48px]">
-                      {trip.title}
-                    </div>
-                    <div className="text-xs bg-white/15 rounded px-2 py-1 mb-2 max-w-full overflow-x-auto whitespace-nowrap">
-                      {trip.subtitle}
-                    </div>
-
-                    {/* Row 1: Duration & Airport */}
-                    <div className="flex items-center justify-between text-xs text-white/90 gap-6 mb-1">
-                      <span className="flex items-center font-bold">
-                        <FaClock className="text-[#00AFD1] text-base mr-2" />
-                        <span className="text-white">{trip.days}</span>
-                      </span>
-                      <span className="flex items-center font-bold">
-                        <FaMapMarkerAlt className="text-[#00AFD1] text-base mr-2" />
-                        <span className="text-white">{trip.airport}</span>
-                      </span>
-                    </div>
-
-                    {/* Row 2: Dates & Batch */}
-                    <div className="flex items-center text-xs mt-1">
-                      <span className="flex items-center font-bold mr-2">
-                        <FaCalendarAlt className="text-[#00AFD1] text-base mr-2" />
-                        <span className="text-white">{trip.start}</span>
-                      </span>
-                      {trip.batch && (
-                        <span className="text-green-400 font-bold ml-1">
-                          {trip.batch}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
+            {loadingAllPackages ? (
+              <div className="py-8 text-center text-lg text-gray-400">Loading...</div>
+            ) : trips.length === 0 ? (
+              <div className="py-8 text-center text-lg text-gray-400">
+                No packages found.
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-7 gap-y-9">
+                  {trips.map((trip, i) => (
+                    <SwiperSlide key={trip._id || i}>
+                      <Link to={`/packages/${trip._id}`}>
+                        <div className="relative h-[500px] rounded-[15px] overflow-hidden group shadow border bg-black/80">
+                          {/* BG Image */}
+                          <img
+                            src={trip.img || trip.image}
+                            alt={trip.title}
+                            className="w-full h-full object-cover"
+                          />
+                          {/* Gradient overlay */}
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
+                          {/* Price badge */}
+                          <div className="absolute top-5 left-5 z-20">
+                            <div className="flex items-center gap-1 px-3 py-1 rounded-full bg-yellow-300/95 text-gray-900 font-semibold text-[15px] shadow min-w-[175px] justify-center">
+                              {/* Old Price */}
+                              <span className="line-through text-gray-600 text-sm">
+                                {trip.oldPrice ||
+                                  (trip.price?.original
+                                    ? "₹" + trip.price.original.toLocaleString()
+                                    : "")}
+                              </span>
+                              {/* Current Price */}
+                              <span className="font-bold ml-2">
+                                {trip.priceText ||
+                                  (trip.price?.current
+                                    ? "₹" + trip.price.current.toLocaleString()
+                                    : trip.price?.current === 0
+                                      ? "₹0"
+                                      : trip.price?.current
+                                        ? trip.price.current
+                                        : "")}
+                              </span>
+                              {/* Label */}
+                              <span className="text-xs ml-1">
+                                {trip.price?.label || trip.priceText || "onwards"}
+                              </span>
+                            </div>
+                          </div>
+                          {/* Tag */}
+                          <div className="absolute left-5 top-[62px] z-30">
+                            <span
+                              className={`text-xs font-bold px-3 py-1 rounded-md ${trip.tagColor || (trip.isRecommended ? "bg-yellow-400" : "bg-green-300")} text-gray-800 shadow`}
+                            >
+                              {trip.tagText || (trip.isRecommended ? "Recommended" : "Popular")}
+                            </span>
+                          </div>
+                          {/* Card Content */}
+                          <div className="absolute bottom-0 left-0 w-full px-5 pb-5 pt-3 z-10 text-white bg-gradient-to-t from-black/90 via-black/40 to-transparent">
+                            <div className="font-bold text-[1.08rem] leading-tight mb-1 min-h-[48px] line-clamp-2">
+                              {trip.title}
+                            </div>
+                            <div className="text-xs bg-white/15 rounded px-2 py-1 mb-2 max-w-full overflow-hidden text-ellipsis whitespace-nowrap">
+                              {trip.subtitle}
+                            </div>
+                            <div className="flex items-center justify-between text-xs text-white/90 gap-4 mb-1">
+                              <span className="flex items-center font-bold">
+                                <FaClock className="text-[#00AFD1] text-base mr-2" />
+                                <span className="text-white">
+                                  {trip.nights && trip.days
+                                    ? `${trip.nights}N/${trip.days}D`
+                                    : trip.days || ""}
+                                </span>
+                              </span>
+                              <span className="flex items-center font-bold">
+                                <FaMapMarkerAlt className="text-[#00AFD1] text-base mr-2" />
+                                <span className="text-white">
+                                  {trip.startLocation || trip.airport || ""}
+                                </span>
+                              </span>
+                            </div>
+                            <div className="flex items-center text-xs mt-1">
+                              <span className="flex items-center font-bold mr-2">
+                                <FaCalendarAlt className="text-[#00AFD1] text-base mr-2" />
+                                <span className="text-white">
+                                  {Array.isArray(trip.departureDates)
+                                    ? trip.departureDates.join(", ")
+                                    : trip.start ||
+                                    trip.departureDates ||
+                                    ""}
+                                </span>
+                              </span>
+                              {trip.batch && (
+                                <span className="text-green-400 font-bold ml-1">
+                                  {trip.batch}
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      </Link>
+                    </SwiperSlide>
+                  ))}
+              </div>
+            )}
           </div>
           <div className="flex justify-center mt-10">
             <button
               className="
-      px-8 py-3
-      rounded-md
-      border border-[#2e6273]
-      text-[#2e6273]
-      font-semibold
-      text-xl
-      bg-white
-      hover:bg-[#f7fbfc]
-      transition
-      shadow-sm
+        px-8 py-3
+        rounded-md
+        border border-[#2e6273]
+        text-[#2e6273]
+        font-semibold
+        text-xl
+        bg-white
+        hover:bg-[#f7fbfc]
+        transition
+        shadow-sm
       "
               style={{ minWidth: 220 }}
             >
               Explore More
             </button>
           </div>
-          s
         </section>
+
         <section className="max-w-[1400px] mx-auto px-4 pt-10 pb-12">
           <div className="mb-7">
             <h2
@@ -1441,7 +1405,7 @@ export default function Package() {
           <div className="relative">
             {/* Custom Left Arrow */}
             <button
-              ref={prevRef}
+              ref={prevActivityRef}
               className="hidden md:block absolute z-20 -left-6 top-1/2 -translate-y-1/2 w-11 h-11 flex items-center justify-center bg-[#ffff] shadow-lg rounded-full border-4 border-white hover:bg-white-400 transition-all"
               style={{ boxShadow: "0 1.5px 10px rgba(0,0,0,.12)" }}
             >
@@ -1450,7 +1414,7 @@ export default function Package() {
 
             {/* Custom Right Arrow */}
             <button
-              ref={nextRef}
+              ref={nextActivityRef}
               className="hidden md:block absolute z-20 -right-6 top-1/2 -translate-y-1/2 w-11 h-11 flex items-center justify-center bg-[#ffff] shadow-lg rounded-full border-4 border-white hover:bg-white-400 transition-all"
               style={{ boxShadow: "0 1.5px 10px rgba(0,0,0,.12)" }}
             >
@@ -1459,13 +1423,13 @@ export default function Package() {
             <Swiper
               modules={[Navigation]}
               navigation={{
-                prevEl: prevRef.current,
-                nextEl: nextRef.current,
+                prevEl: prevActivityRef.current,
+                nextEl: nextActivityRef.current,
               }}
               onInit={(swiper) => {
                 // Attach navigation refs after mount
-                (swiper.params.navigation as any).prevEl = prevRef.current;
-                (swiper.params.navigation as any).nextEl = nextRef.current;
+                (swiper.params.navigation as any).prevEl = prevActivityRef.current;
+                (swiper.params.navigation as any).nextEl = nextActivityRef.current;
                 swiper.navigation.init();
                 swiper.navigation.update();
               }}
@@ -1530,7 +1494,7 @@ export default function Package() {
           <div className="relative">
             {/* Custom Left Arrow */}
             <button
-              ref={prevRef}
+              ref={prevVisitRef}
               className="hidden md:block absolute z-20 -left-6 top-1/2 -translate-y-1/2 w-11 h-11 flex items-center justify-center bg-[#ffff] shadow-lg rounded-full border-4 border-white hover:bg-white-400 transition-all"
               style={{ boxShadow: "0 1.5px 10px rgba(0,0,0,.12)" }}
             >
@@ -1539,7 +1503,7 @@ export default function Package() {
 
             {/* Custom Right Arrow */}
             <button
-              ref={nextRef}
+              ref={nextVisitRef}
               className="hidden md:block absolute z-20 -right-6 top-1/2 -translate-y-1/2 w-11 h-11 flex items-center justify-center bg-[#ffff] shadow-lg rounded-full border-4 border-white hover:bg-white-400 transition-all"
               style={{ boxShadow: "0 1.5px 10px rgba(0,0,0,.12)" }}
             >
@@ -1549,15 +1513,15 @@ export default function Package() {
             <Swiper
               modules={[Navigation]}
               navigation={{
-                prevEl: prevRef.current,
-                nextEl: nextRef.current,
+                prevEl: prevVisitRef.current,
+                nextEl: nextVisitRef.current,
               }}
               onInit={(swiper) => {
                 // Attach navigation refs after mount
                 // @ts-ignore
-                swiper.params.navigation.prevEl = prevRef.current;
+                swiper.params.navigation.prevEl = prevVisitRef.current;
                 // @ts-ignore
-                swiper.params.navigation.nextEl = nextRef.current;
+                swiper.params.navigation.nextEl = nextVisitRef.current;
                 swiper.navigation.init();
                 swiper.navigation.update();
               }}
@@ -1623,7 +1587,7 @@ export default function Package() {
           <div className="relative">
             {/* Custom Left Arrow */}
             <button
-              ref={prevRef}
+              ref={prevShopRef}
               className="hidden md:block absolute z-20 -left-6 top-1/2 -translate-y-1/2 w-11 h-11 flex items-center justify-center bg-[#ffff] shadow-lg rounded-full border-4 border-white hover:bg-white-400 transition-all"
               style={{ boxShadow: "0 1.5px 10px rgba(0,0,0,.12)" }}
             >
@@ -1632,7 +1596,7 @@ export default function Package() {
 
             {/* Custom Right Arrow */}
             <button
-              ref={nextRef}
+              ref={nextShopRef}
               className="hidden md:block absolute z-20 -right-6 top-1/2 -translate-y-1/2 w-11 h-11 flex items-center justify-center bg-[#ffff] shadow-lg rounded-full border-4 border-white hover:bg-white-400 transition-all"
               style={{ boxShadow: "0 1.5px 10px rgba(0,0,0,.12)" }}
             >
@@ -1642,12 +1606,12 @@ export default function Package() {
             <Swiper
               modules={[Navigation]}
               navigation={{
-                prevEl: prevRef.current,
-                nextEl: nextRef.current,
+                prevEl: prevShopRef.current,
+                nextEl: nextShopRef.current,
               }}
               onInit={(swiper) => {
-                swiper.params.navigation.prevEl = prevRef.current;
-                swiper.params.navigation.nextEl = nextRef.current;
+                (swiper.params.navigation as any).prevEl = prevShopRef.current;
+                (swiper.params.navigation as any).nextEl = nextShopRef.current;
                 swiper.navigation.init();
                 swiper.navigation.update();
               }}
@@ -1891,7 +1855,7 @@ export default function Package() {
             <div className="relative flex items-center">
               {/* Left Arrow */}
               <button
-                ref={prevRef}
+                ref={prevReviewRef}
                 className="hidden md:block absolute left-[-35px] z-10 bg-white border-2 border-gray-700 w-12 h-12 rounded-full flex items-center justify-center transition hover:bg-gray-100"
                 style={{ top: "42%" }}
                 aria-label="Previous"
@@ -1903,12 +1867,12 @@ export default function Package() {
                 <Swiper
                   modules={[Navigation]}
                   navigation={{
-                    prevEl: prevRef.current,
-                    nextEl: nextRef.current,
+                    prevEl: prevReviewRef.current,
+                    nextEl: nextReviewRef.current,
                   }}
                   onInit={(swiper) => {
-                    swiper.params.navigation.prevEl = prevRef.current;
-                    swiper.params.navigation.nextEl = nextRef.current;
+                    (swiper.params.navigation as any).prevEl = prevReviewRef.current;
+                    (swiper.params.navigation as any).nextEl = nextReviewRef.current;
                     swiper.navigation.init();
                     swiper.navigation.update();
                   }}

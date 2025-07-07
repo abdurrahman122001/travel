@@ -1,4 +1,6 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -17,205 +19,15 @@ import {
 } from "react-icons/fa";
 import DownloadModal from "@/components/DownloadModal";
 import Navigations from "@/components/Navigation";
-// --- DEMO DATA ---
 import Footer from "@/components/Footer";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Navigation, Pagination } from "swiper/modules";
+import { Autoplay, Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-const trips = [
-  {
-    img: "https://images.wanderon.in/gallery/new/2024/12/13/backpacking-trip-to-europe-10n-11d.avif",
-    oldPrice: "₹2,29,990/-",
-    price: "₹1,69,990",
-    priceText: "onwards",
-    tag: "Recommended",
-    title:
-      "11 Days European Pathways Community Trip - France, Netherlands, Germany, Czechia",
-    subtitle: "3N Paris · 3N Amsterdam· 2N Prague",
-    days: "10N/11D",
-    airport: "Paris Airport - Prague",
-    start: "9 Aug, 27 Sep",
-    // batch: "+1 batch",
-    icon: "fa-solid fa-location-dot",
-    badgeColor: "bg-yellow-400",
-    tagColor: "bg-yellow-400",
-    tagText: "Recommended",
-  },
-  {
-    img: "https://images.wanderon.in/gallery/new/2025/06/10/1749541707344-spain-community-trip-9n-10ds-new.webp",
-    oldPrice: "₹2,09,990/-",
-    price: "₹1,49,999",
-    priceText: "onwards",
-    tag: "Popular",
-    title: "10 Days Spain Community Trip | La Tomatina Special",
-    subtitle: "Barcelona · Ibiza · Valencia · Bunol ",
-    days: "9N/10D",
-    airport: "Barcelona - Madrid",
-    start: "21 Aug",
-    batch: "",
-    badgeColor: "bg-yellow-400",
-    tagColor: "bg-green-300",
-    tagText: "Popular",
-  },
-  {
-    img: "https://images.wanderon.in/gallery/new/2025/06/09/1749455995718-oktoberfest-trip-package-10n-11d.webp",
-    oldPrice: "₹2,29,990/-",
-    price: "₹1,89,990",
-    priceText: "onwards",
-    tag: "Recommended",
-    title: "Live Europe’s Best Moments: 11-Day Oktoberfest Community Trip",
-    subtitle: "Amsterdam · Paris · Eiffel Tower",
-    days: "10N/11D",
-    airport: "Amsterdam Airport - Prague",
-    start: "16 Sep",
-    batch: "",
-    badgeColor: "bg-yellow-400",
-    tagColor: "bg-yellow-400",
-    tagText: "Recommended",
-  },
-  {
-    img: "https://images.wanderon.in/gallery/new/2024/12/13/europe-community-trip-7n-8d.avif",
-    oldPrice: "₹2,09,990/-",
-    price: "₹1,44,990",
-    priceText: "onwards",
-    tag: "Recommended",
-    title:
-      "8 Days European Trails Community Trip - Netherlands, Germany, Czechia",
-    subtitle: "3N Amsterdam · 2N Berlin · 2N Prague",
-    days: "7N/8D",
-    airport: "Amsterdam Airport - Prague",
-    start: "12 Aug, 30 Sep",
-    // batch: "+1 batch",
-    badgeColor: "bg-yellow-400",
-    tagColor: "bg-yellow-400",
-    tagText: "Recommended",
-  },
-  {
-    img: "https://images.wanderon.in/gallery/new/2024/12/13/backpacking-trip-to-europe-10n-11d.avif",
-    oldPrice: "₹2,29,990/-",
-    price: "₹1,69,990",
-    priceText: "onwards",
-    tag: "Recommended",
-    title:
-      "11 Days European Pathways Community Trip - France, Netherlands, Germany, Czechia",
-    subtitle: "3N Paris · 3N Amsterdam· 2N Prague",
-    days: "10N/11D",
-    airport: "Paris Airport - Prague",
-    start: "9 Aug, 27 Sep",
-    // batch: "+1 batch",
-    icon: "fa-solid fa-location-dot",
-    badgeColor: "bg-yellow-400",
-    tagColor: "bg-yellow-400",
-    tagText: "Recommended",
-  },
-  {
-    img: "https://images.wanderon.in/gallery/new/2025/06/10/1749541707344-spain-community-trip-9n-10ds-new.webp",
-    oldPrice: "₹2,09,990/-",
-    price: "₹1,49,999",
-    priceText: "onwards",
-    tag: "Popular",
-    title: "10 Days Spain Community Trip | La Tomatina Special",
-    subtitle: "Barcelona · Ibiza · Valencia · Bunol ",
-    days: "9N/10D",
-    airport: "Barcelona - Madrid",
-    start: "21 Aug",
-    batch: "",
-    badgeColor: "bg-yellow-400",
-    tagColor: "bg-green-300",
-    tagText: "Popular",
-  },
-  {
-    img: "https://images.wanderon.in/gallery/new/2025/06/09/1749455995718-oktoberfest-trip-package-10n-11d.webp",
-    oldPrice: "₹2,29,990/-",
-    price: "₹1,89,990",
-    priceText: "onwards",
-    tag: "Recommended",
-    title: "Live Europe’s Best Moments: 11-Day Oktoberfest Community Trip",
-    subtitle: "Amsterdam · Paris · Eiffel Tower",
-    days: "10N/11D",
-    airport: "Amsterdam Airport - Prague",
-    start: "16 Sep",
-    batch: "",
-    badgeColor: "bg-yellow-400",
-    tagColor: "bg-yellow-400",
-    tagText: "Recommended",
-  },
-  {
-    img: "https://images.wanderon.in/gallery/new/2024/12/13/europe-community-trip-7n-8d.avif",
-    oldPrice: "₹2,09,990/-",
-    price: "₹1,44,990",
-    priceText: "onwards",
-    tag: "Recommended",
-    title:
-      "8 Days European Trails Community Trip - Netherlands, Germany, Czechia",
-    subtitle: "3N Amsterdam · 2N Berlin · 2N Prague",
-    days: "7N/8D",
-    airport: "Amsterdam Airport - Prague",
-    start: "12 Aug, 30 Sep",
-    // batch: "+1 batch",
-    badgeColor: "bg-yellow-400",
-    tagColor: "bg-yellow-400",
-    tagText: "Recommended",
-  },
-];
-const packageDetails = {
-  bannerImage:
-    "https://images.wanderon.in/gallery/new/2024/12/24/prague-evening-cruise.AVIF",
-  title:
-    "11 Days European Pathways Community Trip - France, Netherlands, Germany, Czechia",
-  pickupDrop: "Paris Airport - Prague Airport",
-  duration: "10N - 11D",
-  price: "₹1,69,990/-",
-  perPerson: "per person",
-  highlights: ["3N Paris", "3N Amsterdam", "2N Berlin", "2N Prague"],
-  overview: `Join us as we take you to some of the dreamiest places in the world. We are talking about our amazing Backpacking Trip to Europe, covering Czechia, Germany, the Netherlands, and France in 11 days!
-This unforgettable adventure offers the perfect blend of guided tours and leisure time, ensuring you experience the best of each destination. Explore iconic cities with hop-on-hop-off bus tours, giving you a brief look at landmarks like the Eiffel Tower, and Prague’s Astronomical Clock.`,
-  itinerary: [
-    {
-      day: "Day 1",
-      title: "Arrival in Paris",
-      details: [
-        "Meet at Paris Airport",
-        "Transfer to hotel, check-in",
-        "Welcome dinner and orientation",
-      ],
-    },
-    {
-      day: "Day 2",
-      title: "Paris Sightseeing",
-      details: [
-        "Guided city tour including Eiffel Tower",
-        "Hop-on-hop-off bus tour",
-        "Evening at leisure",
-      ],
-    },
-    {
-      day: "Day 3",
-      title: "Travel to Amsterdam",
-      details: [
-        "Morning departure for Amsterdam",
-        "Check-in and canal cruise",
-        "Free evening to explore",
-      ],
-    },
-  ],
-  inclusions: [
-    "Accommodation in 3-star hotels",
-    "Daily breakfast",
-    "All intercity transfers",
-    "Guided sightseeing tours",
-    "Entry tickets to key attractions",
-  ],
-  exclusions: [
-    "Personal expenses",
-    "Lunch and dinner",
-    "Visa fees",
-    "Travel insurance",
-  ],
-  otherInfo: `For more information, please contact our support team.`,
-};
+
+const BANNER_IMAGE =
+  "https://images.wanderon.in/gallery/new/2024/12/24/prague-evening-cruise.AVIF";
 
 const tabList = [
   { label: "Overview & Highlights", key: "overview" },
@@ -224,55 +36,70 @@ const tabList = [
   { label: "Exclusions", key: "exclusions" },
   { label: "Other Info", key: "otherinfo" },
 ];
+  const images = [
+    {
+      src: "https://images.wanderon.in/new-homepage-data/Gallery/vietnam%202",
+      label: "Vietnam",
+    },
+    {
+      src: "https://images.wanderon.in/new-homepage-data/Gallery/dubai%20re%2001?updatedAt=1711452484035/images/slide2.jpg",
+      label: "Dubai",
+    },
+    {
+      src: "https://images.wanderon.in/new-homepage-data/Gallery/bhutan%204",
+      label: "Bhutan",
+    },
+    {
+      src: "https://images.wanderon.in/new-homepage-data/Gallery/kerala-trips-1",
+      label: "Kerala",
+    },
+    {
+      src: "https://images.wanderon.in/new-homepage-data/Gallery/meghalaya%201?updatedAt=1711451040355",
+      label: "Meghalaya",
+    },
+    {
+      src: "https://images.wanderon.in/new-homepage-data/Gallery/uttarakhand-re-2?updatedAt=1711452678546",
+      label: "Uttarakhand",
+    },
+  ];
 
 const scrollToRef = (ref) => {
   ref.current?.scrollIntoView({ behavior: "smooth", block: "start" });
 };
-const images = [
-  {
-    src: "https://images.wanderon.in/new-homepage-data/Gallery/vietnam%202",
-    label: "Vietnam",
-  },
-  {
-    src: "https://images.wanderon.in/new-homepage-data/Gallery/dubai%20re%2001?updatedAt=1711452484035/images/slide2.jpg",
-    label: "Dubai",
-  },
-  {
-    src: "https://images.wanderon.in/new-homepage-data/Gallery/bhutan%204",
-    label: "Bhutan",
-  },
-  {
-    src: "https://images.wanderon.in/new-homepage-data/Gallery/kerala-trips-1",
-    label: "Kerala",
-  },
-  {
-    src: "https://images.wanderon.in/new-homepage-data/Gallery/meghalaya%201?updatedAt=1711451040355",
-    label: "Meghalaya",
-  },
-  {
-    src: "https://images.wanderon.in/new-homepage-data/Gallery/uttarakhand-re-2?updatedAt=1711452678546",
-    label: "Uttarakhand",
-  },
-];
 
 const PackageDetailsPage = () => {
+  // Params
+  const { id } = useParams();
+
+  // State
+  const [packageDetails, setPackageDetails] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [trips, setTrips] = useState([]);
+  const [loadingTrips, setLoadingTrips] = useState(true);
+
   // Section refs
   const overviewRef = useRef(null);
   const itineraryRef = useRef(null);
   const inclusionsRef = useRef(null);
   const exclusionsRef = useRef(null);
   const otherInfoRef = useRef(null);
+  const prevBestRef = useRef(null);
+  const nextBestRef = useRef(null);
 
-  // Tab state
+  // UI state
   const [activeTab, setActiveTab] = useState(tabList[0].key);
   const [openItineraryIndexes, setOpenItineraryIndexes] = useState([0]);
   const [form, setForm] = useState({ name: "", phone: "", email: "" });
   const [formStatus, setFormStatus] = useState("idle");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
-  const prevRef = useRef(null);
-  const nextRef = useRef(null);
-  // Handle scrolling/tab
+  const [formError, setFormError] = useState(""); // For error message
+
+  // Swiper navigation refs
+  const prevRef = useRef<HTMLButtonElement | null>(null);
+  const nextRef = useRef<HTMLButtonElement | null>(null);
+
+  // Tab switch
   const handleTabClick = (key) => {
     setActiveTab(key);
     switch (key) {
@@ -296,32 +123,108 @@ const PackageDetailsPage = () => {
     }
   };
 
-  // Itinerary accordion toggle
+  // Itinerary toggle
   const toggleDay = (idx) => {
     setOpenItineraryIndexes((prev) =>
       prev.includes(idx) ? prev.filter((i) => i !== idx) : [...prev, idx]
     );
   };
 
-  // Contact form submission (demo only)
-  const handleFormSubmit = (e) => {
+  // Contact form
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-    setFormStatus("submitted");
-    setTimeout(() => setFormStatus("idle"), 2000);
+    setFormStatus("submitting");
+    setFormError("");
+
+    try {
+      // POST to booking API with packageId and title
+      await axios.post(`${import.meta.env.VITE_API_URL || ""}/bookings`, {
+        packageId: packageDetails._id,
+        packageTitle: packageDetails.title,
+        fullName: form.name,
+        phone: form.phone,
+        email: form.email,
+      });
+      setFormStatus("submitted");
+      setForm({ name: "", phone: "", email: "" }); // reset
+      setTimeout(() => setFormStatus("idle"), 2000);
+    } catch (err) {
+      setFormStatus("error");
+      setFormError(
+        err.response?.data?.message ||
+        "Submission failed. Please try again."
+      );
+      setTimeout(() => setFormStatus("idle"), 2500);
+    }
   };
+
+  // Fetch package by id
+  useEffect(() => {
+    if (!id) return;
+    setLoading(true);
+    axios
+      .get(`${import.meta.env.VITE_API_URL || ""}/packages/${id}`)
+      .then((res) => setPackageDetails(res.data))
+      .catch(() => setPackageDetails(null))
+      .finally(() => setLoading(false));
+  }, [id]);
+
+  // Fetch best-selling trips (you can replace this endpoint)
+  useEffect(() => {
+    setLoadingTrips(true);
+    axios
+      .get(`${import.meta.env.VITE_API_URL || ""}/packages?limit=8`)
+      .then((res) => setTrips(res.data))
+      .catch(() => setTrips([]))
+      .finally(() => setLoadingTrips(false));
+  }, []);
+
+  // Helper: format price
+  const formatPrice = (num) =>
+    num ? `₹${num.toLocaleString("en-IN")}` : "";
+
+  // Helper: show duration (nights/days)
+  const showDuration = (n, d, label) =>
+    label
+      ? label
+      : n && d
+        ? `${n}N/${d}D`
+        : n
+          ? `${n} Nights`
+          : d
+            ? `${d} Days`
+            : "";
+
+  // Helper: show tags
+  const getTagColor = (isRecommended) =>
+    isRecommended ? "bg-yellow-400" : "bg-green-300";
+  const getTagText = (isRecommended) =>
+    isRecommended ? "Recommended" : "Popular";
+
+  if (loading)
+    return (
+      <div className="w-full h-screen flex items-center justify-center text-lg text-gray-400">
+        Loading...
+      </div>
+    );
+  if (!packageDetails)
+    return (
+      <div className="w-full h-screen flex items-center justify-center text-lg text-gray-400">
+        Package not found.
+      </div>
+    );
 
   return (
     <div className="bg-[#f6fbfd] min-h-screen pb-8">
       <Navigations onContactClick={() => setIsContactModalOpen(true)} />
       <div className="relative w-full h-[430px] md:h-[440px] lg:h-[500px] flex items-end justify-center overflow-hidden">
         <img
-          src={packageDetails.bannerImage}
+          src={BANNER_IMAGE}
           alt="cover"
           className="absolute inset-0 w-full h-full object-cover z-0"
           style={{ minHeight: 320, filter: "brightness(0.70)" }}
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 to-transparent z-10" />
-        <div className="z-20 w-full px-4 flex flex-col items-center pb-8 relative"></div>
         <Button
           onClick={() => setIsModalOpen(true)}
           className="mt-5 bg-[#FEE60E] hover:bg-yellow-400 text-black font-bold rounded-full shadow-md px-8 py-3 text-base transition absolute left-1/2 -translate-x-1/2 bottom-6 md:bottom-8 z-30"
@@ -371,7 +274,9 @@ const PackageDetailsPage = () => {
               <div>
                 <div className="text-xs text-gray-500">Pickup & Drop</div>
                 <div className="text-sm font-semibold text-slate-800">
-                  {packageDetails.pickupDrop}
+                  {packageDetails.startLocation ||
+                    packageDetails.pickupDrop ||
+                    "-"}
                 </div>
               </div>
             </div>
@@ -384,29 +289,16 @@ const PackageDetailsPage = () => {
               <div>
                 <div className="text-xs text-gray-500">Duration</div>
                 <div className="text-sm font-semibold text-slate-800">
-                  {packageDetails.duration}
+                  {showDuration(
+                    packageDetails.nights,
+                    packageDetails.days,
+                    packageDetails.durationLabel
+                  )}
                 </div>
               </div>
             </div>
           </div>
         </div>
-        {/* Pricing Box */}
-        {/* <div className="md:w-[340px] w-full">
-          <div className="bg-white rounded-lg border border-sky-200 shadow p-5 flex flex-col items-center text-center">
-            <span className="block text-xs text-gray-500 mb-1">
-              Starting from
-            </span>
-            <span className="text-2xl font-bold text-sky-700 mb-1">
-              {packageDetails.price}
-            </span>
-            <span className="text-xs text-gray-500 mb-3">
-              {packageDetails.perPerson}
-            </span>
-            <Button className="w-full bg-cyan-400 hover:bg-cyan-500 text-white font-semibold rounded transition">
-              Dates & Costing
-            </Button>
-          </div>
-        </div> */}
       </div>
 
       {/* Main Section */}
@@ -431,7 +323,7 @@ const PackageDetailsPage = () => {
             ))}
           </div>
 
-          {/* Main Content Sections */}
+          {/* Overview & Highlights */}
           <div ref={overviewRef} className="scroll-mt-24">
             <h2 className="flex items-center text-lg font-bold text-sky-700 mb-1">
               <span className="border-l-4 border-sky-500 pl-2 mr-2" />
@@ -439,7 +331,7 @@ const PackageDetailsPage = () => {
             </h2>
             <div className="bg-white rounded-lg shadow p-5 mb-8">
               <div className="mb-2">
-                {packageDetails.highlights.map((hl, idx) => (
+                {(packageDetails.features || []).map((hl, idx) => (
                   <div
                     key={idx}
                     className="inline-block text-xs bg-sky-50 border border-sky-200 rounded px-3 py-1 mr-2 mb-2 text-sky-900 font-semibold"
@@ -449,55 +341,74 @@ const PackageDetailsPage = () => {
                 ))}
               </div>
               <p className="text-gray-700 text-sm whitespace-pre-line">
-                {packageDetails.overview}
+                {packageDetails.itinerary ||
+                  packageDetails.tripBreakdown ||
+                  "No overview available."}
               </p>
             </div>
           </div>
 
-    <div className="bg-white rounded-lg shadow mb-8">
-      <div className="space-y-4"> {/* <-- this adds a gap between each FAQ */}
-        {packageDetails.itinerary.map((day, idx) => {
-          const isOpen = openItineraryIndexes.includes(idx);
-          return (
-            <div
-              key={idx}
-              className={`border-b last:border-0 ${isOpen ? "bg-blue-50" : ""}`}
-            >
-              <button
-                onClick={() => toggleDay(idx)}
-                className={`flex items-center justify-between w-full px-5 py-4 focus:outline-none text-left
+          {/* Itinerary Accordion */}
+          <div ref={itineraryRef} className="bg-white rounded-lg shadow mb-8">
+            <div className="space-y-4">
+              {/* If itinerary is rich text: display, else show as list */}
+              {Array.isArray(packageDetails.itinerary) &&
+                packageDetails.itinerary.length > 0
+                ? packageDetails.itinerary.map((day, idx) => {
+                  const isOpen = openItineraryIndexes.includes(idx);
+                  return (
+                    <div
+                      key={idx}
+                      className={`border-b last:border-0 ${isOpen ? "bg-blue-50" : ""}`}
+                    >
+                      <button
+                        onClick={() => toggleDay(idx)}
+                        className={`flex items-center justify-between w-full px-5 py-4 focus:outline-none text-left
                 ${isOpen ? "bg-blue-50" : "bg-sky-50"}
                 hover:bg-sky-100 transition`}
-              >
-                <span className="flex items-center">
-                  <span className="bg-[#09c2e7] text-white rounded px-3 py-1 mr-2 text-xs font-bold inline-block">
-                    {day.day}
-                  </span>
-                  <span className="text-base font-semibold">{day.title}</span>
-                </span>
-                {isOpen ? (
-                  <ChevronUp className="w-6 h-6 text-sky-600" />
-                ) : (
-                  <ChevronDown className="w-6 h-6 text-sky-600" />
-                )}
-              </button>
-              <div
-                className={`overflow-hidden transition-all duration-200 px-5
+                      >
+                        <span className="flex items-center">
+                          <span className="bg-[#09c2e7] text-white rounded px-3 py-1 mr-2 text-xs font-bold inline-block">
+                            Day {idx + 1}
+                          </span>
+                          <span className="text-base font-semibold">
+                            {day.title || day}
+                          </span>
+                        </span>
+                        {isOpen ? (
+                          <ChevronUp className="w-6 h-6 text-sky-600" />
+                        ) : (
+                          <ChevronDown className="w-6 h-6 text-sky-600" />
+                        )}
+                      </button>
+                      <div
+                        className={`overflow-hidden transition-all duration-200 px-5
                 ${isOpen ? "max-h-96 py-3 bg-blue-50" : "max-h-0 py-0 bg-white"}`}
-              >
-                {isOpen && day.details && day.details.length > 0 && (
-                  <ul className="list-disc ml-8 text-sm text-gray-700 space-y-2">
-                    {day.details.map((detail, i) => (
-                      <li key={i}>{detail}</li>
-                    ))}
-                  </ul>
+                      >
+                        {isOpen && day.details && Array.isArray(day.details) ? (
+                          <ul className="list-disc ml-8 text-sm text-gray-700 space-y-2">
+                            {day.details.map((detail, i) => (
+                              <li key={i}>{detail}</li>
+                            ))}
+                          </ul>
+                        ) : isOpen && day.details ? (
+                          <div className="text-sm text-gray-700">
+                            {day.details}
+                          </div>
+                        ) : null}
+                      </div>
+                    </div>
+                  );
+                })
+                : packageDetails.itinerary && (
+                  <div className="p-5 text-gray-600">
+                    {packageDetails.itinerary}
+                  </div>
                 )}
-              </div>
             </div>
-          );
-        })}
-      </div>
-    </div>
+          </div>
+
+          {/* Inclusions */}
           <div ref={inclusionsRef} className="scroll-mt-24">
             <h2 className="flex items-center text-lg font-bold text-green-700 mb-1">
               <span className="border-l-4 border-green-400 pl-2 mr-2" />
@@ -505,7 +416,7 @@ const PackageDetailsPage = () => {
             </h2>
             <div className="bg-white rounded-lg shadow p-5 mb-8">
               <ul className="space-y-2">
-                {packageDetails.inclusions.map((inc, i) => (
+                {(packageDetails.inclusions || []).map((inc, i) => (
                   <li
                     key={i}
                     className="flex items-center gap-2 text-sm text-gray-700"
@@ -517,6 +428,7 @@ const PackageDetailsPage = () => {
             </div>
           </div>
 
+          {/* Exclusions */}
           <div ref={exclusionsRef} className="scroll-mt-24">
             <h2 className="flex items-center text-lg font-bold text-red-700 mb-1">
               <span className="border-l-4 border-red-400 pl-2 mr-2" />
@@ -524,7 +436,7 @@ const PackageDetailsPage = () => {
             </h2>
             <div className="bg-white rounded-lg shadow p-5 mb-8">
               <ul className="space-y-2">
-                {packageDetails.exclusions.map((exc, i) => (
+                {(packageDetails.exclusions || []).map((exc, i) => (
                   <li
                     key={i}
                     className="flex items-center gap-2 text-sm text-gray-700"
@@ -537,6 +449,7 @@ const PackageDetailsPage = () => {
             </div>
           </div>
 
+          {/* Other Info */}
           <div ref={otherInfoRef} className="scroll-mt-24">
             <h2 className="flex items-center text-lg font-bold text-gray-700 mb-1">
               <span className="border-l-4 border-gray-300 pl-2 mr-2" />
@@ -544,11 +457,14 @@ const PackageDetailsPage = () => {
             </h2>
             <div className="bg-white rounded-lg shadow p-5 mb-8">
               <p className="text-sm text-gray-500">
-                {packageDetails.otherInfo}
+                {packageDetails.terms ||
+                  packageDetails.otherInfo ||
+                  "For more information, please contact our support team."}
               </p>
             </div>
           </div>
         </div>
+
         {/* RIGHT: Sticky Contact Form */}
         <div className="md:w-[340px] w-full md:sticky md:top-24 h-fit shrink-0">
           <div className="md:w-[340px] w-full">
@@ -557,10 +473,10 @@ const PackageDetailsPage = () => {
                 Starting from
               </span>
               <span className="text-2xl font-bold text-sky-700 mb-1">
-                {packageDetails.price}
+                {formatPrice(packageDetails.price?.current)}
               </span>
               <span className="text-xs text-gray-500 mb-3">
-                {packageDetails.perPerson}
+                {packageDetails.price?.label || "per person"}
               </span>
               <Button className="w-full bg-[#01AFD1] hover:bg-cyan-500 text-white font-semibold rounded-full transition">
                 Dates & Costing
@@ -620,14 +536,27 @@ const PackageDetailsPage = () => {
               <Button
                 className="w-full rounded-full bg-[#FEE60E] hover:bg-yellow-400 text-black font-bold mt-2"
                 type="submit"
-                disabled={formStatus === "submitted"}
+                disabled={formStatus === "submitting" || formStatus === "submitted"}
               >
-                {formStatus === "submitted" ? "Submitted!" : "Submit"}
+                {formStatus === "submitting"
+                  ? "Submitting..."
+                  : formStatus === "submitted"
+                    ? "Submitted!"
+                    : "Submit"}
               </Button>
+              {formStatus === "error" && (
+                <div className="text-xs text-red-600 mt-2">{formError}</div>
+              )}
+              {formStatus === "submitted" && (
+                <div className="text-xs text-green-700 mt-2">We received your request!</div>
+              )}
+
             </form>
           </div>
         </div>
       </div>
+
+      {/* Best-Selling Community Trips */}
       <div className="container mx-auto py-12">
         <div className="text-center mb-6">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-1 tracking-tight">
@@ -642,10 +571,7 @@ const PackageDetailsPage = () => {
             spaceBetween={16}
             slidesPerView={4}
             autoplay={{ delay: 2500, disableOnInteraction: false }}
-            navigation={{
-              prevEl: prevRef.current,
-              nextEl: nextRef.current,
-            }}
+            navigation={{ prevEl: prevRef.current, nextEl: nextRef.current }}
             onInit={(swiper) => {
               // @ts-ignore
               swiper.params.navigation.prevEl = prevRef.current;
@@ -692,168 +618,9 @@ const PackageDetailsPage = () => {
             ›
           </button>
         </section>
-        <section className="bg-white pt-8 pb-12">
-          <div className="max-w-[1400px] mx-auto px-4">
-            {/* Header */}
-            <h2 className="text-3xl md:text-[2rem] font-bold text-[#34586a] mb-1">
-              Best-Selling Community Trips
-            </h2>
-            <p className="text-lg text-gray-500 mb-6">
-              Discover Europe with WanderOn: Epic Journeys, New Bonds,
-              Unforgettable Memories!
-            </p>
 
-            {/* Slider */}
-            <div className="relative">
-              {/* Navigation */}
-              <button
-                ref={prevRef}
-                className="hidden md:block absolute left-[-35px] top-1/2 -translate-y-1/2 z-10 w-[54px] h-[54px] bg-white rounded-full flex items-center justify-center shadow border border-gray-200 hover:bg-blue-100 transition-all"
-                aria-label="Previous"
-                style={{
-                  boxShadow: "0 2px 18px rgba(32,60,132,0.12)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  padding: 0,
-                  lineHeight: 1,
-                }}
-              >
-                <FaArrowLeft
-                  className="text-[#87bdd8] text-3xl"
-                  style={{
-                    display: "block",
-                    margin: 0,
-                    lineHeight: 1,
-                    verticalAlign: "middle",
-                    position: "relative",
-                    top: "0px", // tweak if needed e.g. "-1px"
-                  }}
-                />
-              </button>
-
-              <button
-                ref={nextRef}
-                className="hidden md:block absolute right-[-35px] top-1/2 -translate-y-1/2 z-10 w-[54px] h-[54px] bg-white rounded-full flex items-center justify-center shadow border border-gray-200 hover:bg-blue-100 transition-all"
-                aria-label="Next"
-                style={{
-                  boxShadow: "0 2px 18px rgba(32,60,132,0.12)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  padding: 0,
-                  lineHeight: 1,
-                }}
-              >
-                <FaArrowRight
-                  className="text-[#87bdd8] text-3xl"
-                  style={{
-                    display: "block",
-                    margin: 0,
-                    lineHeight: 1,
-                    verticalAlign: "middle",
-                    position: "relative",
-                    top: "0px", // tweak if needed
-                  }}
-                />
-              </button>
-
-              <Swiper
-                modules={[Navigation]}
-                slidesPerView={1}
-                spaceBetween={32}
-                breakpoints={{
-                  700: { slidesPerView: 2 },
-                  1024: { slidesPerView: 3 },
-                  1300: { slidesPerView: 4 },
-                }}
-                navigation={{
-                  prevEl: prevRef.current,
-                  nextEl: nextRef.current,
-                }}
-                onInit={(swiper) => {
-                  // @ts-ignore
-                  swiper.params.navigation.prevEl = prevRef.current;
-                  // @ts-ignore
-                  swiper.params.navigation.nextEl = nextRef.current;
-                  swiper.navigation.init();
-                  swiper.navigation.update();
-                }}
-                className="py-4"
-              >
-                {trips.map((trip, i) => (
-                  <SwiperSlide key={i}>
-                    <div className="relative h-[470px] rounded-[15px] overflow-hidden group shadow border bg-black/80">
-                      {/* BG Image */}
-                      <img
-                        src={trip.img}
-                        alt={trip.title}
-                        className="w-full h-full object-cover"
-                      />
-                      {/* Gradient overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
-                      {/* Price badge */}
-                      <div className="absolute top-5 left-5 z-20">
-                        <div className="flex items-center gap-1 px-3 py-1 rounded-full bg-yellow-300/95 text-gray-900 font-semibold text-[15px] shadow min-w-[175px] justify-center">
-                          <span className="line-through text-gray-600 text-sm">
-                            {trip.oldPrice}
-                          </span>
-                          <span className="font-bold">{trip.price}/-</span>
-                          <span className="text-xs">{trip.priceText}</span>
-                        </div>
-                      </div>
-                      {/* Tag */}
-                      <div className="absolute left-5 top-[62px] z-30">
-                        <span
-                          className={`text-xs font-bold px-3 py-1 rounded-md ${trip.tagColor} text-gray-800 shadow`}
-                        >
-                          {trip.tagText}
-                        </span>
-                      </div>
-                      {/* Card Content */}
-                      <div className="absolute bottom-0 left-0 w-full px-5 pb-5 pt-3 z-10 text-white">
-                        <div className="font-bold text-[1.08rem] leading-tight mb-2 min-h-[48px]">
-                          {trip.title}
-                        </div>
-                        <div className="text-xs bg-white/15 rounded px-2 py-1 mb-2 max-w-full overflow-x-auto whitespace-nowrap">
-                          {trip.subtitle}
-                        </div>
-
-                        {/* Row 1: Duration & Airport */}
-                        <div className="flex items-center justify-between text-xs text-white/90 gap-6 mb-1">
-                          <span className="flex items-center font-bold">
-                            <FaClock className="text-[#00AFD1] text-base mr-2" />
-                            <span className="text-white">{trip.days}</span>
-                          </span>
-                          <span className="flex items-center font-bold">
-                            <FaMapMarkerAlt className="text-[#00AFD1] text-base mr-2" />
-                            <span className="text-white">{trip.airport}</span>
-                          </span>
-                        </div>
-
-                        {/* Row 2: Dates & Batch */}
-                        <div className="flex items-center text-xs mt-1">
-                          <span className="flex items-center font-bold mr-2">
-                            <FaCalendarAlt className="text-[#00AFD1] text-base mr-2" />
-                            <span className="text-white">{trip.start}</span>
-                          </span>
-                          {trip.batch && (
-                            <span className="text-green-400 font-bold ml-1">
-                              {trip.batch}
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  </SwiperSlide>
-                ))}
-              </Swiper>
-            </div>
-          </div>
-        </section>
       </div>
       <Footer setIsContactModalOpen={setIsContactModalOpen} />
-
     </div>
   );
 };

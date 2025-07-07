@@ -12,17 +12,32 @@ interface ContactModalProps {
 
 const ContactModal = ({ isOpen, onClose }: ContactModalProps) => {
   const [formData, setFormData] = useState({
-    name: "",
+    fullName: "",
     email: "",
     phone: "",
     message: ""
   });
+  const [loading, setLoading] = useState(false);
+  const [submitMessage, setSubmitMessage] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Submit your form here
-    onClose();
-    setFormData({ name: "", email: "", phone: "", message: "" });
+    setSubmitMessage(null);
+    setLoading(true);
+    try {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/contact-messages`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData)
+      });
+      if (!res.ok) throw new Error("Failed to send message");
+      setSubmitMessage("Message sent successfully!");
+      setFormData({ fullName: "", email: "", phone: "", message: "" });
+      setTimeout(onClose, 1500); // Optional: close modal after submit
+    } catch (err) {
+      setSubmitMessage("Failed to send message. Please try again.");
+    }
+    setLoading(false);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -85,11 +100,11 @@ const ContactModal = ({ isOpen, onClose }: ContactModalProps) => {
           {/* Contact Form */}
           <form onSubmit={handleSubmit} className="space-y-3">
             <div>
-              <Label htmlFor="name">Full Name</Label>
+              <Label htmlFor="fullName">Full Name</Label>
               <Input
-                id="name"
-                name="name"
-                value={formData.name}
+                id="fullName"
+                name="fullName"
+                value={formData.fullName}
                 onChange={handleChange}
                 required
               />
@@ -127,9 +142,14 @@ const ContactModal = ({ isOpen, onClose }: ContactModalProps) => {
                 placeholder="Tell us about your travel plans..."
               />
             </div>
+            {submitMessage && (
+              <div className={`text-sm ${submitMessage.includes("success") ? "text-green-600" : "text-red-600"}`}>
+                {submitMessage}
+              </div>
+            )}
             <div className="flex gap-2 pt-2">
-              <Button type="submit" className="flex-1">
-                Send Message
+              <Button type="submit" className="flex-1" disabled={loading}>
+                {loading ? "Sending..." : "Send Message"}
               </Button>
               <Button type="button" variant="outline" onClick={onClose}>
                 Cancel

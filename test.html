@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Travel Community Landing Page</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <!-- Tailwind CDN for utility classes -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .typing-cursor::after {
+      content: '|';
+      animation: blink 0.7s infinite;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+    .journey-frame-slide { position: relative; border-radius: 16px; overflow: hidden; }
+    .journey-frame-img { width: 100%; height: 210px; object-fit: cover; }
+    .journey-frame-label {
+      position: absolute;
+      bottom: 12px;
+      left: 0;
+      right: 0;
+      background: rgba(0,0,0,0.5);
+      color: #fff;
+      text-align: center;
+      font-weight: 600;
+      padding: 6px 0;
+      border-radius: 0 0 16px 16px;
+      font-size: 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+    }
+    /* Swiper/slider arrow styles for mockup */
+    .swiper-button-custom {
+      background: #74bdda;
+      color: white;
+      font-size: 2rem;
+      border-radius: 100%;
+      width: 40px;
+      height: 40px;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 24px rgba(80,160,180,0.16);
+      cursor: pointer;
+    }
+    .swiper-button-custom:active { background: #52aec5; }
+  </style>
+</head>
+<body class="bg-white">
+  <!-- Navigation -->
+  <nav class="w-full py-4 bg-blue-900 text-white flex justify-between items-center px-6">
+    <div class="text-2xl font-bold">WanderOn</div>
+    <div class="flex gap-6">
+      <a href="#" class="hover:underline">Home</a>
+      <a href="#" class="hover:underline">Trips</a>
+      <a href="#" class="hover:underline">Gallery</a>
+      <a href="#" class="hover:underline">Contact</a>
+    </div>
+    <button class="bg-yellow-400 text-blue-900 px-5 py-2 rounded font-semibold">Contact Us</button>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="relative min-h-[380px] xs:min-h-[430px] sm:min-h-[520px] md:min-h-[600px] lg:min-h-[680px] w-full">
+    <img src="https://images.unsplash.com/photo-1472396961693-142e6e269027?auto=format&fit=crop&w=1920&q=80"
+      alt="hero"
+      class="w-full h-[60vh] object-cover"
+    />
+    <div class="absolute inset-0 bg-black/40 flex items-center justify-center">
+      <div class="text-center text-white px-4 max-w-4xl">
+        <h1 class="text-3xl md:text-7xl font-bold mb-4" style="font-family:Roboto">
+          Global Community for Travelers
+        </h1>
+        <p class="text-yellow-400 text-xl md:text-3xl font-medium typing-cursor" style="font-family:Roboto">
+          Create Your Own Journey, Your Own Story...
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Reviews Row -->
+  <section class="py-5 flex items-center justify-center bg-[#F1FDFF]">
+    <div class="flex flex-wrap justify-center gap-6 max-w-4xl w-full px-4">
+      <a href="https://www.google.com" target="_blank" rel="noopener" class="flex items-center gap-4 border border-gray-200 shadow-sm p-4 rounded-lg bg-white w-full sm:w-auto">
+        <img src="https://ik.imagekit.io/workcations/gallery/landing-pages/social/google.png" class="w-10 h-10 object-contain" alt="Google" />
+        <div>
+          <div class="flex items-center gap-1 text-yellow-500 font-bold text-lg">
+            <svg width="14" height="15" viewBox="0 0 14 15"><path d="M6.02686 4.71162C6.40117 3.77788 6.58832 3.31102 6.89238 3.24631C6.97233 3.2293 7.05496 3.2293 7.13491 3.24631C7.43898 3.31102 7.62613 3.77788 8.00043 4.71162C8.21329 5.24261 8.31972 5.50811 8.51887 5.68869C8.57473 5.73934 8.63537 5.78445 8.69993 5.82339C8.9301 5.96221 9.21744 5.98796 9.79212 6.03946C10.7649 6.12664 11.2514 6.17023 11.3999 6.44775C11.4307 6.50522 11.4516 6.56745 11.4618 6.63185C11.511 6.94278 11.1534 7.26832 10.4383 7.91939L10.2397 8.10019C9.90531 8.40457 9.73813 8.55677 9.64143 8.7467C9.58343 8.86064 9.54453 8.98334 9.52631 9.1099C9.49593 9.32088 9.54489 9.54167 9.6428 9.98325L9.67778 10.141C9.85336 10.9329 9.94116 11.3289 9.83156 11.5235C9.73312 11.6983 9.55179 11.8102 9.35149 11.8198C9.12849 11.8304 8.81428 11.5742 8.18586 11.0619C7.77184 10.7243 7.56482 10.5555 7.33501 10.4895C7.125 10.4293 6.90229 10.4293 6.69228 10.4895C6.46247 10.5555 6.25546 10.7243 5.84143 11.0619C5.21301 11.5742 4.8988 11.8304 4.67581 11.8198C4.4755 11.8102 4.29417 11.6983 4.19573 11.5235C4.08614 11.3289 4.17393 10.9329 4.34952 10.141L4.3845 9.98325C4.48241 9.54167 4.53137 9.32088 4.50099 9.1099C4.48276 8.98334 4.44387 8.86064 4.38586 8.7467C4.28917 8.55677 4.12199 8.40457 3.78763 8.10019L3.58903 7.91939C2.87386 7.26832 2.51627 6.94278 2.56552 6.63185C2.57572 6.56745 2.59663 6.50522 2.6274 6.44775C2.77593 6.17023 3.26235 6.12664 4.23518 6.03946C4.80985 5.98796 5.09719 5.96221 5.32737 5.82339C5.39193 5.78445 5.45256 5.73934 5.50842 5.68869C5.70757 5.50811 5.814 5.24261 6.02686 4.71162Z" fill="#FEA500" stroke="#FEA500" stroke-width="2"/></svg>
+            4.9
+          </div>
+          <p class="text-sm text-gray-500">(13,080 reviews)</p>
+        </div>
+      </a>
+      <!-- Add similar cards for Tripadvisor and Facebook if needed -->
+    </div>
+  </section>
+
+  <!-- Logo showcase -->
+  <section class="py-20 px-4 flex items-center justify-center hidden md:block">
+    <div class="w-[80%] mx-auto text-center">
+      <img src="https://via.placeholder.com/800x200?text=Logo+Showcase+1" alt="Logo 1" class="w-full" />
+    </div>
+  </section>
+  <section class="py-20 px-4 flex items-center justify-center hidden md:block">
+    <div class="w-[80%] mx-auto text-center">
+      <img src="https://via.placeholder.com/800x200?text=Logo+Showcase+2" alt="Logo 2" class="w-full" />
+    </div>
+  </section>
+
+  <!-- Static effect cards (replace with content as needed) -->
+  <section class="hidden md:block py-16 bg-gray-50">
+    <div class="max-w-4xl mx-auto flex flex-row gap-8 justify-center">
+      <div class="w-72 h-44 bg-white rounded-xl shadow p-6 flex flex-col justify-center items-center text-center">
+        <img src="https://via.placeholder.com/80x80" class="mb-4" alt="Feature" />
+        <h3 class="font-bold mb-2">Special Feature 1</h3>
+        <p class="text-gray-500 text-sm">Your effect card one here</p>
+      </div>
+      <div class="w-72 h-44 bg-white rounded-xl shadow p-6 flex flex-col justify-center items-center text-center">
+        <img src="https://via.placeholder.com/80x80" class="mb-4" alt="Feature" />
+        <h3 class="font-bold mb-2">Special Feature 2</h3>
+        <p class="text-gray-500 text-sm">Your effect card two here</p>
+      </div>
+      <div class="w-72 h-44 bg-white rounded-xl shadow p-6 flex flex-col justify-center items-center text-center">
+        <img src="https://via.placeholder.com/80x80" class="mb-4" alt="Feature" />
+        <h3 class="font-bold mb-2">Special Feature 3</h3>
+        <p class="text-gray-500 text-sm">Your effect card three here</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Swiper/slider mockup for International Trips -->
+  <section class="py-12 hidden md:block bg-[#fffbe0]">
+    <div class="max-w-5xl mx-auto">
+      <div class="rounded-2xl mb-10 relative bg-cover bg-center"
+        style="background-image:url('https://images.wanderon.in/new-homepage-data/cta%20homepage%20-%20desktop.png'); min-height:370px;">
+        <div class="absolute inset-0 bg-black/20 rounded-2xl"></div>
+        <div class="relative z-10 flex flex-col justify-center h-full px-12 py-12 md:px-24 md:py-20">
+          <h1 class="text-white text-5xl md:text-6xl font-bold mb-6 drop-shadow" style="font-family: Roboto,sans-serif">International Trips</h1>
+          <p class="text-white text-lg md:text-2xl mb-8 font-medium" style="font-family: Roboto,sans-serif">Discover the world, one destination at a time</p>
+          <button class="bg-yellow-300 hover:bg-yellow-400 text-black font-semibold rounded-md py-3 text-lg shadow-md border border-yellow-400 transition w-36 flex justify-center items-center">Explore</button>
+        </div>
+      </div>
+      <div class="relative flex items-center">
+        <button class="swiper-button-custom absolute left-[-25px] top-1/2 -translate-y-1/2 z-20" aria-label="Previous">&lsaquo;</button>
+        <div class="flex gap-6 overflow-x-auto w-full px-4">
+          <!-- Slide -->
+          <div class="rounded-xl overflow-hidden shadow-lg border bg-white w-64 min-w-[250px] relative group">
+            <img src="https://images.wanderon.in/new-homepage-data/Explore%20India/kerala" alt="Europe" class="w-full h-64 object-cover"/>
+            <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black via-black/50 to-transparent">
+              <h3 class="text-white text-center text-2xl font-bold drop-shadow">Europe</h3>
+              <p class="text-white text-center text-sm font-medium drop-shadow">Starting Price Rs. 1,49,999/-</p>
+            </div>
+          </div>
+          <!-- ...repeat for each destination... -->
+        </div>
+        <button class="swiper-button-custom absolute right-[-25px] top-1/2 -translate-y-1/2 z-20" aria-label="Next">&rsaquo;</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Journey in Frames -->
+  <div class="container mx-auto py-12">
+    <div class="text-center mb-6">
+      <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-1 tracking-tight">JOURNEY IN FRAMES</h2>
+      <p class="text-lg text-gray-500">Pictures Perfect Moments</p>
+    </div>
+    <section class="relative custom-swiper-slider">
+      <div class="flex gap-4 overflow-x-auto px-4">
+        <div class="journey-frame-slide">
+          <img src="https://images.wanderon.in/new-homepage-data/Gallery/vietnam%202" alt="Vietnam" class="journey-frame-img"/>
+          <div class="journey-frame-label">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M12 2C7.03 2 3 6.03 3 11c0 5.25 6.84 10.69 7.18 10.96a1.001 1.001 0 0 0 1.23 0C14.16 21.69 21 16.25 21 11c0-4.97-4.03-9-9-9zm0 18.88C9.35 19.34 5 15.53 5 11c0-3.86 3.14-7 7-7s7 3.14 7 7c0 4.53-4.35 8.34-7 9.88zM12 6a5 5 0 1 0 0 10A5 5 0 0 0 12 6zm0 8a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" fill="currentColor"/></svg>
+            Vietnam
+          </div>
+        </div>
+        <!-- Repeat for other frames as needed -->
+      </div>
+      <button class="swiper-button-custom absolute left-0 top-1/2 -translate-y-1/2 z-20">‹</button>
+      <button class="swiper-button-custom absolute right-0 top-1/2 -translate-y-1/2 z-20">›</button>
+    </section>
+  </div>
+
+  <!-- Testimonials -->
+  <section class="py-20 bg-blue-50">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl font-bold mb-4 text-blue-900">What Our Travelers Say</h2>
+        <p class="text-xl text-blue-700">Real experiences from real adventurers</p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="bg-white rounded-2xl p-8 shadow flex flex-col items-center text-center">
+          <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?auto=format&fit=crop&w=150&q=80" class="w-20 h-20 rounded-full mb-3" alt="Sarah Johnson"/>
+          <div class="text-yellow-400 text-lg mb-1">★★★★★</div>
+          <div class="font-bold mb-2">Sarah Johnson</div>
+          <div class="text-gray-500 text-sm">Our Bali trip was absolutely incredible! Every detail was perfectly planned and the experiences were unforgettable.</div>
+        </div>
+        <!-- ...repeat for each testimonial... -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter Section (commented) -->
+  <!--
+  <section class="py-20 bg-blue-600 text-white">
+    <div class="max-w-4xl mx-auto px-4 text-center">
+      <h2 class="text-4xl font-bold mb-4">Stay Updated</h2>
+      <p class="text-xl mb-8 opacity-90">Subscribe to our newsletter for exclusive deals and travel inspiration</p>
+      <form class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+        <input type="email" placeholder="Enter your email" required class="bg-white text-blue-900 border-white rounded px-4 py-2 flex-1"/>
+        <button type="submit" class="bg-white text-blue-600 px-5 py-2 rounded hover:bg-blue-50">Subscribe</button>
+      </form>
+    </div>
+  </section>
+  -->
+
+  <!-- Footer -->
+  <footer class="bg-blue-900 text-white py-10">
+    <div class="max-w-5xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
+      <div class="mb-4 md:mb-0 font-bold text-lg">WanderOn &copy; 2025</div>
+      <div class="flex gap-6">
+        <a href="#" class="hover:underline">Privacy Policy</a>
+        <a href="#" class="hover:underline">Terms of Use</a>
+        <a href="#" class="hover:underline">Contact</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
