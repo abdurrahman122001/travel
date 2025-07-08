@@ -61,7 +61,7 @@ export default function EffectCard() {
         <img
           src="https://images.wanderon.in/new-homepage-data/assets/international-image"
           alt="International SVG"
-          className="ml-auto w-[170px] h-[60px] object-contain"
+          className="ml-auto w-[150px] h-[80px] object-contain"
         />
       </div>
       {/* Centered swiper */}
