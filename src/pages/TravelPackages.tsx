@@ -69,7 +69,7 @@ const scrollToRef = (ref) => {
 
 const PackageDetailsPage = () => {
   // Params
-  const { id } = useParams();
+  const { slug } = useParams();  // <<=== CHANGE: now reading slug
 
   // State
   const [packageDetails, setPackageDetails] = useState(null);
@@ -160,15 +160,14 @@ const PackageDetailsPage = () => {
 
   // Fetch package by id
   useEffect(() => {
-    if (!id) return;
+    if (!slug) return;
     setLoading(true);
     axios
-      .get(`${import.meta.env.VITE_API_URL || ""}/packages/${id}`)
+      .get(`${import.meta.env.VITE_API_URL || ""}/packages/slug/${slug}`) // <<=== CHANGED
       .then((res) => setPackageDetails(res.data))
       .catch(() => setPackageDetails(null))
       .finally(() => setLoading(false));
-  }, [id]);
-
+  }, [slug]);
   // Fetch best-selling trips (you can replace this endpoint)
   useEffect(() => {
     setLoadingTrips(true);

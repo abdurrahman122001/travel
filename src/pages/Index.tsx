@@ -545,7 +545,7 @@ const Index = () => {
                 ) : (
                   internationalTrips.map((trip, idx) => (
                     <SwiperSlide key={trip._id || idx} className="w-[250px] md:w-[270px] flex-shrink-0">
-                      <div className="rounded-xl overflow-hidden shadow-lg border border-white bg-white relative group transition-all">
+                      <Link to="/packages"><div className="rounded-xl overflow-hidden shadow-lg border border-white bg-white relative group transition-all">
                         <img
                           src={trip.image}
                           alt={trip.title}
@@ -553,14 +553,14 @@ const Index = () => {
                           draggable={false}
                         />
                         <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black via-black/50 to-transparent">
-                          <h3 className="text-white text-center text-2xl font-bold drop-shadow">
+                        <h3 className="text-white text-center text-2xl font-bold drop-shadow">
                             {trip.title}
                           </h3>
                           <p className="text-white text-center text-sm font-medium drop-shadow">
                             Starting Price Rs. {trip.price}/-
                           </p>
                         </div>
-                      </div>
+                      </div></Link>
                     </SwiperSlide>
                   ))
                 )}

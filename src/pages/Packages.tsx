@@ -710,7 +710,7 @@ export default function Package() {
                 >
                   {bestSellingTrips.map((trip, i) => (
                     <SwiperSlide key={i}>
-                      <Link to={`/packages/${trip._id}`}>
+                      <Link to={`/packages/${trip.slug}`}>
                         <div className="relative h-[500px] rounded-[15px] overflow-hidden group shadow border bg-black/80">
                           {/* BG Image */}
                           <img
@@ -862,7 +862,7 @@ export default function Package() {
                 >
                   {summerDeals.map((trip, i) => (
                     <SwiperSlide key={trip._id || i}>
-                      <Link to={`/packages/${trip._id}`}>
+                      <Link to={`/packages/${trip.slug}`}>
                         <div className="relative h-[500px] rounded-[15px] overflow-hidden group shadow border bg-black/80">
                           {/* BG Image */}
                           <img
@@ -1014,7 +1014,7 @@ export default function Package() {
                 >
                   {affordablePackages.map((trip, i) => (
                     <SwiperSlide key={trip._id || i}>
-                      <Link to={`/packages/${trip._id}`}>
+                      <Link to={`/packages/${trip.slug}`}>
                         <div className="relative h-[500px] rounded-[15px] overflow-hidden group shadow border bg-black/80">
                           {/* BG Image */}
                           <img
@@ -1160,7 +1160,7 @@ export default function Package() {
                 >
                   {europeWithUK.map((trip, i) => (
                     <SwiperSlide key={trip._id || i}>
-                      <Link to={`/packages/${trip._id}`}>
+                      <Link to={`/packages/${trip.slug}`}>
                         <div className="relative h-[500px] rounded-[15px] overflow-hidden group shadow border bg-black/80">
                           {/* BG Image */}
                           <img
@@ -1273,7 +1273,7 @@ export default function Package() {
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-7 gap-y-9">
                   {trips.map((trip, i) => (
                     <SwiperSlide key={trip._id || i}>
-                      <Link to={`/packages/${trip._id}`}>
+                      <Link to={`/packages/${trip.slug}`}>
                         <div className="relative h-[500px] rounded-[15px] overflow-hidden group shadow border bg-black/80">
                           {/* BG Image */}
                           <img

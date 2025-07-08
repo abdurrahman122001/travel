@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -17,6 +16,9 @@ import EffectCard from "./pages/EffectCard";
 import Desclaimer from "./pages/Desclaimer";
 import BlogDetails from "./pages/BlogDetails";
 
+// Only this import for WhatsApp widget:
+import { FloatingWhatsApp } from "react-floating-whatsapp";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -24,11 +26,24 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
+
+      {/* === WhatsApp Widget (shows on all pages) === */}
+      <FloatingWhatsApp
+        phoneNumber="918368753277" // +91 8368753277 (India)
+        accountName="Travel Support"
+        chatMessage="Hi! How can we help you?"
+        avatar="/logo192.png" // optional: replace with your logo or remove
+        allowEsc
+        allowClickAway
+        notification
+        notificationSound
+      />
+
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/packages" element={<TravelPackages />} />
-          <Route path="/packages/:id" element={<TravelPackages />} />
+          <Route path="/packages/:slug" element={<TravelPackages />} />
           <Route path="/about" element={<About />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
@@ -37,9 +52,7 @@ const App = () => (
           <Route path="/package" element={<Package />} />
           <Route path="/effect" element={<EffectCard />} />
           <Route path="/desclaimer" element={<Desclaimer />} />
-<Route path="/blog/:id" element={<BlogDetails />} />
-
-          {/* Add more routes as needed */}
+          <Route path="/blog/:slug" element={<BlogDetails />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
