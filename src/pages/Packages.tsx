@@ -283,142 +283,6 @@ const reviews = [
     name: "Arjun Patel",
   },
 ];
-const trips = [
-  {
-    img: "https://images.wanderon.in/gallery/new/2024/12/13/backpacking-trip-to-europe-10n-11d.avif",
-    oldPrice: "₹2,29,990/-",
-    price: "₹1,69,990",
-    priceText: "onwards",
-    tag: "Recommended",
-    title:
-      "11 Days European Pathways Community Trip - France, Netherlands, Germany, Czechia",
-    subtitle: "3N Paris · 3N Amsterdam· 2N Prague",
-    days: "10N/11D",
-    airport: "Paris Airport - Prague",
-    start: "9 Aug, 27 Sep",
-    batch: "",
-    icon: "fa-solid fa-location-dot",
-    badgeColor: "bg-yellow-400",
-    tagColor: "bg-yellow-400",
-    tagText: "Recommended",
-  },
-  {
-    img: "https://images.wanderon.in/gallery/new/2025/06/10/1749541707344-spain-community-trip-9n-10ds-new.webp",
-    oldPrice: "₹2,09,990/-",
-    price: "₹1,49,999",
-    priceText: "onwards",
-    tag: "Popular",
-    title: "10 Days Spain Community Trip | La Tomatina Special",
-    subtitle: "Barcelona · Ibiza · Valencia · Bunol ",
-    days: "9N/10D",
-    airport: "Barcelona - Madrid",
-    start: "21 Aug",
-    batch: "",
-    badgeColor: "bg-yellow-400",
-    tagColor: "bg-green-300",
-    tagText: "Popular",
-  },
-  {
-    img: "https://images.wanderon.in/gallery/new/2025/06/09/1749455995718-oktoberfest-trip-package-10n-11d.webp",
-    oldPrice: "₹2,29,990/-",
-    price: "₹1,89,990",
-    priceText: "onwards",
-    tag: "Recommended",
-    title: "Live Europe’s Best Moments: 11-Day Oktoberfest Community Trip",
-    subtitle: "Amsterdam · Paris · Eiffel Tower",
-    days: "10N/11D",
-    airport: "Amsterdam Airport - Prague",
-    start: "16 Sep",
-    batch: "",
-    badgeColor: "bg-yellow-400",
-    tagColor: "bg-yellow-400",
-    tagText: "Recommended",
-  },
-  {
-    img: "https://images.wanderon.in/gallery/new/2024/12/13/europe-community-trip-7n-8d.avif",
-    oldPrice: "₹2,09,990/-",
-    price: "₹1,44,990",
-    priceText: "onwards",
-    tag: "Recommended",
-    title:
-      "8 Days European Trails Community Trip - Netherlands, Germany, Czechia",
-    subtitle: "3N Amsterdam · 2N Berlin · 2N Prague",
-    days: "7N/8D",
-    airport: "Amsterdam Airport - Prague",
-    start: "12 Aug, 30 Sep",
-    // batch: "+1 batch",
-    badgeColor: "bg-yellow-400",
-    tagColor: "bg-yellow-400",
-    tagText: "Recommended",
-  },
-  {
-    img: "https://images.wanderon.in/gallery/new/2024/12/13/backpacking-trip-to-europe-10n-11d.avif",
-    oldPrice: "₹2,29,990/-",
-    price: "₹1,69,990",
-    priceText: "onwards",
-    tag: "Recommended",
-    title:
-      "11 Days European Pathways Community Trip - France, Netherlands, Germany, Czechia",
-    subtitle: "3N Paris · 3N Amsterdam· 2N Prague",
-    days: "10N/11D",
-    airport: "Paris Airport - Prague",
-    start: "9 Aug, 27 Sep",
-    // batch: "+1 batch",
-    icon: "fa-solid fa-location-dot",
-    badgeColor: "bg-yellow-400",
-    tagColor: "bg-yellow-400",
-    tagText: "Recommended",
-  },
-  {
-    img: "https://images.wanderon.in/gallery/new/2025/06/10/1749541707344-spain-community-trip-9n-10ds-new.webp",
-    oldPrice: "₹2,09,990/-",
-    price: "₹1,49,999",
-    priceText: "onwards",
-    tag: "Popular",
-    title: "10 Days Spain Community Trip | La Tomatina Special",
-    subtitle: "Barcelona · Ibiza · Valencia · Bunol ",
-    days: "9N/10D",
-    airport: "Barcelona - Madrid",
-    start: "21 Aug",
-    batch: "",
-    badgeColor: "bg-yellow-400",
-    tagColor: "bg-green-300",
-    tagText: "Popular",
-  },
-  {
-    img: "https://images.wanderon.in/gallery/new/2025/06/09/1749455995718-oktoberfest-trip-package-10n-11d.webp",
-    oldPrice: "₹2,29,990/-",
-    price: "₹1,89,990",
-    priceText: "onwards",
-    tag: "Recommended",
-    title: "Live Europe’s Best Moments: 11-Day Oktoberfest Community Trip",
-    subtitle: "Amsterdam · Paris · Eiffel Tower",
-    days: "10N/11D",
-    airport: "Amsterdam Airport - Prague",
-    start: "16 Sep",
-    batch: "",
-    badgeColor: "bg-yellow-400",
-    tagColor: "bg-yellow-400",
-    tagText: "Recommended",
-  },
-  {
-    img: "https://images.wanderon.in/gallery/new/2024/12/13/europe-community-trip-7n-8d.avif",
-    oldPrice: "₹2,09,990/-",
-    price: "₹1,44,990",
-    priceText: "onwards",
-    tag: "Recommended",
-    title:
-      "8 Days European Trails Community Trip - Netherlands, Germany, Czechia",
-    subtitle: "3N Amsterdam · 2N Berlin · 2N Prague",
-    days: "7N/8D",
-    airport: "Amsterdam Airport - Prague",
-    start: "12 Aug, 30 Sep",
-    // batch: "+1 batch",
-    badgeColor: "bg-yellow-400",
-    tagColor: "bg-yellow-400",
-    tagText: "Recommended",
-  },
-];
 
 export default function Package() {
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
@@ -710,7 +574,7 @@ export default function Package() {
                 >
                   {bestSellingTrips.map((trip, i) => (
                     <SwiperSlide key={i}>
-                      <Link to={`/packages/${trip._id}`}>
+                      <Link to={`/packages/${trip.slug}`}>
                         <div className="relative h-[500px] rounded-[15px] overflow-hidden group shadow border bg-black/80">
                           {/* BG Image */}
                           <img
@@ -862,7 +726,7 @@ export default function Package() {
                 >
                   {summerDeals.map((trip, i) => (
                     <SwiperSlide key={trip._id || i}>
-                      <Link to={`/packages/${trip._id}`}>
+                      <Link to={`/packages/${trip.slug}`}>
                         <div className="relative h-[500px] rounded-[15px] overflow-hidden group shadow border bg-black/80">
                           {/* BG Image */}
                           <img
@@ -1014,7 +878,7 @@ export default function Package() {
                 >
                   {affordablePackages.map((trip, i) => (
                     <SwiperSlide key={trip._id || i}>
-                      <Link to={`/packages/${trip._id}`}>
+                      <Link to={`/packages/${trip.slug}`}>
                         <div className="relative h-[500px] rounded-[15px] overflow-hidden group shadow border bg-black/80">
                           {/* BG Image */}
                           <img
@@ -1160,7 +1024,7 @@ export default function Package() {
                 >
                   {europeWithUK.map((trip, i) => (
                     <SwiperSlide key={trip._id || i}>
-                      <Link to={`/packages/${trip._id}`}>
+                      <Link to={`/packages/${trip.slug}`}>
                         <div className="relative h-[500px] rounded-[15px] overflow-hidden group shadow border bg-black/80">
                           {/* BG Image */}
                           <img
@@ -1273,7 +1137,7 @@ export default function Package() {
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-7 gap-y-9">
                   {trips.map((trip, i) => (
                     <SwiperSlide key={trip._id || i}>
-                      <Link to={`/packages/${trip._id}`}>
+                      <Link to={`/packages/${trip.slug}`}>
                         <div className="relative h-[500px] rounded-[15px] overflow-hidden group shadow border bg-black/80">
                           {/* BG Image */}
                           <img

@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 
 interface BlogPost {
   _id: string;
+  slug: string; // <--- Add this!
   title: string;
   excerpt: string;
   image: string;
@@ -100,7 +101,7 @@ const Blog = () => {
                           asChild
                           className="bg-blue-600 hover:bg-blue-700 text-white"
                         >
-                          <Link to={`/blog/${featuredPost._id}`}>
+                          <Link to={`/blog/${featuredPost.slug}`}> {/* <--- use slug */}
                             Read More <ArrowRight className="h-4 w-4 ml-2" />
                           </Link>
                         </Button>
@@ -156,7 +157,7 @@ const Blog = () => {
                         variant="outline"
                         className="w-full group-hover:bg-blue-600 group-hover:text-white transition-colors"
                       >
-                        <Link to={`/blog/${post._id}`}>
+                        <Link to={`/blog/${post.slug}`}> {/* <--- use slug */}
                           Read More <ArrowRight className="h-4 w-4 ml-2" />
                         </Link>
                       </Button>

@@ -1,9 +1,9 @@
-
+import { useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Index from "./pages/Index";
 import TravelPackages from "./pages/TravelPackages";
 import About from "./pages/About";
@@ -16,19 +16,40 @@ import Package from "./pages/Packages";
 import EffectCard from "./pages/EffectCard";
 import Desclaimer from "./pages/Desclaimer";
 import BlogDetails from "./pages/BlogDetails";
+import VisitorCounter from "./VisitorCounter";
+// Only this import for WhatsApp widget:
+import { FloatingWhatsApp } from "react-floating-whatsapp";
 
 const queryClient = new QueryClient();
 
+// --- New: VisitorCounter component ---
+// --- Main App ---
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Toaster />
       <Sonner />
+
+      {/* === WhatsApp Widget (shows on all pages) === */}
+      <FloatingWhatsApp
+        phoneNumber="918368753277"
+        accountName="Travel Support"
+        chatMessage="Hi! How can we help you?"
+        avatar="/logo192.png"
+        allowEsc
+        allowClickAway
+        notification
+        notificationSound
+      />
+
       <BrowserRouter>
+        {/* Place VisitorCounter inside BrowserRouter so useLocation works */}
+        <VisitorCounter />
+
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/packages" element={<TravelPackages />} />
-          <Route path="/packages/:id" element={<TravelPackages />} />
+          <Route path="/packages/:slug" element={<TravelPackages />} />
           <Route path="/about" element={<About />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
@@ -37,9 +58,7 @@ const App = () => (
           <Route path="/package" element={<Package />} />
           <Route path="/effect" element={<EffectCard />} />
           <Route path="/desclaimer" element={<Desclaimer />} />
-<Route path="/blog/:id" element={<BlogDetails />} />
-
-          {/* Add more routes as needed */}
+          <Route path="/blog/:slug" element={<BlogDetails />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
