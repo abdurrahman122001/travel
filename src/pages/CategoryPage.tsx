@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useLocation, Link } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import { FaClock, FaMapMarkerAlt, FaCalendarAlt } from "react-icons/fa";
@@ -30,47 +30,28 @@ interface Trip {
   start?: string;
 }
 
-interface CategoryOrSubcategory {
+interface Category {
   _id: string;
   name: string;
 }
 
 const CategoryOrSubcategoryPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const location = useLocation();
-
-  const [entity, setEntity] = useState<CategoryOrSubcategory | null>(null);
+  const [category, setCategory] = useState<Category | null>(null);
   const [trips, setTrips] = useState<Trip[]>([]);
   const [loading, setLoading] = useState(true);
-
-  // Determine if we're on a category or subcategory route
-  const isCategory = location.pathname.startsWith("/category/");
-  const isSubcategory = location.pathname.startsWith("/subcategory/");
 
   useEffect(() => {
     if (!id) return;
     setLoading(true);
 
-    // 1. Fetch category/subcategory details
-    const entityUrl = isCategory
-      ? `${API_BASE}/package-categories/${id}`
-      : `${API_BASE}/package-subcategories/${id}`;
-
-    fetch(entityUrl)
-      .then(res => res.json())
-      .then(setEntity)
-      .catch(() => setEntity(null));
-
-    // 2. Fetch packages for this category/subcategory
-    const packagesUrl = isCategory
-      ? `${API_BASE}/packages?category=${id}`
-      : `${API_BASE}/packages?subcategory=${id}`;
-    fetch(packagesUrl)
+    // 2. Fetch packages for this category
+    fetch(`${API_BASE}/packages/by-category/${id}`)
       .then(res => res.json())
       .then(data => setTrips(Array.isArray(data) ? data : []))
       .catch(() => setTrips([]))
       .finally(() => setLoading(false));
-  }, [id, isCategory, isSubcategory]);
+  }, [id]);
 
   return (
     <>
@@ -78,7 +59,7 @@ const CategoryOrSubcategoryPage: React.FC = () => {
       <section className="bg-white py-10">
         <div className="max-w-[1400px] mx-auto px-4">
           <h2 className="text-3xl md:text-[2rem] font-bold text-[#34586a] mb-8">
-            {entity?.name || "All Packages"}
+            {category?.name || "All Packages"}
           </h2>
           {loading ? (
             <div className="py-8 text-center text-lg text-gray-400">Loading...</div>
