@@ -17,6 +17,7 @@ import EffectCard from "./pages/EffectCard";
 import Desclaimer from "./pages/Desclaimer";
 import BlogDetails from "./pages/BlogDetails";
 import VisitorCounter from "./VisitorCounter";
+import CategoryOrSubcategoryPage from "./pages/CategoryPage";
 // Only this import for WhatsApp widget:
 import { FloatingWhatsApp } from "react-floating-whatsapp";
 
@@ -56,6 +57,8 @@ const App = () => (
           <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
           <Route path="/search" element={<SearchHero />} />
           <Route path="/package" element={<Package />} />
+          <Route path="/category/:id" element={<CategoryOrSubcategoryPage />} />
+          <Route path="/subcategory/:id" element={<CategoryOrSubcategoryPage />} />
           <Route path="/effect" element={<EffectCard />} />
           <Route path="/desclaimer" element={<Desclaimer />} />
           <Route path="/blog/:slug" element={<BlogDetails />} />

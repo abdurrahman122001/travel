@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import {
   Menu,
@@ -12,42 +12,63 @@ import {
 } from "lucide-react";
 import logo from "../../public/logo.png";
 
+const API_BASE = import.meta.env.VITE_API_URL as string;
+
 interface NavigationProps {
   onContactClick: () => void;
 }
 
-const skyMenuDropdowns: Record<string, string[]> = {
-  "International Trips": ["Europe", "Dubai", "Thailand", "Singapore"],
-  "Indian Trips": ["Kashmir", "Goa", "Himachal", "Kerala"],
-  "School Trips": ["Delhi School Tour", "Science Park", "Zoo Visit"],
-  "Inschool Camps": ["Yoga Camp", "STEM Workshop", "Adventure Day"],
-  "Corporates Trips": ["Annual Meetup", "Offsite Retreat", "Team Building"],
-  "Group Tours": ["Friends Group", "Solo Travelers", "Family Group"],
-  "Educational Trips": ["Museum Visit", "Industrial Tour", "Tech Park"],
-  "Weekend Trips": ["Kasol", "Manali", "Goa", "Rishikesh"],
-};
+interface Category {
+  _id: string;
+  name: string;
+}
 
-const skyMenuOrder = [
-  "International Trips",
-  "Indian Trips",
-  "School Trips",
-  "Inschool Camps",
-  "Corporates Trips",
-  "Group Tours",
-  "Educational Trips",
-  "Weekend Trips",
-];
+interface Subcategory {
+  _id: string;
+  name: string;
+  category: string | { _id: string; name: string };
+}
 
 const Navigations: React.FC<NavigationProps> = ({ onContactClick }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [sidebarSearchTerm, setSidebarSearchTerm] = useState("");
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [subcategories, setSubcategories] = useState<Subcategory[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
   const navigate = useNavigate();
   const location = useLocation();
 
-  const onSearchNavigate = () => navigate("/search");
+  useEffect(() => {
+    setLoading(true);
+    setError(null);
+    Promise.all([
+      fetch(`${API_BASE}/package-categories`).then(res => res.json()),
+      fetch(`${API_BASE}/package-subcategories`).then(res => res.json()),
+    ])
+      .then(([cat, subcat]) => {
+        setCategories(Array.isArray(cat) ? cat : []);
+        setSubcategories(Array.isArray(subcat) ? subcat : []);
+      })
+      .catch((err) => setError("Failed to load menu"))
+      .finally(() => setLoading(false));
+  }, []);
 
-  // Check if current path starts with "/search"
+  // Group subcategories by category id string
+  const subcategoriesByCat: Record<string, Subcategory[]> = {};
+  subcategories.forEach((sub) => {
+    let catId =
+      typeof sub.category === "string"
+        ? sub.category
+        : sub.category?._id || "";
+    if (!catId) return;
+    if (!subcategoriesByCat[catId]) subcategoriesByCat[catId] = [];
+    subcategoriesByCat[catId].push(sub);
+  });
+
+  const onSearchNavigate = () => navigate("/search");
   const isOnSearchRoute = location.pathname === "/search";
 
   return (
@@ -60,8 +81,7 @@ const Navigations: React.FC<NavigationProps> = ({ onContactClick }) => {
             <Link to="/">
               <img src={logo} alt="Logo" className="h-24 w-auto" />
             </Link>
-
-            {/* Desktop Search: hidden/disabled on /search */}
+            {/* Desktop Search */}
             <div
               className={`relative hidden lg:block ml-6 ${
                 isOnSearchRoute ? "opacity-50 pointer-events-none" : ""
@@ -84,7 +104,6 @@ const Navigations: React.FC<NavigationProps> = ({ onContactClick }) => {
               />
             </div>
           </div>
-
           {/* Desktop Nav */}
           <div className="hidden lg:flex items-center space-x-6 text-sm text-gray-800">
             <Link to="/upcoming-trips" className="hover:text-blue-600 flex items-center gap-1">
@@ -115,35 +134,52 @@ const Navigations: React.FC<NavigationProps> = ({ onContactClick }) => {
               Contact Us
             </button>
           </div>
-
           {/* Mobile Menu Button */}
           <button onClick={() => setIsSidebarOpen(true)} className="lg:hidden">
             <Menu className="w-6 h-6 text-blue-600" />
           </button>
         </div>
       </div>
-
       {/* Sky Menu */}
       <div className="bg-sky-400 text-white text-[15px] font-medium py-4 hidden lg:flex justify-center items-center space-x-7 relative z-40">
-        {skyMenuOrder.map((label) => (
-          <div className="group relative" key={label}>
-            <div className="cursor-pointer group-hover:text-yellow-100 transition flex items-center gap-1 whitespace-nowrap">
-              {label}
-              <ChevronDown className="w-4 h-4 mt-[1px]" />
+        {loading ? (
+          <span className="italic">Loading...</span>
+        ) : error ? (
+          <span className="text-red-200">{error}</span>
+        ) : categories.length === 0 ? (
+          <span>No categories found.</span>
+        ) : (
+          categories.map((cat) => (
+            <div className="group relative" key={cat._id}>
+              <Link
+                to={`/category/${cat._id}`}
+                className="cursor-pointer group-hover:text-yellow-100 transition flex items-center gap-1 whitespace-nowrap"
+              >
+                {cat.name}
+                {subcategoriesByCat[cat._id]?.length > 0 && (
+                  <ChevronDown className="w-4 h-4 mt-[1px]" />
+                )}
+              </Link>
+              {/* Subcategories Dropdown */}
+              {subcategoriesByCat[cat._id]?.length > 0 && (
+                <div className="absolute left-1/2 -translate-x-1/2 mt-3 bg-white text-black rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 min-w-[220px] p-4 z-50">
+                  <div className="flex flex-col gap-2 text-sm">
+                    {subcategoriesByCat[cat._id].map((sub) => (
+                      <Link
+                        key={sub._id}
+                        to={`/subcategory/${sub._id}`}
+                        className="hover:text-blue-600 whitespace-nowrap"
+                      >
+                        {sub.name}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
-            <div className="absolute left-1/2 -translate-x-1/2 mt-3 bg-white text-black rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 min-w-[220px] p-4 z-50">
-              <div className="flex flex-col gap-2 text-sm">
-                {skyMenuDropdowns[label].map((item, idx) => (
-                  <Link key={idx} to="#" className="hover:text-blue-600 whitespace-nowrap">
-                    {item}
-                  </Link>
-                ))}
-              </div>
-            </div>
-          </div>
-        ))}
+          ))
+        )}
       </div>
-
       {/* Mobile Sidebar */}
       {isSidebarOpen && (
         <div className="fixed inset-0 z-50 bg-black/50 flex">
@@ -154,7 +190,6 @@ const Navigations: React.FC<NavigationProps> = ({ onContactClick }) => {
                 <X className="w-6 h-6 text-blue-700" />
               </button>
             </div>
-
             {/* Sidebar Search: hidden/disabled on /search */}
             <div className={`${isOnSearchRoute ? "opacity-50 pointer-events-none" : ""}`}>
               <input
@@ -173,7 +208,6 @@ const Navigations: React.FC<NavigationProps> = ({ onContactClick }) => {
                 onClick={() => !isOnSearchRoute && (setIsSidebarOpen(false), onSearchNavigate())}
               />
             </div>
-
             {/* Links */}
             <nav className="flex flex-col space-y-3 text-sm text-gray-800">
               <Link to="/upcoming-trips" onClick={() => setIsSidebarOpen(false)}>📅 Upcoming Trips</Link>
@@ -188,9 +222,7 @@ const Navigations: React.FC<NavigationProps> = ({ onContactClick }) => {
                 Contact Us
               </button>
             </nav>
-
             <hr className="border-gray-300" />
-
             {/* Social Icons */}
             <div className="flex justify-center gap-5 text-blue-600 mt-2">
               <a href="https://facebook.com" target="_blank" rel="noopener noreferrer"><Facebook className="w-5 h-5 hover:text-blue-800" /></a>
