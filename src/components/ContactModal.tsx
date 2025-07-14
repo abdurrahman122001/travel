@@ -2,7 +2,13 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { X, Phone, Mail, MapPin } from "lucide-react";
 
 interface ContactModalProps {
@@ -15,7 +21,7 @@ const ContactModal = ({ isOpen, onClose }: ContactModalProps) => {
     fullName: "",
     email: "",
     phone: "",
-    message: ""
+    message: "",
   });
   const [loading, setLoading] = useState(false);
   const [submitMessage, setSubmitMessage] = useState<string | null>(null);
@@ -25,22 +31,27 @@ const ContactModal = ({ isOpen, onClose }: ContactModalProps) => {
     setSubmitMessage(null);
     setLoading(true);
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/contact-messages`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData)
-      });
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL}/contact-messages`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
+        }
+      );
       if (!res.ok) throw new Error("Failed to send message");
       setSubmitMessage("Message sent successfully!");
       setFormData({ fullName: "", email: "", phone: "", message: "" });
-      setTimeout(onClose, 1500); // Optional: close modal after submit
+      setTimeout(onClose, 1500);
     } catch (err) {
       setSubmitMessage("Failed to send message. Please try again.");
     }
     setLoading(false);
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -48,8 +59,10 @@ const ContactModal = ({ isOpen, onClose }: ContactModalProps) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
+      {/* Backdrop */}
       <div className="absolute inset-0 bg-black/50" onClick={onClose} />
-      <Card className="relative w-full max-w-sm mx-2 max-h-[90vh] overflow-y-auto shadow-lg">
+      {/* Modal Card */}
+      <Card className="relative w-full max-w-sm mx-2 max-h-[95vh] overflow-y-auto shadow-lg border-none">
         <CardHeader>
           <div className="flex items-center justify-between">
             <div>
@@ -60,45 +73,43 @@ const ContactModal = ({ isOpen, onClose }: ContactModalProps) => {
             </div>
             <button
               onClick={onClose}
+              aria-label="Close"
               className="p-2 hover:bg-muted rounded-full transition-colors"
+              type="button"
             >
               <X className="w-5 h-5" />
             </button>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4 pb-4">
-          {/* Contact Information */}
-          <div className="space-y-2 p-4 bg-muted/30 rounded-lg">
-            <div className="flex items-center gap-2">
-              <Phone className="w-5 h-5 text-primary" />
-              <div>
-                <p className="font-medium text-sm">Phone</p>
-                <p className="text-xs text-muted-foreground">
-                  +1 (555) 123-4567
-                </p>
+        <CardContent className="space-y-3 pb-4">
+          {/* Contact Information in a row */}
+          <div className="flex flex-col sm:flex-row items-stretch gap-3 sm:gap-4 p-3 bg-muted/30 rounded-lg text-xs justify-center">
+            <div className="flex items-center gap-2 flex-1 min-w-0">
+              <Phone className="w-5 h-5 text-primary shrink-0" />
+              <div className="min-w-0">
+                <div className="font-medium truncate">Phone</div>
+                <div className="text-muted-foreground truncate">+91 836 8753277</div>
               </div>
             </div>
-            <div className="flex items-center gap-2">
-              <Mail className="w-5 h-5 text-primary" />
-              <div>
-                <p className="font-medium text-sm">Email</p>
-                <p className="text-xs text-muted-foreground">
-                  info@wanderlust.com
-                </p>
+            <div className="hidden sm:block w-px h-auto bg-muted" />
+            <div className="flex items-center gap-2 flex-1 min-w-0">
+              <Mail className="w-5 h-5 text-primary shrink-0" />
+              <div className="min-w-0">
+                <div className="font-medium truncate">Email</div>
+                <div className="text-muted-foreground truncate ">info@breakoutwanderers.com</div>
               </div>
             </div>
-            <div className="flex items-center gap-2">
-              <MapPin className="w-5 h-5 text-primary" />
-              <div>
-                <p className="font-medium text-sm">Address</p>
-                <p className="text-xs text-muted-foreground">
-                  123 Travel St, City
-                </p>
+            <div className="hidden sm:block w-px h-auto bg-muted" />
+            {/* <div className="flex items-center gap-2 flex-1 min-w-0">
+              <MapPin className="w-5 h-5 text-primary shrink-0" />
+              <div className="min-w-0">
+                <div className="font-medium truncate">Address</div>
+                <div className="text-muted-foreground truncate">123 Travel St, City</div>
               </div>
-            </div>
+            </div> */}
           </div>
           {/* Contact Form */}
-          <form onSubmit={handleSubmit} className="space-y-3">
+          <form onSubmit={handleSubmit} className="space-y-2 mt-2">
             <div>
               <Label htmlFor="fullName">Full Name</Label>
               <Input
@@ -107,6 +118,7 @@ const ContactModal = ({ isOpen, onClose }: ContactModalProps) => {
                 value={formData.fullName}
                 onChange={handleChange}
                 required
+                autoComplete="name"
               />
             </div>
             <div>
@@ -118,6 +130,7 @@ const ContactModal = ({ isOpen, onClose }: ContactModalProps) => {
                 value={formData.email}
                 onChange={handleChange}
                 required
+                autoComplete="email"
               />
             </div>
             <div>
@@ -128,6 +141,9 @@ const ContactModal = ({ isOpen, onClose }: ContactModalProps) => {
                 type="tel"
                 value={formData.phone}
                 onChange={handleChange}
+                autoComplete="tel"
+                inputMode="tel"
+                maxLength={16}
               />
             </div>
             <div>
@@ -138,18 +154,25 @@ const ContactModal = ({ isOpen, onClose }: ContactModalProps) => {
                 value={formData.message}
                 onChange={handleChange}
                 required
-                className="w-full min-h-[80px] px-3 py-2 border border-input bg-background rounded-md text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                placeholder="Tell us about your travel plans..."
+                className="w-full min-h-[60px] px-3 py-2 border border-input bg-background rounded-md text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 resize-none"
+                placeholder="Your message..."
+                maxLength={600}
               />
             </div>
             {submitMessage && (
-              <div className={`text-sm ${submitMessage.includes("success") ? "text-green-600" : "text-red-600"}`}>
+              <div
+                className={`text-xs ${
+                  submitMessage.includes("success")
+                    ? "text-green-600"
+                    : "text-red-600"
+                }`}
+              >
                 {submitMessage}
               </div>
             )}
             <div className="flex gap-2 pt-2">
               <Button type="submit" className="flex-1" disabled={loading}>
-                {loading ? "Sending..." : "Send Message"}
+                {loading ? "Sending..." : "Send"}
               </Button>
               <Button type="button" variant="outline" onClick={onClose}>
                 Cancel

@@ -79,7 +79,7 @@ const Navigations: React.FC<NavigationProps> = ({ onContactClick }) => {
           {/* Logo + Search */}
           <div className="flex items-center gap-3">
             <Link to="/">
-              <img src={logo} alt="Logo" className="h-24 w-auto" />
+              <img src={logo} alt="Logo" className="h-32 w-auto" />
             </Link>
             {/* Desktop Search */}
             <div
