@@ -29,12 +29,25 @@ interface Subcategory {
   category: string | { _id: string; name: string };
 }
 
+interface HeaderSettings {
+  logo: {
+    url: string;
+    altText: string;
+  };
+  socialLinks: Array<{
+    platform: string;
+    url: string;
+    icon: string;
+  }>;
+}
+
 const Navigations: React.FC<NavigationProps> = ({ onContactClick }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [sidebarSearchTerm, setSidebarSearchTerm] = useState("");
   const [categories, setCategories] = useState<Category[]>([]);
   const [subcategories, setSubcategories] = useState<Subcategory[]>([]);
+  const [headerSettings, setHeaderSettings] = useState<HeaderSettings | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -42,18 +55,33 @@ const Navigations: React.FC<NavigationProps> = ({ onContactClick }) => {
   const location = useLocation();
 
   useEffect(() => {
-    setLoading(true);
-    setError(null);
-    Promise.all([
-      fetch(`${API_BASE}/package-categories`).then(res => res.json()),
-      fetch(`${API_BASE}/package-subcategories`).then(res => res.json()),
-    ])
-      .then(([cat, subcat]) => {
+    const fetchData = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const [catRes, subcatRes, settingsRes] = await Promise.all([
+          fetch(`${API_BASE}/package-categories`),
+          fetch(`${API_BASE}/package-subcategories`),
+          fetch(`${API_BASE}/header-settings`)
+        ]);
+        
+        const [cat, subcat, settings] = await Promise.all([
+          catRes.json(),
+          subcatRes.json(),
+          settingsRes.json()
+        ]);
+
         setCategories(Array.isArray(cat) ? cat : []);
         setSubcategories(Array.isArray(subcat) ? subcat : []);
-      })
-      .catch((err) => setError("Failed to load menu"))
-      .finally(() => setLoading(false));
+        setHeaderSettings(settings);
+      } catch (err) {
+        setError("Failed to load menu");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
   }, []);
 
   // Group subcategories by category id string
@@ -71,6 +99,22 @@ const Navigations: React.FC<NavigationProps> = ({ onContactClick }) => {
   const onSearchNavigate = () => navigate("/search");
   const isOnSearchRoute = location.pathname === "/search";
 
+  // Get social icon component
+  const getSocialIcon = (platform: string) => {
+    switch (platform) {
+      case 'facebook':
+        return <Facebook className="w-4 h-4 hover:text-blue-800" />;
+      case 'instagram':
+        return <Instagram className="w-4 h-4 hover:text-pink-600" />;
+      case 'youtube':
+        return <Youtube className="w-4 h-4 hover:text-red-600" />;
+      case 'whatsapp':
+        return <Phone className="w-4 h-4 hover:text-green-600" />;
+      default:
+        return null;
+    }
+  };
+
   return (
     <header className="w-full z-50">
       {/* Top Header */}
@@ -79,7 +123,11 @@ const Navigations: React.FC<NavigationProps> = ({ onContactClick }) => {
           {/* Logo + Search */}
           <div className="flex items-center gap-3">
             <Link to="/">
-              <img src={logo} alt="Logo" className="h-32 w-auto" />
+              <img 
+                src={headerSettings?.logo?.url || logo} 
+                alt={headerSettings?.logo?.altText || "Logo"} 
+                className="h-32 w-auto" 
+              />
             </Link>
             {/* Desktop Search */}
             <div
@@ -114,18 +162,16 @@ const Navigations: React.FC<NavigationProps> = ({ onContactClick }) => {
             <Link to="/about" className="hover:text-blue-600">About Us</Link>
             <Link to="/blog" className="hover:text-blue-600">Blog</Link>
             <div className="flex gap-4 items-center text-blue-600">
-              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
-                <Facebook className="w-4 h-4 hover:text-blue-800" />
-              </a>
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
-                <Instagram className="w-4 h-4 hover:text-pink-600" />
-              </a>
-              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer">
-                <Youtube className="w-4 h-4 hover:text-red-600" />
-              </a>
-              <a href="https://wa.me/1234567890" target="_blank" rel="noopener noreferrer">
-                <Phone className="w-4 h-4 hover:text-green-600" />
-              </a>
+              {headerSettings?.socialLinks?.map((link) => (
+                <a 
+                  key={link.platform} 
+                  href={link.url} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                >
+                  {getSocialIcon(link.platform)}
+                </a>
+              ))}
             </div>
             <button
               onClick={onContactClick}
@@ -225,10 +271,16 @@ const Navigations: React.FC<NavigationProps> = ({ onContactClick }) => {
             <hr className="border-gray-300" />
             {/* Social Icons */}
             <div className="flex justify-center gap-5 text-blue-600 mt-2">
-              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer"><Facebook className="w-5 h-5 hover:text-blue-800" /></a>
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"><Instagram className="w-5 h-5 hover:text-pink-600" /></a>
-              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer"><Youtube className="w-5 h-5 hover:text-red-600" /></a>
-              <a href="https://wa.me/1234567890" target="_blank" rel="noopener noreferrer"><Phone className="w-5 h-5 hover:text-green-600" /></a>
+              {headerSettings?.socialLinks?.map((link) => (
+                <a 
+                  key={link.platform} 
+                  href={link.url} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                >
+                  {getSocialIcon(link.platform)}
+                </a>
+              ))}
             </div>
           </div>
           <div className="flex-1" onClick={() => setIsSidebarOpen(false)} />
