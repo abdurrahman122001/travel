@@ -506,7 +506,7 @@ export default function Package() {
           <div className="max-w-[1400px] mx-auto px-4">
             {/* Header */}
             <h2 className="text-3xl md:text-[2rem] font-bold text-[#34586a] mb-1">
-              Best-Selling Community Trips
+              {bestSellingTrips[0]?.categories?.[0]?.name || "Exclusive Deals"}
             </h2>
             <p className="text-lg text-gray-500 mb-6">
               Discover Europe with WanderOn: Epic Journeys, New Bonds, Unforgettable Memories!
@@ -650,7 +650,7 @@ export default function Package() {
           <div className="max-w-[1400px] mx-auto px-4">
             {/* Header */}
             <h2 className="text-3xl md:text-[2rem] font-bold text-[#34586a] mb-1">
-              Exclusive Europe Summer Deals 2025
+              {summerDeals[0]?.categories?.[0]?.name || "Exclusive Deals"}
             </h2>
             <p className="text-lg text-gray-500 mb-6">
               Spend a perfect summer soaking in the scenic landscapes of Europe
@@ -802,7 +802,7 @@ export default function Package() {
           <div className="max-w-[1400px] mx-auto px-4">
             {/* Header */}
             <h2 className="text-3xl md:text-[2rem] font-bold text-[#34586a] mb-1">
-              Affordable Packages
+              {affordablePackages[0]?.categories?.[0]?.name || "Exclusive Deals"}
             </h2>
             <p className="text-lg text-gray-500 mb-6">
               Spend a perfect summer soaking in the scenic landscapes of Europe
@@ -962,7 +962,7 @@ export default function Package() {
           <div className="max-w-[1400px] mx-auto px-4">
             {/* Header */}
             <h2 className="text-3xl md:text-[2rem] font-bold text-[#34586a] mb-1">
-              Europe with UK
+              {europeWithUK[0]?.categories?.[0]?.name || "Exclusive Deals"}
             </h2>
             <p className="text-lg text-gray-500 mb-6">
               Explore Timeless Europe, Embrace Royal UK – One Epic Journey Awaits!
@@ -1135,99 +1135,99 @@ export default function Package() {
               </div>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-7 gap-y-9">
-                  {trips.map((trip, i) => (
-                    <SwiperSlide key={trip._id || i}>
-                      <Link to={`/packages/${trip.slug}`}>
-                        <div className="relative h-[500px] rounded-[15px] overflow-hidden group shadow border bg-black/80">
-                          {/* BG Image */}
-                          <img
-                            src={trip.img || trip.image}
-                            alt={trip.title}
-                            className="w-full h-full object-cover"
-                          />
-                          {/* Gradient overlay */}
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
-                          {/* Price badge */}
-                          <div className="absolute top-5 left-5 z-20">
-                            <div className="flex items-center gap-1 px-3 py-1 rounded-full bg-yellow-300/95 text-gray-900 font-semibold text-[15px] shadow min-w-[175px] justify-center">
-                              {/* Old Price */}
-                              <span className="line-through text-gray-600 text-sm">
-                                {trip.oldPrice ||
-                                  (trip.price?.original
-                                    ? "₹" + trip.price.original.toLocaleString()
-                                    : "")}
-                              </span>
-                              {/* Current Price */}
-                              <span className="font-bold ml-2">
-                                {trip.priceText ||
-                                  (trip.price?.current
-                                    ? "₹" + trip.price.current.toLocaleString()
-                                    : trip.price?.current === 0
-                                      ? "₹0"
-                                      : trip.price?.current
-                                        ? trip.price.current
-                                        : "")}
-                              </span>
-                              {/* Label */}
-                              <span className="text-xs ml-1">
-                                {trip.price?.label || trip.priceText || "onwards"}
-                              </span>
-                            </div>
-                          </div>
-                          {/* Tag */}
-                          <div className="absolute left-5 top-[62px] z-30">
-                            <span
-                              className={`text-xs font-bold px-3 py-1 rounded-md ${trip.tagColor || (trip.isRecommended ? "bg-yellow-400" : "bg-green-300")} text-gray-800 shadow`}
-                            >
-                              {trip.tagText || (trip.isRecommended ? "Recommended" : "Popular")}
+                {trips.map((trip, i) => (
+                  <SwiperSlide key={trip._id || i}>
+                    <Link to={`/packages/${trip.slug}`}>
+                      <div className="relative h-[500px] rounded-[15px] overflow-hidden group shadow border bg-black/80">
+                        {/* BG Image */}
+                        <img
+                          src={trip.img || trip.image}
+                          alt={trip.title}
+                          className="w-full h-full object-cover"
+                        />
+                        {/* Gradient overlay */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
+                        {/* Price badge */}
+                        <div className="absolute top-5 left-5 z-20">
+                          <div className="flex items-center gap-1 px-3 py-1 rounded-full bg-yellow-300/95 text-gray-900 font-semibold text-[15px] shadow min-w-[175px] justify-center">
+                            {/* Old Price */}
+                            <span className="line-through text-gray-600 text-sm">
+                              {trip.oldPrice ||
+                                (trip.price?.original
+                                  ? "₹" + trip.price.original.toLocaleString()
+                                  : "")}
+                            </span>
+                            {/* Current Price */}
+                            <span className="font-bold ml-2">
+                              {trip.priceText ||
+                                (trip.price?.current
+                                  ? "₹" + trip.price.current.toLocaleString()
+                                  : trip.price?.current === 0
+                                    ? "₹0"
+                                    : trip.price?.current
+                                      ? trip.price.current
+                                      : "")}
+                            </span>
+                            {/* Label */}
+                            <span className="text-xs ml-1">
+                              {trip.price?.label || trip.priceText || "onwards"}
                             </span>
                           </div>
-                          {/* Card Content */}
-                          <div className="absolute bottom-0 left-0 w-full px-5 pb-5 pt-3 z-10 text-white bg-gradient-to-t from-black/90 via-black/40 to-transparent">
-                            <div className="font-bold text-[1.08rem] leading-tight mb-1 min-h-[48px] line-clamp-2">
-                              {trip.title}
-                            </div>
-                            <div className="text-xs bg-white/15 rounded px-2 py-1 mb-2 max-w-full overflow-hidden text-ellipsis whitespace-nowrap">
-                              {trip.subtitle}
-                            </div>
-                            <div className="flex items-center justify-between text-xs text-white/90 gap-4 mb-1">
-                              <span className="flex items-center font-bold">
-                                <FaClock className="text-[#00AFD1] text-base mr-2" />
-                                <span className="text-white">
-                                  {trip.nights && trip.days
-                                    ? `${trip.nights}N/${trip.days}D`
-                                    : trip.days || ""}
-                                </span>
+                        </div>
+                        {/* Tag */}
+                        <div className="absolute left-5 top-[62px] z-30">
+                          <span
+                            className={`text-xs font-bold px-3 py-1 rounded-md ${trip.tagColor || (trip.isRecommended ? "bg-yellow-400" : "bg-green-300")} text-gray-800 shadow`}
+                          >
+                            {trip.tagText || (trip.isRecommended ? "Recommended" : "Popular")}
+                          </span>
+                        </div>
+                        {/* Card Content */}
+                        <div className="absolute bottom-0 left-0 w-full px-5 pb-5 pt-3 z-10 text-white bg-gradient-to-t from-black/90 via-black/40 to-transparent">
+                          <div className="font-bold text-[1.08rem] leading-tight mb-1 min-h-[48px] line-clamp-2">
+                            {trip.title}
+                          </div>
+                          <div className="text-xs bg-white/15 rounded px-2 py-1 mb-2 max-w-full overflow-hidden text-ellipsis whitespace-nowrap">
+                            {trip.subtitle}
+                          </div>
+                          <div className="flex items-center justify-between text-xs text-white/90 gap-4 mb-1">
+                            <span className="flex items-center font-bold">
+                              <FaClock className="text-[#00AFD1] text-base mr-2" />
+                              <span className="text-white">
+                                {trip.nights && trip.days
+                                  ? `${trip.nights}N/${trip.days}D`
+                                  : trip.days || ""}
                               </span>
-                              <span className="flex items-center font-bold">
-                                <FaMapMarkerAlt className="text-[#00AFD1] text-base mr-2" />
-                                <span className="text-white">
-                                  {trip.startLocation || trip.airport || ""}
-                                </span>
+                            </span>
+                            <span className="flex items-center font-bold">
+                              <FaMapMarkerAlt className="text-[#00AFD1] text-base mr-2" />
+                              <span className="text-white">
+                                {trip.startLocation || trip.airport || ""}
                               </span>
-                            </div>
-                            <div className="flex items-center text-xs mt-1">
-                              <span className="flex items-center font-bold mr-2">
-                                <FaCalendarAlt className="text-[#00AFD1] text-base mr-2" />
-                                <span className="text-white">
-                                  {Array.isArray(trip.departureDates)
-                                    ? trip.departureDates.join(", ")
-                                    : trip.start ||
-                                    trip.departureDates ||
-                                    ""}
-                                </span>
+                            </span>
+                          </div>
+                          <div className="flex items-center text-xs mt-1">
+                            <span className="flex items-center font-bold mr-2">
+                              <FaCalendarAlt className="text-[#00AFD1] text-base mr-2" />
+                              <span className="text-white">
+                                {Array.isArray(trip.departureDates)
+                                  ? trip.departureDates.join(", ")
+                                  : trip.start ||
+                                  trip.departureDates ||
+                                  ""}
                               </span>
-                              {trip.batch && (
-                                <span className="text-green-400 font-bold ml-1">
-                                  {trip.batch}
-                                </span>
-                              )}
-                            </div>
+                            </span>
+                            {trip.batch && (
+                              <span className="text-green-400 font-bold ml-1">
+                                {trip.batch}
+                              </span>
+                            )}
                           </div>
                         </div>
-                      </Link>
-                    </SwiperSlide>
-                  ))}
+                      </div>
+                    </Link>
+                  </SwiperSlide>
+                ))}
               </div>
             )}
           </div>
@@ -1249,277 +1249,6 @@ export default function Package() {
             >
               Explore More
             </button>
-          </div>
-        </section>
-
-        <section className="max-w-[1400px] mx-auto px-4 pt-10 pb-12">
-          <div className="mb-7">
-            <h2
-              className="text-[2rem] font-bold text-[#34586a] mb-2"
-              style={{ letterSpacing: "-0.5px" }}
-            >
-              Must-Do Activities for an Unforgettable Europe Experience
-            </h2>
-            <p className="text-gray-500 text-lg">
-              From skiing in the Alps to hiking ancient trails, Europe offers
-              diverse adventure activities in stunning settings. Explore
-              thrilling experiences across the continent.
-            </p>
-          </div>
-          <div className="relative">
-            {/* Custom Left Arrow */}
-            <button
-              ref={prevActivityRef}
-              className="hidden md:block absolute z-20 -left-6 top-1/2 -translate-y-1/2 w-11 h-11 flex items-center justify-center bg-[#ffff] shadow-lg rounded-full border-4 border-white hover:bg-white-400 transition-all"
-              style={{ boxShadow: "0 1.5px 10px rgba(0,0,0,.12)" }}
-            >
-              <ChevronLeft className="text-black" size={33} />
-            </button>
-
-            {/* Custom Right Arrow */}
-            <button
-              ref={nextActivityRef}
-              className="hidden md:block absolute z-20 -right-6 top-1/2 -translate-y-1/2 w-11 h-11 flex items-center justify-center bg-[#ffff] shadow-lg rounded-full border-4 border-white hover:bg-white-400 transition-all"
-              style={{ boxShadow: "0 1.5px 10px rgba(0,0,0,.12)" }}
-            >
-              <ChevronRight className="text-black" size={33} />
-            </button>
-            <Swiper
-              modules={[Navigation]}
-              navigation={{
-                prevEl: prevActivityRef.current,
-                nextEl: nextActivityRef.current,
-              }}
-              onInit={(swiper) => {
-                // Attach navigation refs after mount
-                (swiper.params.navigation as any).prevEl = prevActivityRef.current;
-                (swiper.params.navigation as any).nextEl = nextActivityRef.current;
-                swiper.navigation.init();
-                swiper.navigation.update();
-              }}
-              slidesPerView={3}
-              spaceBetween={28}
-              breakpoints={{
-                0: { slidesPerView: 1, spaceBetween: 18 },
-                600: { slidesPerView: 1.25, spaceBetween: 18 },
-                900: { slidesPerView: 2, spaceBetween: 22 },
-                1200: { slidesPerView: 3, spaceBetween: 28 },
-              }}
-            //   className="!px-10"
-            >
-              {activities.map((item, i) => (
-                <SwiperSlide key={i}>
-                  <div className="bg-white rounded-2xl overflow-hidden flex flex-col h-full min-h-[320px]">
-                    {/* Image with overlay */}
-                    <div className="relative h-[220px] w-full">
-                      <img
-                        src={item.img}
-                        alt={item.activity}
-                        className="w-full h-full object-cover rounded-t-2xl"
-                        draggable={false}
-                      />
-                      {/* Black label overlay */}
-                      <div className="absolute bottom-3 left-3 bg-black/80 rounded px-2 py-1 text-white text-xs font-semibold shadow min-w-[110px]">
-                        <span className="block text-xs font-medium mb-0.5">
-                          📍 {item.country}
-                        </span>
-                        <span className="block bg-black font-bold rounded px-1 py-0.5 mt-0.5 text-sm">
-                          {item.activity}
-                        </span>
-                        <span className="block mt-1 font-normal">
-                          {item.duration}
-                        </span>
-                      </div>
-                    </div>
-                    {/* Description */}
-                    <div className="text-[15px] text-gray-600 text-[#49768f] px-4 py-4 font-normal leading-relaxed">
-                      {item.desc}
-                    </div>
-                  </div>
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          </div>
-        </section>
-        <section className="max-w-[1400px] mx-auto px-4 pt-10 pb-12">
-          <div className="mb-7">
-            <h2
-              className="text-[2rem] font-bold text-[#34586a] mb-2"
-              style={{ letterSpacing: "-0.5px" }}
-            >
-              Must-Visit Places in Europe for a Dream Vacation
-            </h2>
-            <p className="text-gray-500 text-lg">
-              Discover Europe's diverse beauty and rich history. Explore our
-              curated list of must-visit destinations, from historic cities to
-              scenic landscapes, and plan your unforgettable European adventure.
-            </p>
-          </div>
-          <div className="relative">
-            {/* Custom Left Arrow */}
-            <button
-              ref={prevVisitRef}
-              className="hidden md:block absolute z-20 -left-6 top-1/2 -translate-y-1/2 w-11 h-11 flex items-center justify-center bg-[#ffff] shadow-lg rounded-full border-4 border-white hover:bg-white-400 transition-all"
-              style={{ boxShadow: "0 1.5px 10px rgba(0,0,0,.12)" }}
-            >
-              <ChevronLeft className="text-black" size={33} />
-            </button>
-
-            {/* Custom Right Arrow */}
-            <button
-              ref={nextVisitRef}
-              className="hidden md:block absolute z-20 -right-6 top-1/2 -translate-y-1/2 w-11 h-11 flex items-center justify-center bg-[#ffff] shadow-lg rounded-full border-4 border-white hover:bg-white-400 transition-all"
-              style={{ boxShadow: "0 1.5px 10px rgba(0,0,0,.12)" }}
-            >
-              <ChevronRight className="text-black" size={33} />
-            </button>
-
-            <Swiper
-              modules={[Navigation]}
-              navigation={{
-                prevEl: prevVisitRef.current,
-                nextEl: nextVisitRef.current,
-              }}
-              onInit={(swiper) => {
-                // Attach navigation refs after mount
-                // @ts-ignore
-                swiper.params.navigation.prevEl = prevVisitRef.current;
-                // @ts-ignore
-                swiper.params.navigation.nextEl = nextVisitRef.current;
-                swiper.navigation.init();
-                swiper.navigation.update();
-              }}
-              slidesPerView={3}
-              spaceBetween={28}
-              breakpoints={{
-                0: { slidesPerView: 1, spaceBetween: 18 },
-                600: { slidesPerView: 1.25, spaceBetween: 18 },
-                900: { slidesPerView: 2, spaceBetween: 22 },
-                1200: { slidesPerView: 3, spaceBetween: 28 },
-              }}
-            //   className="!px-10"
-            >
-              {VisitActivities.map((item, i) => (
-                <SwiperSlide key={i}>
-                  <div className="bg-white rounded-2xl overflow-hidden flex flex-col h-full min-h-[320px]">
-                    {/* Image with overlay */}
-                    <div className="relative h-[220px] w-full">
-                      <img
-                        src={item.img}
-                        alt={item.activity}
-                        className="w-full h-full object-cover rounded-t-2xl"
-                        draggable={false}
-                      />
-                      {/* Black label overlay */}
-                      <div className="absolute bottom-3 left-3 bg-black/80 rounded px-2 py-1 text-white text-xs font-semibold shadow min-w-[110px]">
-                        <span className="block text-xs font-medium mb-0.5">
-                          📍 {item.country}
-                        </span>
-                        <span className="block bg-black font-bold rounded px-1 py-0.5 mt-0.5 text-sm">
-                          {item.activity}
-                        </span>
-                        <span className="block mt-1 font-normal">
-                          {item.duration}
-                        </span>
-                      </div>
-                    </div>
-                    {/* Description */}
-                    <div className="text-[15px] text-gray-600 text-[#49768f] px-4 py-4 font-normal leading-relaxed">
-                      {item.desc}
-                    </div>
-                  </div>
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          </div>
-        </section>
-        <section className="max-w-[1400px] mx-auto px-4 pt-10 pb-12">
-          <div className="mb-7">
-            <h2
-              className="text-[2rem] font-bold text-[#34586a] mb-2"
-              style={{ letterSpacing: "-0.5px" }}
-            >
-              Shop till you drop: Best shopping destinations in Europe
-            </h2>
-            <p className="text-gray-500 text-lg">
-              European Shopping Escapades: Explore the continent's diverse
-              retail landscape, from iconic fashion capitals to quaint markets.
-              Discover Europe's unique shopping experiences and hidden
-              treasures.
-            </p>
-          </div>
-          <div className="relative">
-            {/* Custom Left Arrow */}
-            <button
-              ref={prevShopRef}
-              className="hidden md:block absolute z-20 -left-6 top-1/2 -translate-y-1/2 w-11 h-11 flex items-center justify-center bg-[#ffff] shadow-lg rounded-full border-4 border-white hover:bg-white-400 transition-all"
-              style={{ boxShadow: "0 1.5px 10px rgba(0,0,0,.12)" }}
-            >
-              <ChevronLeft className="text-black" size={33} />
-            </button>
-
-            {/* Custom Right Arrow */}
-            <button
-              ref={nextShopRef}
-              className="hidden md:block absolute z-20 -right-6 top-1/2 -translate-y-1/2 w-11 h-11 flex items-center justify-center bg-[#ffff] shadow-lg rounded-full border-4 border-white hover:bg-white-400 transition-all"
-              style={{ boxShadow: "0 1.5px 10px rgba(0,0,0,.12)" }}
-            >
-              <ChevronRight className="text-black" size={33} />
-            </button>
-
-            <Swiper
-              modules={[Navigation]}
-              navigation={{
-                prevEl: prevShopRef.current,
-                nextEl: nextShopRef.current,
-              }}
-              onInit={(swiper) => {
-                (swiper.params.navigation as any).prevEl = prevShopRef.current;
-                (swiper.params.navigation as any).nextEl = nextShopRef.current;
-                swiper.navigation.init();
-                swiper.navigation.update();
-              }}
-              slidesPerView={3}
-              spaceBetween={28}
-              breakpoints={{
-                0: { slidesPerView: 1, spaceBetween: 18 },
-                600: { slidesPerView: 1.2, spaceBetween: 18 },
-                900: { slidesPerView: 2, spaceBetween: 22 },
-                1200: { slidesPerView: 3, spaceBetween: 28 },
-              }}
-            >
-              {ShopActivities.map((item, i) => (
-                <SwiperSlide key={i}>
-                  <div className="bg-white rounded-2xl overflow-hidden flex flex-col h-full min-h-[320px]">
-                    {/* Image with overlay */}
-                    <div className="relative h-[220px] w-full">
-                      <img
-                        src={item.img}
-                        alt={item.activity}
-                        className="w-full h-full object-cover rounded-t-2xl"
-                        draggable={false}
-                      />
-                      {/* Black label overlay */}
-                      <div className="absolute bottom-3 left-3 bg-black/80 rounded px-2 py-1 text-white text-xs font-semibold shadow min-w-[110px]">
-                        <span className="block text-xs font-medium mb-0.5">
-                          📍 {item.country}
-                        </span>
-                        <span className="block bg-black font-bold rounded px-1 py-0.5 mt-0.5 text-sm">
-                          {item.activity}
-                        </span>
-                        <span className="block mt-1 font-normal">
-                          {item.duration}
-                        </span>
-                      </div>
-                    </div>
-                    {/* Description */}
-                    <div className="text-[15px] text-gray-600 text-[#49768f] px-4 py-4 font-normal leading-relaxed">
-                      {item.desc}
-                    </div>
-                  </div>
-                </SwiperSlide>
-              ))}
-            </Swiper>
           </div>
         </section>
         <section className="w-full py-16 bg-white">
