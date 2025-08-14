@@ -5,6 +5,7 @@ import {
   X,
   Search,
   ChevronDown,
+  ChevronRight,
   Facebook,
   Instagram,
   Youtube,
@@ -50,6 +51,7 @@ const Navigations: React.FC<NavigationProps> = ({ onContactClick }) => {
   const [headerSettings, setHeaderSettings] = useState<HeaderSettings | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -115,6 +117,10 @@ const Navigations: React.FC<NavigationProps> = ({ onContactClick }) => {
     }
   };
 
+  const toggleCategory = (categoryId: string) => {
+    setExpandedCategory(expandedCategory === categoryId ? null : categoryId);
+  };
+
   return (
     <header className="w-full z-50">
       {/* Top Header */}
@@ -154,7 +160,7 @@ const Navigations: React.FC<NavigationProps> = ({ onContactClick }) => {
           </div>
           {/* Desktop Nav */}
           <div className="hidden lg:flex items-center space-x-6 text-sm text-gray-800">
-            <Link to="/upcoming-trips" className="hover:text-blue-600 flex items-center gap-1">
+            <Link to="/category/68999adfe4af09778910753b" className="hover:text-blue-600 flex items-center gap-1">
               📅 Upcoming Trips
             </Link>
             <Link to="/" className="hover:text-blue-600">Home</Link>
@@ -229,7 +235,7 @@ const Navigations: React.FC<NavigationProps> = ({ onContactClick }) => {
       {/* Mobile Sidebar */}
       {isSidebarOpen && (
         <div className="fixed inset-0 z-50 bg-black/50 flex">
-          <div className="w-80 bg-white p-5 flex flex-col space-y-4">
+          <div className="w-80 bg-white p-5 flex flex-col space-y-4 overflow-y-auto">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-semibold text-blue-700">Menu</h2>
               <button onClick={() => setIsSidebarOpen(false)}>
@@ -254,16 +260,102 @@ const Navigations: React.FC<NavigationProps> = ({ onContactClick }) => {
                 onClick={() => !isOnSearchRoute && (setIsSidebarOpen(false), onSearchNavigate())}
               />
             </div>
-            {/* Links */}
+            {/* Main Navigation Links */}
             <nav className="flex flex-col space-y-3 text-sm text-gray-800">
-              <Link to="/upcoming-trips" onClick={() => setIsSidebarOpen(false)}>📅 Upcoming Trips</Link>
-              <Link to="/package" onClick={() => setIsSidebarOpen(false)}>Packages</Link>
-              <Link to="/corporate-tours" onClick={() => setIsSidebarOpen(false)}>Corporate Tours</Link>
-              <Link to="/blogs" onClick={() => setIsSidebarOpen(false)}>Blogs</Link>
-              <Link to="/about" onClick={() => setIsSidebarOpen(false)}>About Us</Link>
+              <Link 
+                to="/" 
+                onClick={() => setIsSidebarOpen(false)}
+                className="py-1 hover:text-blue-600"
+              >
+                Home
+              </Link>
+              <Link 
+                to="/upcoming-trips" 
+                onClick={() => setIsSidebarOpen(false)}
+                className="py-1 hover:text-blue-600"
+              >
+                📅 Upcoming Trips
+              </Link>
+              <Link 
+                to="/package" 
+                onClick={() => setIsSidebarOpen(false)}
+                className="py-1 hover:text-blue-600"
+              >
+                Packages
+              </Link>
+              <Link 
+                to="/about" 
+                onClick={() => setIsSidebarOpen(false)}
+                className="py-1 hover:text-blue-600"
+              >
+                About Us
+              </Link>
+              <Link 
+                to="/blog" 
+                onClick={() => setIsSidebarOpen(false)}
+                className="py-1 hover:text-blue-600"
+              >
+                Blog
+              </Link>
+              
+              {/* Categories with Subcategories */}
+              <div className="mt-2 border-t border-gray-200 pt-2">
+                <h3 className="font-medium text-gray-700 mb-2">Categories</h3>
+                {loading ? (
+                  <div className="text-sm text-gray-500">Loading categories...</div>
+                ) : error ? (
+                  <div className="text-sm text-red-500">{error}</div>
+                ) : categories.length === 0 ? (
+                  <div className="text-sm text-gray-500">No categories found</div>
+                ) : (
+                  <div className="space-y-1">
+                    {categories.map((cat) => (
+                      <div key={cat._id} className="mb-1">
+                        <div 
+                          className="flex items-center justify-between py-1 px-2 rounded hover:bg-gray-100 cursor-pointer"
+                          onClick={() => toggleCategory(cat._id)}
+                        >
+                          <Link 
+                            to={`/category/${cat._id}`} 
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setIsSidebarOpen(false);
+                            }}
+                            className="flex-1 hover:text-blue-600"
+                          >
+                            {cat.name}
+                          </Link>
+                          {subcategoriesByCat[cat._id]?.length > 0 && (
+                            <ChevronRight 
+                              className={`w-4 h-4 transition-transform ${
+                                expandedCategory === cat._id ? 'transform rotate-90' : ''
+                              }`}
+                            />
+                          )}
+                        </div>
+                        {expandedCategory === cat._id && subcategoriesByCat[cat._id]?.length > 0 && (
+                          <div className="ml-4 pl-2 border-l-2 border-gray-200 mt-1">
+                            {subcategoriesByCat[cat._id].map((sub) => (
+                              <Link
+                                key={sub._id}
+                                to={`/subcategory/${sub._id}`}
+                                onClick={() => setIsSidebarOpen(false)}
+                                className="block py-1 px-2 text-sm hover:text-blue-600 hover:bg-gray-50 rounded"
+                              >
+                                {sub.name}
+                              </Link>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+              
               <button
                 onClick={() => { setIsSidebarOpen(false); onContactClick(); }}
-                className="bg-blue-600 hover:bg-blue-700 text-white w-full px-5 py-2 rounded-full transition font-semibold shadow mt-1"
+                className="bg-blue-600 hover:bg-blue-700 text-white w-full px-5 py-2 rounded-full transition font-semibold shadow mt-3"
               >
                 Contact Us
               </button>
