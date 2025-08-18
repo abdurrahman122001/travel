@@ -96,7 +96,7 @@ const ContactModal = ({ isOpen, onClose }: ContactModalProps) => {
               <Mail className="w-5 h-5 text-primary shrink-0" />
               <div className="min-w-0">
                 <div className="font-medium truncate">Email</div>
-                <div className="text-muted-foreground truncate ">info@breakoutwanderers.com</div>
+                <div className="text-muted-foreground truncate ">breakoutwanderers@gmail.com</div>
               </div>
             </div>
             <div className="hidden sm:block w-px h-auto bg-muted" />

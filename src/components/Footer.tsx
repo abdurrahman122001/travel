@@ -8,16 +8,15 @@ interface FooterProps {
 }
 
 type Category = {
-  id: string | number;
+  _id: string;
   name: string;
-  slug?: string | null;
 };
 
 const API_URL = import.meta.env.VITE_API_URL as string | undefined;
 
 const Footer = ({ setIsContactModalOpen }: FooterProps) => {
   const [categories, setCategories] = useState<Category[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -42,8 +41,9 @@ const Footer = ({ setIsContactModalOpen }: FooterProps) => {
         }
 
         const data = await res.json();
-        // Normalize: expecting array of { id, name, slug? }
+        // Expecting array of { _id, name }
         const list: Category[] = Array.isArray(data) ? data : data?.data ?? [];
+
         if (isMounted) {
           setCategories(list);
           setError(null);
@@ -111,9 +111,6 @@ const Footer = ({ setIsContactModalOpen }: FooterProps) => {
                   Privacy Policy
                 </Link>
               </li>
-              {/* <li>
-                <Link to="/disclaimer" className="hover:text-[#20e0ff] transition">Disclaimer</Link>
-              </li> */}
               <li>
                 <Link
                   to="/terms-and-conditions"
@@ -129,32 +126,26 @@ const Footer = ({ setIsContactModalOpen }: FooterProps) => {
           <div>
             <h4 className="font-semibold mb-4 text-lg">Categories</h4>
 
-            {loading && (
-              <ul className="space-y-2 text-gray-400 text-[15px]">
-                <li>Loading categories…</li>
-              </ul>
-            )}
-
+            {loading && <p className="text-gray-400 text-[15px]">Loading…</p>}
             {!loading && error && (
               <p className="text-red-300 text-[14px]">{error}</p>
             )}
-
             {!loading && !error && categories.length === 0 && (
               <p className="text-gray-400 text-[15px]">No categories found.</p>
             )}
 
             {!loading && !error && categories.length > 0 && (
               <ul className="space-y-2 text-gray-300 text-[15px]">
-                {categories.map((cat) => {
-                  const to = `/category/${cat.slug || cat.id}`;
-                  return (
-                    <li key={cat.id}>
-                      <Link to={to} className="hover:text-[#20e0ff] transition">
-                        {cat.name}
-                      </Link>
-                    </li>
-                  );
-                })}
+                {categories.map((cat) => (
+                  <li key={cat._id}>
+                    <Link
+                      to={`/category/${cat._id}`}
+                      className="hover:text-[#20e0ff] transition"
+                    >
+                      {cat.name}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             )}
           </div>
@@ -169,7 +160,7 @@ const Footer = ({ setIsContactModalOpen }: FooterProps) => {
               </div>
               <div className="flex items-center gap-2">
                 <Mail className="w-4 h-4" />
-                <span>info@breakoutwanderers.com</span>
+                <span>breakoutwanderers@gmail.com</span>
               </div>
             </div>
           </div>
