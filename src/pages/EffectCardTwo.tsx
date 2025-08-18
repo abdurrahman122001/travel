@@ -4,6 +4,7 @@ import "swiper/css";
 import "swiper/css/effect-cards";
 import { EffectCards } from "swiper/modules";
 import "./style.css";
+import { Link } from "react-router-dom";
 
 const API_URL = import.meta.env.VITE_API_URL; // Make sure this is set in your env
 
@@ -44,6 +45,7 @@ export default function EffectCardTwo() {
           className="ml-auto w-[60px] h-[60px] object-contain"
         />
       </div>
+      <Link to="/package">
       {/* Centered swiper */}
       <div className="flex justify-center">
         {loading ? (
@@ -109,6 +111,7 @@ export default function EffectCardTwo() {
           </Swiper>
         )}
       </div>
+      </Link>
     </div>
   );
 }

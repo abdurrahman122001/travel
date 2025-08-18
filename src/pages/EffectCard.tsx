@@ -48,7 +48,7 @@ export default function EffectCard() {
         </div>
 
         {/* Centered swiper */}
-        <Link to="/packages">
+        <Link to="/package">
           <div className="flex justify-center">
             <Swiper
               effect="cards"

@@ -224,7 +224,7 @@ const About = () => {
               Contact Us
             </Button>
             <Button size="lg" variant="outline">
-              <a href="/packages">View Packages</a>
+              <a href="/package">View Packages</a>
             </Button>
           </div>
         </div>
