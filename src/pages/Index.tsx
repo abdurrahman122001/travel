@@ -545,7 +545,7 @@ const Index = () => {
                 ) : (
                   internationalTrips.map((trip, idx) => (
                     <SwiperSlide key={trip._id || idx} className="w-[250px] md:w-[270px] flex-shrink-0">
-                      <Link to="/packages"><div className="rounded-xl overflow-hidden shadow-lg border border-white bg-white relative group transition-all">
+                      <Link to="/package"><div className="rounded-xl overflow-hidden shadow-lg border border-white bg-white relative group transition-all">
                         <img
                           src={trip.image}
                           alt={trip.title}
@@ -790,7 +790,7 @@ const Index = () => {
               {filteredTrips.length > 0 ? (
                 filteredTrips.map((trip, idx) => (
                   <SwiperSlide key={idx}>
-                    <Link to="/packages/1">
+                    <Link to="/package">
                       <div
                         className="relative group rounded-2xl overflow-hidden h-[350px] sm:h-[400px] md:h-[420px] flex flex-col justify-end"
                         style={{

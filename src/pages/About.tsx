@@ -7,7 +7,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Users, Award, Globe, Heart, MapPin, Clock } from "lucide-react";
+import { Users, Award, Globe, Heart, Clock, Shield, Sparkles } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import ContactModal from "@/components/ContactModal";
 import Footer from "@/components/Footer";
@@ -20,69 +20,60 @@ const About = () => {
     { icon: Award, label: "Awards Won", value: "25+" },
     { icon: Clock, label: "Years Experience", value: "10+" },
   ];
-
   const team = [
     {
-      name: "Sarah Johnson",
-      role: "Founder & CEO",
-      image:
-        "https://images.unsplash.com/photo-1494790108755-2616b612b786?auto=format&fit=crop&w=300&q=80",
-      bio: "Passionate traveler with 15+ years in the tourism industry",
+      name: "Divyanshi Chadha",
+      role: "Founder",
+      image: "/images/team/divyanshi.jpg", // replace with actual image path
+      bio: "A dynamic leader and passionate traveler, Divyanshi blends discipline, creativity, and business acumen. A national-level basketball player and MBA in Finance, she has led 47+ group trips with unmatched energy. Known for connecting deeply with people, she inspires trust and ensures every journey is full of learning, fun, and unforgettable memories.",
     },
     {
-      name: "Michael Chen",
-      role: "Head of Operations",
-      image:
-        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80",
-      bio: "Expert in logistics and creating seamless travel experiences",
+      name: "Ankit Joshi",
+      role: "Co-Founder",
+      image: "/images/team/ankit.jpg", // replace with actual image path
+      bio: "With a Masters in Media and Governance and a traveler’s spirit, Ankit has covered 30,000+ km and completed challenging treks across India. A former basketball representative for India, he brings vision and depth, ensuring every itinerary balances comfort, excitement, and authenticity for truly memorable experiences.",
     },
     {
-      name: "Emma Williams",
-      role: "Travel Specialist",
-      image:
-        "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=300&q=80",
-      bio: "Specializes in adventure and cultural immersion trips",
-    },
-    {
-      name: "David Rodriguez",
-      role: "Guide Coordinator",
-      image:
-        "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=300&q=80",
-      bio: "Connects travelers with the best local guides worldwide",
+      name: "Vikram Chadha",
+      role: "Advisor",
+      image: "/images/team/vikram.jpg", // replace with actual image path
+      bio: "With 30+ years in the travel industry and work with 155+ schools, Vikram is the guiding light of Breakout Wanderers. A seasoned professional and vigorous traveler, he brings fresh perspectives and unique destinations. His expertise ensures safety, legacy, and excellence in every journey.",
     },
   ];
 
   const values = [
     {
-      icon: Heart,
-      title: "Passion for Travel",
-      description: "We believe travel transforms lives and connects cultures",
+      icon: Heart, // ❤️
+      title: "Legacy",
+      description: "A family-driven venture built on 25 years of passion and trust.",
     },
     {
-      icon: Users,
-      title: "Customer First",
-      description:
-        "Every decision is made with our travelers' best interests in mind",
+      icon: Shield, // 🛡️ safety/protection
+      title: "Safety First",
+      description: "Zero-compromise safety protocols for students and professionals.",
     },
     {
-      icon: Globe,
-      title: "Sustainable Tourism",
-      description:
-        "We promote responsible travel that benefits local communities",
+      icon: Globe, // 🌍 global + customization
+      title: "Customization",
+      description: "Every journey is tailor-made to the needs of our clients.",
     },
     {
-      icon: Award,
-      title: "Excellence",
-      description: "We strive for perfection in every aspect of your journey",
+      icon: Users, // 👥 team/professionalism
+      title: "Professionalism",
+      description: "From planning to execution, we ensure excellence at every step.",
+    },
+    {
+      icon: Sparkles, // ✨ enrichment/creativity
+      title: "Enrichment",
+      description: "We design experiences that educate, inspire, and create lifelong memories.",
     },
   ];
-
   return (
     <div className="min-h-screen bg-background">
       <Navigation onContactClick={() => setIsContactModalOpen(true)} />
 
       {/* Hero Section */}
-      <section className="relative h-64" style={{backgroundColor: '#38bdf8'}}>
+      <section className="relative h-64" style={{ backgroundColor: '#38bdf8' }}>
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="text-center text-white px-4">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
@@ -101,22 +92,20 @@ const About = () => {
           <h2 className="text-4xl font-bold mb-8">Our Story</h2>
           <div className="text-lg text-muted-foreground space-y-6">
             <p>
-              Founded in 2015 by a group of passionate travelers, Wanderlust was
-              born from the belief that travel should be more than just visiting
-              places – it should be about creating life-changing experiences and
-              meaningful connections.
+              Breakout Wanderers was born out of a passion for travel that began more than 25 years ago with our founder, a
+              father whose love for exploration inspired him to create meaningful journeys for schools and organizations. What
+              started as a simple dream soon transformed into a trusted family business, delivering safe, enriching, and
+              unforgettable travel experiences across India and abroad.
             </p>
             <p>
-              What started as a small team of travel enthusiasts has grown into
-              a trusted partner for thousands of adventurers worldwide. We
-              specialize in crafting unique journeys that go beyond the typical
-              tourist experience, focusing on authentic cultural immersion and
-              sustainable tourism practices.
+              Today, his daughter carries forward this legacy, taking Breakout Wanderers into a new era. With the same dedication
+              to safety, learning, and discovery, she is expanding the business to meet the evolving needs of schools, corporates,
+              and global travelers.
             </p>
             <p>
-              Today, we continue to push the boundaries of what's possible in
-              travel, always staying true to our core mission: making the world
-              more accessible, one adventure at a time.
+              For us, travel is not just about destinations — it’s about heritage, learning, and creating lasting bonds. Each journey
+              we curate reflects our family values of trust, care, and innovation, ensuring that every trip becomes a story worth
+              remembering.
             </p>
           </div>
         </div>
@@ -141,6 +130,17 @@ const About = () => {
           </div>
         </div>
       </section>
+      <section className="py-20 px-4">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-4xl font-bold mb-8">Our Mission</h2>
+          <Card className="p-8 bg-primary text-primary-foreground">
+            <CardContent className="text-xl leading-relaxed">
+              "To create safe, enriching, and memorable travel experiences that inspire learning, strengthen connections, and
+              leave lasting impressions for every traveler."
+            </CardContent>
+          </Card>
+        </div>
+      </section>
 
       {/* Our Values */}
       <section className="py-20 px-4">
@@ -152,7 +152,7 @@ const About = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
             {values.map((value, index) => {
               const Icon = value.icon;
               return (
@@ -181,20 +181,20 @@ const About = () => {
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-4">Meet Our Team</h2>
             <p className="text-xl text-muted-foreground">
-              The passionate people behind your perfect journey
+              At Breakout Wanderers, our strength lies in the passion and expertise of our people.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {team.map((member, index) => (
-              <Card key={index} className="text-center overflow-hidden">
-                <div className="relative">
+              <Card key={index} className="text-center overflow-hidden shadow-lg rounded-2xl">
+                {/* <div className="relative">
                   <img
                     src={member.image}
                     alt={member.name}
                     className="w-full h-64 object-cover"
                   />
-                </div>
+                </div> */}
                 <CardHeader>
                   <CardTitle className="text-xl">{member.name}</CardTitle>
                   <CardDescription className="text-primary font-medium">
@@ -210,25 +210,9 @@ const About = () => {
         </div>
       </section>
 
-      {/* Mission Statement */}
-      <section className="py-20 px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl font-bold mb-8">Our Mission</h2>
-          <Card className="p-8 bg-primary text-primary-foreground">
-            <CardContent className="text-xl leading-relaxed">
-              "To inspire and enable authentic travel experiences that create
-              lasting memories, foster cultural understanding, and contribute
-              positively to the communities we visit. We believe that travel has
-              the power to transform both travelers and destinations, creating a
-              more connected and understanding world."
-            </CardContent>
-          </Card>
-        </div>
-      </section>
-
       {/* Call to Action */}
       <section className="py-20 bg-muted/30">
-        <div className="max-w-4xl mx-auto px-4 text-center p-10 rounded-xl" style={{backgroundColor: '#38BDF8'}}>
+        <div className="max-w-4xl mx-auto px-4 text-center p-10 rounded-xl" style={{ backgroundColor: '#38BDF8' }}>
           <h2 className="text-4xl text-white font-bold mb-4">
             Ready to Start Your Journey?
           </h2>
@@ -245,7 +229,7 @@ const About = () => {
           </div>
         </div>
       </section>
-        <Footer setIsContactModalOpen={setIsContactModalOpen} />
+      <Footer setIsContactModalOpen={setIsContactModalOpen} />
       <ContactModal
         isOpen={isContactModalOpen}
         onClose={() => setIsContactModalOpen(false)}

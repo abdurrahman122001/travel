@@ -20,7 +20,7 @@ import BlogDetails from "./pages/BlogDetails";
 import VisitorCounter from "./pages/VisitorCounter";
 import CategoryOrSubcategoryPage from "./pages/CategoryPage";
 import LatestPackagesSection from "./pages/LatestPackagesSection";
-
+import SearchResults from "./pages/SearchResults";
 // Import WhatsApp widget and CSS
 import { WhatsAppWidget } from 'react-whatsapp-widget';
 import 'react-whatsapp-widget/dist/index.css';
@@ -56,6 +56,8 @@ const App = () => {
             <Route path="/blog/:slug" element={<BlogDetails />} />
             <Route path="upcoming-trips" element={<LatestPackagesSection />} />
             <Route path="*" element={<NotFound />} />
+            <Route path="/search-results" element={<SearchResults />} />
+
           </Routes>
 
           {showWidget && (
