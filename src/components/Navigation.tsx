@@ -66,15 +66,16 @@ const Navigations: React.FC<NavigationProps> = ({ onContactClick }) => {
           fetch(`${API_BASE}/package-subcategories`),
           fetch(`${API_BASE}/header-settings`)
         ]);
-        
+
         const [cat, subcat, settings] = await Promise.all([
           catRes.json(),
           subcatRes.json(),
           settingsRes.json()
         ]);
 
-        setCategories(Array.isArray(cat) ? cat : []);
-        setSubcategories(Array.isArray(subcat) ? subcat : []);
+        setCategories(
+          Array.isArray(cat) ? cat.filter((c: Category) => c.name !== "Upcoming Trips") : []
+        ); setSubcategories(Array.isArray(subcat) ? subcat : []);
         setHeaderSettings(settings);
       } catch (err) {
         setError("Failed to load menu");
@@ -129,17 +130,16 @@ const Navigations: React.FC<NavigationProps> = ({ onContactClick }) => {
           {/* Logo + Search */}
           <div className="flex items-center gap-3">
             <Link to="/">
-              <img 
-                src={headerSettings?.logo?.url || logo} 
-                alt={headerSettings?.logo?.altText || "Logo"} 
-                className="h-32 w-auto" 
+              <img
+                src={headerSettings?.logo?.url || logo}
+                alt={headerSettings?.logo?.altText || "Logo"}
+                className="h-32 w-auto"
               />
             </Link>
             {/* Desktop Search */}
             <div
-              className={`relative hidden lg:block ml-6 ${
-                isOnSearchRoute ? "opacity-50 pointer-events-none" : ""
-              }`}
+              className={`relative hidden lg:block ml-6 ${isOnSearchRoute ? "opacity-50 pointer-events-none" : ""
+                }`}
             >
               <input
                 type="text"
@@ -151,9 +151,8 @@ const Navigations: React.FC<NavigationProps> = ({ onContactClick }) => {
                 className="w-72 px-4 py-2 pl-5 pr-10 text-sm rounded-full border border-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-400 placeholder:text-gray-500 disabled:bg-gray-100 disabled:placeholder-gray-400"
               />
               <Search
-                className={`absolute right-3 top-2.5 w-4 h-4 text-blue-400 cursor-pointer ${
-                  isOnSearchRoute ? "text-gray-400 cursor-default" : ""
-                }`}
+                className={`absolute right-3 top-2.5 w-4 h-4 text-blue-400 cursor-pointer ${isOnSearchRoute ? "text-gray-400 cursor-default" : ""
+                  }`}
                 onClick={() => !isOnSearchRoute && onSearchNavigate()}
               />
             </div>
@@ -169,10 +168,10 @@ const Navigations: React.FC<NavigationProps> = ({ onContactClick }) => {
             <Link to="/blog" className="hover:text-blue-600">Blog</Link>
             <div className="flex gap-4 items-center text-blue-600">
               {headerSettings?.socialLinks?.map((link) => (
-                <a 
-                  key={link.platform} 
-                  href={link.url} 
-                  target="_blank" 
+                <a
+                  key={link.platform}
+                  href={link.url}
+                  target="_blank"
                   rel="noopener noreferrer"
                 >
                   {getSocialIcon(link.platform)}
@@ -254,50 +253,49 @@ const Navigations: React.FC<NavigationProps> = ({ onContactClick }) => {
                 className="w-full px-4 pl-5 pr-10 py-2 text-sm rounded-full border border-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-400 disabled:bg-gray-100 disabled:placeholder-gray-400"
               />
               <Search
-                className={`absolute right-3 top-[92px] w-4 h-4 text-blue-400 cursor-pointer ${
-                  isOnSearchRoute ? "text-gray-400 cursor-default" : ""
-                }`}
+                className={`absolute right-3 top-[92px] w-4 h-4 text-blue-400 cursor-pointer ${isOnSearchRoute ? "text-gray-400 cursor-default" : ""
+                  }`}
                 onClick={() => !isOnSearchRoute && (setIsSidebarOpen(false), onSearchNavigate())}
               />
             </div>
             {/* Main Navigation Links */}
             <nav className="flex flex-col space-y-3 text-sm text-gray-800">
-              <Link 
-                to="/" 
+              <Link
+                to="/"
                 onClick={() => setIsSidebarOpen(false)}
                 className="py-1 hover:text-blue-600"
               >
                 Home
               </Link>
-              <Link 
-                to="/upcoming-trips" 
+              <Link
+                to="/upcoming-trips"
                 onClick={() => setIsSidebarOpen(false)}
                 className="py-1 hover:text-blue-600"
               >
                 📅 Upcoming Trips
               </Link>
-              <Link 
-                to="/package" 
+              <Link
+                to="/package"
                 onClick={() => setIsSidebarOpen(false)}
                 className="py-1 hover:text-blue-600"
               >
                 Packages
               </Link>
-              <Link 
-                to="/about" 
+              <Link
+                to="/about"
                 onClick={() => setIsSidebarOpen(false)}
                 className="py-1 hover:text-blue-600"
               >
                 About Us
               </Link>
-              <Link 
-                to="/blog" 
+              <Link
+                to="/blog"
                 onClick={() => setIsSidebarOpen(false)}
                 className="py-1 hover:text-blue-600"
               >
                 Blog
               </Link>
-              
+
               {/* Categories with Subcategories */}
               <div className="mt-2 border-t border-gray-200 pt-2">
                 <h3 className="font-medium text-gray-700 mb-2">Categories</h3>
@@ -311,12 +309,12 @@ const Navigations: React.FC<NavigationProps> = ({ onContactClick }) => {
                   <div className="space-y-1">
                     {categories.map((cat) => (
                       <div key={cat._id} className="mb-1">
-                        <div 
+                        <div
                           className="flex items-center justify-between py-1 px-2 rounded hover:bg-gray-100 cursor-pointer"
                           onClick={() => toggleCategory(cat._id)}
                         >
-                          <Link 
-                            to={`/category/${cat._id}`} 
+                          <Link
+                            to={`/category/${cat._id}`}
                             onClick={(e) => {
                               e.stopPropagation();
                               setIsSidebarOpen(false);
@@ -326,10 +324,9 @@ const Navigations: React.FC<NavigationProps> = ({ onContactClick }) => {
                             {cat.name}
                           </Link>
                           {subcategoriesByCat[cat._id]?.length > 0 && (
-                            <ChevronRight 
-                              className={`w-4 h-4 transition-transform ${
-                                expandedCategory === cat._id ? 'transform rotate-90' : ''
-                              }`}
+                            <ChevronRight
+                              className={`w-4 h-4 transition-transform ${expandedCategory === cat._id ? 'transform rotate-90' : ''
+                                }`}
                             />
                           )}
                         </div>
@@ -352,7 +349,7 @@ const Navigations: React.FC<NavigationProps> = ({ onContactClick }) => {
                   </div>
                 )}
               </div>
-              
+
               <button
                 onClick={() => { setIsSidebarOpen(false); onContactClick(); }}
                 className="bg-blue-600 hover:bg-blue-700 text-white w-full px-5 py-2 rounded-full transition font-semibold shadow mt-3"
@@ -364,10 +361,10 @@ const Navigations: React.FC<NavigationProps> = ({ onContactClick }) => {
             {/* Social Icons */}
             <div className="flex justify-center gap-5 text-blue-600 mt-2">
               {headerSettings?.socialLinks?.map((link) => (
-                <a 
-                  key={link.platform} 
-                  href={link.url} 
-                  target="_blank" 
+                <a
+                  key={link.platform}
+                  href={link.url}
+                  target="_blank"
                   rel="noopener noreferrer"
                 >
                   {getSocialIcon(link.platform)}
