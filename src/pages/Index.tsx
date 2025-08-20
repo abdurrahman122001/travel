@@ -58,23 +58,23 @@ const Index = () => {
     // Fetch International Trips
     setLoadingIntl(true);
     fetch(`${import.meta.env.VITE_API_URL}/trips/international`)
-      .then(res => res.json())
-      .then(data => setInternationalTrips(Array.isArray(data) ? data : []))
+      .then((res) => res.json())
+      .then((data) => setInternationalTrips(Array.isArray(data) ? data : []))
       .catch(() => setInternationalTrips([]))
       .finally(() => setLoadingIntl(false));
 
     // Fetch India Trips
     setLoadingIndia(true);
     fetch(`${import.meta.env.VITE_API_URL}/trips/explore-india`)
-      .then(res => res.json())
-      .then(data => setIndiaTrips(Array.isArray(data) ? data : []))
+      .then((res) => res.json())
+      .then((data) => setIndiaTrips(Array.isArray(data) ? data : []))
       .catch(() => setIndiaTrips([]))
       .finally(() => setLoadingIndia(false));
 
     setLoadingRomantic(true);
     fetch(`${import.meta.env.VITE_API_URL}/trips/romantic-escapes`)
-      .then(res => res.json())
-      .then(data => setRomanticTrips(Array.isArray(data) ? data : []))
+      .then((res) => res.json())
+      .then((data) => setRomanticTrips(Array.isArray(data) ? data : []))
       .catch(() => setRomanticTrips([]))
       .finally(() => setLoadingRomantic(false));
   }, []);
@@ -425,7 +425,10 @@ const Index = () => {
         </div>
       </section>
       <EffectCard />
-      <section className="py-12 relative hidden md:block bg-[#fffbe0]" style={{ marginBottom: '100px' }}>
+      <section
+        className="py-12 relative hidden md:block bg-[#fffbe0]"
+        style={{ marginBottom: "100px" }}
+      >
         <div className="max-w-[1500px] mx-auto px-4 flex flex-col items-center">
           {/* Hero Banner */}
           <div
@@ -544,23 +547,28 @@ const Index = () => {
                   </SwiperSlide>
                 ) : (
                   internationalTrips.map((trip, idx) => (
-                    <SwiperSlide key={trip._id || idx} className="w-[250px] md:w-[270px] flex-shrink-0">
-                      <Link to="/package"><div className="rounded-xl overflow-hidden shadow-lg border border-white bg-white relative group transition-all">
-                        <img
-                          src={trip.image}
-                          alt={trip.title}
-                          className="w-full h-[330px] object-cover"
-                          draggable={false}
-                        />
-                        <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black via-black/50 to-transparent">
-                        <h3 className="text-white text-center text-2xl font-bold drop-shadow">
-                            {trip.title}
-                          </h3>
-                          <p className="text-white text-center text-sm font-medium drop-shadow">
-                            Starting Price Rs. {trip.price}/-
-                          </p>
+                    <SwiperSlide
+                      key={trip._id || idx}
+                      className="w-[250px] md:w-[270px] flex-shrink-0"
+                    >
+                      <Link to="/package">
+                        <div className="rounded-xl overflow-hidden shadow-lg border border-white bg-white relative group transition-all">
+                          <img
+                            src={trip.image}
+                            alt={trip.title}
+                            className="w-full h-[330px] object-cover"
+                            draggable={false}
+                          />
+                          <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black via-black/50 to-transparent">
+                            <h3 className="text-white text-center text-2xl font-bold drop-shadow">
+                              {trip.title}
+                            </h3>
+                            <p className="text-white text-center text-sm font-medium drop-shadow">
+                              Starting Price Rs. {trip.price}/-
+                            </p>
+                          </div>
                         </div>
-                      </div></Link>
+                      </Link>
                     </SwiperSlide>
                   ))
                 )}
@@ -605,7 +613,10 @@ const Index = () => {
           </div>
 
           {/* Swiper Slider */}
-          <div className="relative w-full max-w-[1150px] min-h-[430px] flex items-center" style={{ marginTop: '-45px', zIndex: 20 }}>
+          <div
+            className="relative w-full max-w-[1150px] min-h-[430px] flex items-center"
+            style={{ marginTop: "-45px", zIndex: 20 }}
+          >
             {/* LEFT ARROW */}
             <button
               ref={prevIndiaRef}
@@ -648,69 +659,74 @@ const Index = () => {
 
             {/* Swiper slides */}
             <div className="overflow-visible w-full">
-              <Swiper
-                modules={[Navigation, Pagination]}
-                spaceBetween={20}
-                slidesPerView={5}
-                navigation={{
-                  prevEl: prevIndiaRef.current,
-                  nextEl: nextIndiaRef.current,
-                }}
-                pagination={{
-                  clickable: true,
-                  el: ".swiper-pagination-explore-india",
-                }}
-                onInit={(swiper) => {
-                  // @ts-ignore
-                  swiper.params.navigation.prevEl = prevIndiaRef.current;
-                  // @ts-ignore
-                  swiper.params.navigation.nextEl = nextIndiaRef.current;
-                  swiper.navigation.init();
-                  swiper.navigation.update();
-                }}
-                breakpoints={{
-                  0: { slidesPerView: 1.2 },
-                  600: { slidesPerView: 2.2 },
-                  900: { slidesPerView: 3 },
-                  1200: { slidesPerView: 5 },
-                }}
-                className="w-full"
-              >
-                {loadingIndia ? (
-                  <SwiperSlide>
-                    <div className="flex items-center justify-center h-[330px] text-lg">
-                      Loading India trips...
-                    </div>
-                  </SwiperSlide>
-                ) : indiaTrips.length === 0 ? (
-                  <SwiperSlide>
-                    <div className="flex items-center justify-center h-[330px] text-lg">
-                      No Explore India trips available at the moment.
-                    </div>
-                  </SwiperSlide>
-                ) : (
-                  indiaTrips.map((trip, idx) => (
-                    <SwiperSlide key={trip._id || idx} className="w-[250px] md:w-[270px] flex-shrink-0">
-                      <div className="rounded-xl overflow-hidden shadow-lg border border-white bg-white relative group transition-all">
-                        <img
-                          src={trip.image}
-                          alt={trip.title}
-                          className="w-full h-[330px] object-cover"
-                          draggable={false}
-                        />
-                        <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black via-black/50 to-transparent">
-                          <h3 className="text-white text-center text-2xl font-bold drop-shadow">
-                            {trip.title}
-                          </h3>
-                          <p className="text-white text-center text-sm font-medium drop-shadow">
-                            Starting Price Rs. {trip.price}/-
-                          </p>
-                        </div>
+              <Link to="/package">
+                <Swiper
+                  modules={[Navigation, Pagination]}
+                  spaceBetween={20}
+                  slidesPerView={5}
+                  navigation={{
+                    prevEl: prevIndiaRef.current,
+                    nextEl: nextIndiaRef.current,
+                  }}
+                  pagination={{
+                    clickable: true,
+                    el: ".swiper-pagination-explore-india",
+                  }}
+                  onInit={(swiper) => {
+                    // @ts-ignore
+                    swiper.params.navigation.prevEl = prevIndiaRef.current;
+                    // @ts-ignore
+                    swiper.params.navigation.nextEl = nextIndiaRef.current;
+                    swiper.navigation.init();
+                    swiper.navigation.update();
+                  }}
+                  breakpoints={{
+                    0: { slidesPerView: 1.2 },
+                    600: { slidesPerView: 2.2 },
+                    900: { slidesPerView: 3 },
+                    1200: { slidesPerView: 5 },
+                  }}
+                  className="w-full"
+                >
+                  {loadingIndia ? (
+                    <SwiperSlide>
+                      <div className="flex items-center justify-center h-[330px] text-lg">
+                        Loading India trips...
                       </div>
                     </SwiperSlide>
-                  ))
-                )}
-              </Swiper>
+                  ) : indiaTrips.length === 0 ? (
+                    <SwiperSlide>
+                      <div className="flex items-center justify-center h-[330px] text-lg">
+                        No Explore India trips available at the moment.
+                      </div>
+                    </SwiperSlide>
+                  ) : (
+                    indiaTrips.map((trip, idx) => (
+                      <SwiperSlide
+                        key={trip._id || idx}
+                        className="w-[250px] md:w-[270px] flex-shrink-0"
+                      >
+                        <div className="rounded-xl overflow-hidden shadow-lg border border-white bg-white relative group transition-all">
+                          <img
+                            src={trip.image}
+                            alt={trip.title}
+                            className="w-full h-[330px] object-cover"
+                            draggable={false}
+                          />
+                          <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black via-black/50 to-transparent">
+                            <h3 className="text-white text-center text-2xl font-bold drop-shadow">
+                              {trip.title}
+                            </h3>
+                            <p className="text-white text-center text-sm font-medium drop-shadow">
+                              Starting Price Rs. {trip.price}/-
+                            </p>
+                          </div>
+                        </div>
+                      </SwiperSlide>
+                    ))
+                  )}
+                </Swiper>
+              </Link>
             </div>
           </div>
         </div>
@@ -738,10 +754,11 @@ const Index = () => {
               <button
                 key={m}
                 onClick={() => setActiveMonth(monthMap[i])}
-                className={`whitespace-nowrap rounded-full px-5 py-2 border text-sm md:text-base font-medium transition-all ${activeMonth === monthMap[i]
-                  ? "bg-blue-50 border-blue-400 text-blue-800 shadow-sm"
-                  : "bg-white border-gray-200 text-gray-600 hover:border-blue-300"
-                  }`}
+                className={`whitespace-nowrap rounded-full px-5 py-2 border text-sm md:text-base font-medium transition-all ${
+                  activeMonth === monthMap[i]
+                    ? "bg-blue-50 border-blue-400 text-blue-800 shadow-sm"
+                    : "bg-white border-gray-200 text-gray-600 hover:border-blue-300"
+                }`}
               >
                 {m}
               </button>
@@ -821,7 +838,8 @@ const Index = () => {
                               <span className="text-lg">⏱️</span> {trip.days}
                             </span>
                             <span className="flex items-center gap-1">
-                              <span className="text-lg">📍</span> {trip.location}
+                              <span className="text-lg">📍</span>{" "}
+                              {trip.location}
                             </span>
                           </div>
                           <div className="flex items-center text-white/90 text-xs gap-2">
@@ -881,7 +899,10 @@ const Index = () => {
           </div>
 
           {/* Swiper Slider */}
-          <div className="relative w-full max-w-[1150px] min-h-[430px] flex items-center" style={{ marginTop: '-45px', zIndex: 20 }}>
+          <div
+            className="relative w-full max-w-[1150px] min-h-[430px] flex items-center"
+            style={{ marginTop: "-45px", zIndex: 20 }}
+          >
             {/* LEFT ARROW - align to slide */}
             <button
               ref={prevRef}
@@ -989,7 +1010,10 @@ const Index = () => {
                   </SwiperSlide>
                 ) : (
                   romanticTrips.map((trip, idx) => (
-                    <SwiperSlide key={trip._id || idx} className="w-[250px] md:w-[270px] flex-shrink-0">
+                    <SwiperSlide
+                      key={trip._id || idx}
+                      className="w-[250px] md:w-[270px] flex-shrink-0"
+                    >
                       <div className="rounded-xl overflow-hidden shadow-lg border border-white bg-white relative group transition-all">
                         <img
                           src={trip.image}
@@ -1100,7 +1124,6 @@ const Index = () => {
             ›
           </button>
         </section>
-
       </div>
       {/* <section className="py-20 px-4">
         <div className="max-w-7xl mx-auto">

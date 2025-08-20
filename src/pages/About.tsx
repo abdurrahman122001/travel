@@ -11,6 +11,7 @@ import { Users, Award, Globe, Heart, Clock, Shield, Sparkles } from "lucide-reac
 import Navigation from "@/components/Navigation";
 import ContactModal from "@/components/ContactModal";
 import Footer from "@/components/Footer";
+import img from "@/assets/images/about.jpg"; // Ensure you have an image for the background
 const About = () => {
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
 
@@ -24,19 +25,19 @@ const About = () => {
     {
       name: "Divyanshi Chadha",
       role: "Founder",
-      image: "/images/team/divyanshi.jpg", // replace with actual image path
+      image: "/public/divyanshi.jpg", // replace with actual image path
       bio: "A dynamic leader and passionate traveler, Divyanshi blends discipline, creativity, and business acumen. A national-level basketball player and MBA in Finance, she has led 47+ group trips with unmatched energy. Known for connecting deeply with people, she inspires trust and ensures every journey is full of learning, fun, and unforgettable memories.",
     },
     {
       name: "Ankit Joshi",
       role: "Co-Founder",
-      image: "/images/team/ankit.jpg", // replace with actual image path
+      image: "/public/ankit.jpg", // replace with actual image path
       bio: "With a Masters in Media and Governance and a traveler’s spirit, Ankit has covered 30,000+ km and completed challenging treks across India. A former basketball representative for India, he brings vision and depth, ensuring every itinerary balances comfort, excitement, and authenticity for truly memorable experiences.",
     },
     {
       name: "Vikram Chadha",
       role: "Advisor",
-      image: "/images/team/vikram.jpg", // replace with actual image path
+      image: "/public/vikram.jpg", // replace with actual image path
       bio: "With 30+ years in the travel industry and work with 155+ schools, Vikram is the guiding light of Breakout Wanderers. A seasoned professional and vigorous traveler, he brings fresh perspectives and unique destinations. His expertise ensures safety, legacy, and excellence in every journey.",
     },
   ];
@@ -77,10 +78,10 @@ const About = () => {
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="text-center text-white px-4">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
-              About Wanderlust
+              About Breakout Wanderers
             </h1>
             <p className="text-xl">
-              Creating extraordinary travel experiences since 2020
+              Creating extraordinary travel experiences since 2000
             </p>
           </div>
         </div>
@@ -188,13 +189,13 @@ const About = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {team.map((member, index) => (
               <Card key={index} className="text-center overflow-hidden shadow-lg rounded-2xl">
-                {/* <div className="relative">
+                <div className="relative">
                   <img
                     src={member.image}
                     alt={member.name}
                     className="w-full h-64 object-cover"
                   />
-                </div> */}
+                </div>
                 <CardHeader>
                   <CardTitle className="text-xl">{member.name}</CardTitle>
                   <CardDescription className="text-primary font-medium">
