@@ -648,7 +648,8 @@ const Index = () => {
 
             {/* Swiper slides */}
             <div className="overflow-visible w-full">
-              <Swiper
+              <Link to="/package"
+>              <Swiper
                 modules={[Navigation, Pagination]}
                 spaceBetween={20}
                 slidesPerView={5}
@@ -711,6 +712,7 @@ const Index = () => {
                   ))
                 )}
               </Swiper>
+              </Link>
             </div>
           </div>
         </div>

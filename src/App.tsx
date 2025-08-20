@@ -61,14 +61,17 @@ const App = () => {
           </Routes>
 
           {showWidget && (
-            <WhatsAppWidget
-              phoneNumber="+918368753277"     // Your WhatsApp number with country code
-              message="Hi! How can we help you?" // Default message text
-              companyName="Travel Support"     // Optional company name shown in widget header
-              sendButtonText="Send"            // Button text
-              // You can customize styles and props further if needed
-              onClose={() => setShowWidget(false)} // Optional: close widget
-            />
+            <div style={{ zIndex: 9999, position: "relative" }}>
+              <WhatsAppWidget
+                phoneNumber="+918368753277"     // Your WhatsApp number with country code
+                message="Hi! How can we help you?" // Default message text
+                companyName="Travel Support"     // Optional company name shown in widget header
+                sendButtonText="Send"            // Button text
+                // You can customize styles and props further if needed
+                onClose={() => setShowWidget(false)} // Optional: close widget
+              />
+            </div>
+
           )}
         </BrowserRouter>
       </TooltipProvider>
