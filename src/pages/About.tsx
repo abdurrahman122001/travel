@@ -24,19 +24,19 @@ const About = () => {
     {
       name: "Divyanshi Chadha",
       role: "Founder",
-      image: "/public/divyanshi.jpg", // replace with actual image path
+      image: "/divyanshi.jpg", // replace with actual image path
       bio: "A dynamic leader and passionate traveler, Divyanshi blends discipline, creativity, and business acumen. A national-level basketball player and MBA in Finance, she has led 47+ group trips with unmatched energy. Known for connecting deeply with people, she inspires trust and ensures every journey is full of learning, fun, and unforgettable memories.",
     },
     {
       name: "Ankit Joshi",
       role: "Co-Founder",
-      image: "/public/ankit.jpg", // replace with actual image path
+      image: "/ankit.jpg", // replace with actual image path
       bio: "With a Masters in Media and Governance and a traveler’s spirit, Ankit has covered 30,000+ km and completed challenging treks across India. A former basketball representative for India, he brings vision and depth, ensuring every itinerary balances comfort, excitement, and authenticity for truly memorable experiences.",
     },
     {
       name: "Vikram Chadha",
       role: "Advisor",
-      image: "/public/vikram.jpg", // replace with actual image path
+      image: "/vikram.jpg", // replace with actual image path
       bio: "With 30+ years in the travel industry and work with 155+ schools, Vikram is the guiding light of Breakout Wanderers. A seasoned professional and vigorous traveler, he brings fresh perspectives and unique destinations. His expertise ensures safety, legacy, and excellence in every journey.",
     },
   ];
