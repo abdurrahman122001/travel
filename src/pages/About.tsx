@@ -11,6 +11,7 @@ import { Users, Award, Globe, Heart, Clock, Shield, Sparkles } from "lucide-reac
 import Navigation from "@/components/Navigation";
 import ContactModal from "@/components/ContactModal";
 import Footer from "@/components/Footer";
+import img from "@/assets/images/about.jpg"; // Ensure you have an image for the background
 const About = () => {
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
 

@@ -167,7 +167,7 @@ const Footer = ({ setIsContactModalOpen }: FooterProps) => {
         </div>
 
         <div className="border-t border-[#27393e] mt-10 pt-6 text-center text-gray-400 text-sm">
-          &copy; {new Date().getFullYear()} Wanderlust Travel. All rights
+          &copy; {new Date().getFullYear()} Breakout Wanderers Travel. All rights
           reserved.
         </div>
       </div>
