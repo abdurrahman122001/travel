@@ -68,7 +68,7 @@ const Footer = ({ setIsContactModalOpen }: FooterProps) => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-white">
           {/* Column 1: Logo + tagline */}
           <div>
-            <img src={logo} alt="Wanderlust Logo" className="mb-4 h-32 w-32" />
+            <img src={logo} alt="Wanderlust Logo" className="mb-4 h-48 w-auto" />
             <p className="text-gray-300 text-[15px]">
               To create safe, enriching, and memorable travel experiences that
               inspire learning, strengthen connections, and leave lasting

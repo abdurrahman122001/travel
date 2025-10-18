@@ -133,8 +133,9 @@ const Navigations: React.FC<NavigationProps> = ({ onContactClick }) => {
               <img
                 src={headerSettings?.logo?.url || logo}
                 alt={headerSettings?.logo?.altText || "Logo"}
-                className="h-32 w-auto"
+                className="h-44 w-auto"
               />
+
             </Link>
             {/* Desktop Search */}
             <div

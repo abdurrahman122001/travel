@@ -32,7 +32,7 @@ const About = () => {
       name: "Ankit Joshi",
       role: "Co-Founder",
       image: "/ankit.jpg", // replace with actual image path
-      bio: "With a Masters in Media and Governance and a traveler’s spirit, Ankit has covered 30,000+ km and completed challenging treks across India. A former basketball representative for India, he brings vision and depth, ensuring every itinerary balances comfort, excitement, and authenticity for truly memorable experiences.",
+      bio: "With a Masters in Media and Governance and a traveler’s spirit, Ankit has covered 1 Lakh+ km and completed challenging treks across India. A former basketball representative for India, he brings vision and depth, ensuring every itinerary balances comfort, excitement, and authenticity for truly memorable experiences.",
     },
     {
       name: "Vikram Chadha",
