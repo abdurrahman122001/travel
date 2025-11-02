@@ -95,10 +95,6 @@ const EmailModal = ({ isOpen, onClose, onDownload, loading }) => {
     onDownload(email);
   };
 
-  const handleSkip = () => {
-    onDownload(""); // Empty email for skip
-  };
-
   if (!isOpen) return null;
 
   return (
@@ -123,7 +119,7 @@ const EmailModal = ({ isOpen, onClose, onDownload, loading }) => {
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Email Address
+              Email Address *
             </label>
             <Input
               type="email"
@@ -132,20 +128,12 @@ const EmailModal = ({ isOpen, onClose, onDownload, loading }) => {
               placeholder="your@email.com"
               className="w-full"
               disabled={loading}
+              required
             />
             {error && <p className="text-red-500 text-xs mt-1">{error}</p>}
           </div>
 
           <div className="flex gap-3 pt-2">
-            <Button
-              type="button"
-              variant="outline"
-              onClick={handleSkip}
-              className="flex-1"
-              disabled={loading}
-            >
-              Skip & Download
-            </Button>
             <Button
               type="submit"
               className="flex-1 bg-[#01AFD1] hover:bg-cyan-600"
@@ -164,7 +152,7 @@ const EmailModal = ({ isOpen, onClose, onDownload, loading }) => {
               )}
             </Button>
           </div>
-          
+
           <p className="text-xs text-gray-500 text-center">
             By providing your email, you agree to receive travel updates and special offers.
           </p>
@@ -273,16 +261,32 @@ const PackageDetailsPage = () => {
     setIsEmailModalOpen(true);
   };
 
+  // Track download email in database
+  const trackDownloadEmail = async (email, packageDetails) => {
+    try {
+      if (email && packageDetails?._id) {
+        await axios.post(`${import.meta.env.VITE_API_URL}/download-emails/track`, {
+          email: email.toLowerCase().trim(),
+          packageId: packageDetails._id,
+          packageTitle: packageDetails.title,
+          packageSlug: packageDetails.slug
+        });
+        console.log('Download tracked successfully for:', email);
+      }
+    } catch (trackError) {
+      console.error('Failed to track download:', trackError);
+      // Don't stop PDF generation if tracking fails
+    }
+  };
+
   // Generate and download PDF
   const generateAndDownloadPDF = async (email = "") => {
     setDownloading(true);
-    
+
     try {
-      // If email is provided, you can store it or send to analytics
+      // Track download if email is provided
       if (email) {
-        console.log("User email for download:", email);
-        // You can send this to your analytics or marketing platform
-        // await axios.post('/api/track-download', { email, packageId: packageDetails._id });
+        await trackDownloadEmail(email, packageDetails);
       }
 
       const element = contentRef.current;
@@ -334,12 +338,12 @@ const PackageDetailsPage = () => {
             ${overviewTitle}
           </h2>
           <div style="margin-bottom: 15px;">
-            ${(packageDetails.features || []).map(feature => 
-              `<span style="display: inline-block; background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 15px; padding: 6px 12px; margin: 0 8px 8px 0; font-size: 11px; color: #0369a1; font-weight: bold;">${feature}</span>`
-            ).join('')}
+            ${(packageDetails.features || []).map(feature =>
+        `<span style="display: inline-block; background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 15px; padding: 6px 12px; margin: 0 8px 8px 0; font-size: 11px; color: #0369a1; font-weight: bold;">${feature}</span>`
+      ).join('')}
           </div>
           <p style="font-size: 14px; line-height: 1.6; color: #333; text-align: justify;">
-            ${packageDetails.itinerary || packageDetails.tripBreakdown || "No overview available."}
+            ${packageDetails.overview || packageDetails.itinerary || packageDetails.tripBreakdown || "No overview available."}
           </p>
         </div>
       `;
@@ -430,9 +434,9 @@ const PackageDetailsPage = () => {
       // Footer
       const footerHTML = `
         <div style="text-align: center; margin-top: 40px; padding-top: 20px; border-top: 2px solid #e5e7eb; color: #6b7280; font-size: 12px;">
-          <p style="margin: 0 0 8px 0; font-weight: bold;">Generated from Wanderon Travels</p>
+          <p style="margin: 0 0 8px 0; font-weight: bold;">Generated from Breakout Wanderers</p>
           <p style="margin: 0 0 8px 0;">📅 ${new Date().toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
-          <p style="margin: 0;">📞 Contact: +91-XXXXXXXXXX | ✉️ support@wanderon.in</p>
+          <p style="margin: 0;">📞 Contact: +91-XXXXXXXXXX | ✉️ support@breakoutwanderers.com</p>
           ${email ? `<p style="margin: 8px 0 0 0; font-style: italic;">Downloaded by: ${email}</p>` : ''}
         </div>
       `;
@@ -443,7 +447,7 @@ const PackageDetailsPage = () => {
       // Create PDF
       const pdf = new jsPDF('p', 'mm', 'a4');
       const pageWidth = pdf.internal.pageSize.getWidth();
-      
+
       // Add content to PDF
       await pdf.html(tempElement, {
         margin: [15, 15, 15, 15],
@@ -457,7 +461,7 @@ const PackageDetailsPage = () => {
           // Save the PDF
           const fileName = `${packageDetails.title.replace(/\s+/g, '_')}_Itinerary.pdf`;
           pdf.save(fileName);
-          
+
           // Close modal after successful download
           setIsEmailModalOpen(false);
         },
@@ -540,7 +544,7 @@ const PackageDetailsPage = () => {
       {/* Main Page Content */}
       <div className="bg-[#f6fbfd] min-h-screen pb-8" ref={contentRef}>
         <Navigations onContactClick={() => setIsContactModalOpen(true)} />
-        
+
         {/* Banner Section */}
         <div className="relative w-full h-[430px] md:h-[440px] lg:h-[500px] flex items-end justify-center overflow-hidden">
           <img
@@ -578,7 +582,6 @@ const PackageDetailsPage = () => {
           </Button>
         </div>
 
-        {/* Rest of the page content remains exactly the same */}
         {/* Trip Summary */}
         <div className="w-full max-w-[1480px] mx-auto flex flex-col md:flex-row gap-6 px-4 pt-16 pb-2 items-start relative z-10">
           <div className="flex-1">
@@ -652,22 +655,84 @@ const PackageDetailsPage = () => {
                 <span className="border-l-4 border-sky-500 pl-2 mr-2" />
                 {packageDetails.overviewTitle || "Overview & Highlights"}
               </h2>
+
               <div className="bg-white rounded-lg shadow p-5 mb-8">
-                <div className="mb-4">
-                  {(packageDetails.features || []).map((hl, idx) => (
-                    <div
-                      key={idx}
-                      className="inline-block text-xs bg-sky-50 border border-sky-200 rounded px-3 py-1 mr-2 mb-2 text-sky-900 font-semibold"
-                    >
-                      {hl}
+
+                {/* Overview Section */}
+                {packageDetails.overview && (
+                  <div className="border-b border-gray-200 pb-6 mb-6">
+                    <div className="flex items-center mb-4">
+                      <span className="bg-[#09c2e7] text-white rounded px-3 py-1 mr-3 text-sm font-bold">
+                        OVERVIEW
+                      </span>
+                      <span className="text-base font-semibold text-gray-800">
+                        Package Overview
+                      </span>
                     </div>
-                  ))}
-                </div>
-                <p className="text-gray-700 text-sm whitespace-pre-line">
-                  {packageDetails.itinerary ||
-                    packageDetails.tripBreakdown ||
-                    "No overview available."}
-                </p>
+                    <div className="pl-14">
+                      <p className="text-gray-700 text-sm leading-relaxed">
+                        {packageDetails.overview}
+                      </p>
+                    </div>
+                  </div>
+                )}
+
+                {/* Features Section */}
+                {packageDetails.features && packageDetails.features.length > 0 && (
+                  <div className="border-b border-gray-200 pb-6 mb-6">
+                    <div className="flex items-center mb-4">
+                      <span className="bg-[#09c2e7] text-white rounded px-3 py-1 mr-3 text-sm font-bold">
+                        FEATURES
+                      </span>
+                      <span className="text-base font-semibold text-gray-800">
+                        Key Highlights
+                      </span>
+                    </div>
+                    <div className="pl-14">
+                      <div className="mb-4">
+                        {packageDetails.features.map((hl, idx) => (
+                          <div
+                            key={idx}
+                            className="inline-block text-xs bg-sky-50 border border-sky-200 rounded px-3 py-1 mr-2 mb-2 text-sky-900 font-semibold"
+                          >
+                            {hl}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Trip Breakdown Section */}
+                {packageDetails.tripBreakdown && (
+                  <div className="border-b border-gray-200 pb-6 mb-6">
+                    <div className="flex items-center mb-4">
+                      <span className="bg-[#09c2e7] text-white rounded px-3 py-1 mr-3 text-sm font-bold">
+                        BREAKDOWN
+                      </span>
+                      <span className="text-base font-semibold text-gray-800">
+                        Trip Breakdown
+                      </span>
+                    </div>
+                    <div className="pl-14">
+                      <p className="text-gray-700 text-sm leading-relaxed">
+                        {packageDetails.tripBreakdown}
+                      </p>
+                    </div>
+                  </div>
+                )}    
+
+                {/* Fallback if no content */}
+                {!packageDetails.overview &&
+                  !packageDetails.features?.length &&
+                  !packageDetails.tripBreakdown &&
+                  !packageDetails.itinerary && (
+                    <div className="text-center py-8">
+                      <p className="text-gray-500 text-sm">
+                        No overview content available.
+                      </p>
+                    </div>
+                  )}
               </div>
             </div>
 
@@ -984,7 +1049,7 @@ const PackageDetailsPage = () => {
             </button>
           </section>
         </div>
-        
+
         <Footer setIsContactModalOpen={setIsContactModalOpen} />
       </div>
 
