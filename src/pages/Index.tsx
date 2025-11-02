@@ -54,6 +54,165 @@ const Index = () => {
   const [loadingRomantic, setLoadingRomantic] = useState(true);
   const prevRomanticRef = useRef(null);
   const nextRomanticRef = useRef(null);
+
+  // Dynamic homepage data state
+  const [homepageData, setHomepageData] = useState(null);
+  const [loadingHomepage, setLoadingHomepage] = useState(true);
+  const [typingTexts, setTypingTexts] = useState([]);
+  const [currentTextIndex, setCurrentTextIndex] = useState(0);
+  const [displayText, setDisplayText] = useState("");
+  const [typing, setTyping] = useState(true);
+
+  // Default data as fallback
+  const defaultHomepageData = {
+    heroSlides: [
+      {
+        image: "https://images.unsplash.com/photo-1472396961693-142e6e269027?auto=format&fit=crop&w=1920&q=80",
+        title: "Discover Amazing Destinations",
+        subtitle: "Explore the world's most beautiful places with our curated travel packages"
+      },
+      {
+        image: "https://images.unsplash.com/photo-1433086966358-54859d0ed716?auto=format&fit=crop&w=1920&q=80",
+        title: "Adventure Awaits You",
+        subtitle: "Experience breathtaking landscapes and unforgettable memories"
+      },
+      {
+        image: "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1920&q=80",
+        title: "Paradise Found",
+        subtitle: "Relax on pristine beaches and enjoy luxury accommodations"
+      }
+    ],
+    reviews: [
+      {
+        name: "Google",
+        href: "https://www.google.com/search?gs_ssp=eJzj4tVP1zc0TE_Pzc0qsbAwYLRSNagwtjRITjVONbI0TDNJMU9JszKoMDVLMgYKpRkYGKWmJCUbeXGUJ-alpBbl5wEAV6UTSw&q=wanderon",
+        rating: "4.9",
+        count: "13080",
+        icon: "https://ik.imagekit.io/workcations/gallery/landing-pages/social/google.png"
+      },
+      {
+        name: "Tripadvisor",
+        href: "https://www.tripadvisor.in/Attraction_Review-g304551-d15013133-Reviews-WanderOn-New_Delhi_National_Capital_Territory_of_Delhi.html",
+        rating: "5.0",
+        count: "3660",
+        icon: "https://ik.imagekit.io/workcations/gallery/landing-pages/social/tripadvisor.png"
+      },
+      {
+        name: "Facebook",
+        href: "https://www.facebook.com/wander.on/reviews/",
+        rating: "4.9",
+        count: "1031",
+        icon: "https://ik.imagekit.io/workcations/gallery/landing-pages/social/facebook.png"
+      }
+    ],
+    sections: {
+      internationalTrips: {
+        title: "International Trips",
+        subtitle: "Discover the world, one destination at a time",
+        backgroundImage: "https://images.wanderon.in/new-homepage-data/cta%20homepage%20-%20desktop.png",
+        buttonText: "Explore",
+        backgroundColor: "#fffbe0"
+      },
+      exploreIndia: {
+        title: "Explore India",
+        subtitle: "Discover the beauty of India, one destination at a time",
+        backgroundImage: "https://images.wanderon.in/new-homepage-data/cta%20homepage%20-%20desktop.png",
+        buttonText: "Explore",
+        backgroundColor: "#FFECE2"
+      },
+      upcomingTrips: {
+        title: "Upcoming Community Trips",
+        viewAllText: "View All"
+      },
+      romanticEscapes: {
+        title: "Romantic Escapes",
+        subtitle: "Where Forever Begins...Together!",
+        backgroundImage: "https://images.wanderon.in/new-homepage-data/cta%20homepage%20-%20desktop.png",
+        buttonText: "Explore",
+        backgroundColor: "#E5F8FF"
+      }
+    },
+    journeyFrames: [
+      {
+        src: "https://images.wanderon.in/new-homepage-data/Gallery/vietnam%202",
+        label: "Vietnam"
+      },
+      {
+        src: "https://images.wanderon.in/new-homepage-data/Gallery/dubai%20re%2001?updatedAt=1711452484035/images/slide2.jpg",
+        label: "Dubai"
+      },
+      {
+        src: "https://images.wanderon.in/new-homepage-data/Gallery/bhutan%204",
+        label: "Bhutan"
+      },
+      {
+        src: "https://images.wanderon.in/new-homepage-data/Gallery/kerala-trips-1",
+        label: "Kerala"
+      },
+      {
+        src: "https://images.wanderon.in/new-homepage-data/Gallery/meghalaya%201?updatedAt=1711451040355",
+        label: "Meghalaya"
+      },
+      {
+        src: "https://images.wanderon.in/new-homepage-data/Gallery/uttarakhand-re-2?updatedAt=1711452678546",
+        label: "Uttarakhand"
+      }
+    ],
+    testimonials: [
+      {
+        name: "Sarah Johnson",
+        image: "https://images.unsplash.com/photo-1494790108755-2616b612b786?auto=format&fit=crop&w=150&q=80",
+        rating: 5,
+        text: "Our Bali trip was absolutely incredible! Every detail was perfectly planned and the experiences were unforgettable."
+      },
+      {
+        name: "Michael Chen",
+        image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80",
+        rating: 5,
+        text: "The Swiss Alps adventure exceeded all expectations. The views were breathtaking and the service was impeccable."
+      },
+      {
+        name: "Emma Williams",
+        image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=150&q=80",
+        rating: 5,
+        text: "Amazing safari experience! We saw all the Big 5 and the guides were incredibly knowledgeable."
+      }
+    ],
+    typingTexts: [
+      "Create Your Own Journey, Your Own Story...",
+      "Find Adventures That Match Your Soul...",
+      "Travel With Purpose And People You Love..."
+    ]
+  };
+
+  // Fetch homepage data
+  useEffect(() => {
+    fetchHomepageData();
+  }, []);
+
+  const fetchHomepageData = async () => {
+    try {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/homepage`);
+      if (res.ok) {
+        const data = await res.json();
+        setHomepageData(data);
+        setTypingTexts(data.typingTexts || defaultHomepageData.typingTexts);
+      } else {
+        // If no data exists, use default structure
+        setHomepageData(defaultHomepageData);
+        setTypingTexts(defaultHomepageData.typingTexts);
+      }
+    } catch (error) {
+      console.error('Error fetching homepage data:', error);
+      // Use default data if fetch fails
+      setHomepageData(defaultHomepageData);
+      setTypingTexts(defaultHomepageData.typingTexts);
+    } finally {
+      setLoadingHomepage(false);
+    }
+  };
+
+  // Fetch trips data
   useEffect(() => {
     // Fetch International Trips
     setLoadingIntl(true);
@@ -78,88 +237,7 @@ const Index = () => {
       .catch(() => setRomanticTrips([]))
       .finally(() => setLoadingRomantic(false));
   }, []);
-  const heroSlides = [
-    {
-      image:
-        "https://images.unsplash.com/photo-1472396961693-142e6e269027?auto=format&fit=crop&w=1920&q=80",
-      title: "Discover Amazing Destinations",
-      subtitle:
-        "Explore the world's most beautiful places with our curated travel packages",
-    },
-    {
-      image:
-        "https://images.unsplash.com/photo-1433086966358-54859d0ed716?auto=format&fit=crop&w=1920&q=80",
-      title: "Adventure Awaits You",
-      subtitle: "Experience breathtaking landscapes and unforgettable memories",
-    },
-    {
-      image:
-        "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1920&q=80",
-      title: "Paradise Found",
-      subtitle: "Relax on pristine beaches and enjoy luxury accommodations",
-    },
-  ];
 
-  const testimonials = [
-    {
-      name: "Sarah Johnson",
-      image:
-        "https://images.unsplash.com/photo-1494790108755-2616b612b786?auto=format&fit=crop&w=150&q=80",
-      rating: 5,
-      text: "Our Bali trip was absolutely incredible! Every detail was perfectly planned and the experiences were unforgettable.",
-    },
-    {
-      name: "Michael Chen",
-      image:
-        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80",
-      rating: 5,
-      text: "The Swiss Alps adventure exceeded all expectations. The views were breathtaking and the service was impeccable.",
-    },
-    {
-      name: "Emma Williams",
-      image:
-        "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=150&q=80",
-      rating: 5,
-      text: "Amazing safari experience! We saw all the Big 5 and the guides were incredibly knowledgeable.",
-    },
-    {
-      name: "David Rodriguez",
-      image:
-        "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=150&q=80",
-      rating: 5,
-      text: "Patagonia was a dream come true! The landscapes were stunning and our guide was fantastic.",
-    },
-    {
-      name: "Lisa Park",
-      image:
-        "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=150&q=80",
-      rating: 5,
-      text: "Perfect honeymoon destination! The beaches were pristine and the accommodations were luxurious.",
-    },
-  ];
-  const reviews = [
-    {
-      name: "Google",
-      href: "https://www.google.com/search?gs_ssp=eJzj4tVP1zc0TE_Pzc0qsbAwYLRSNagwtjRITjVONbI0TDNJMU9JszKoMDVLMgYKpRkYGKWmJCUbeXGUJ-alpBbl5wEAV6UTSw&q=wanderon",
-      rating: "4.9",
-      count: "13080",
-      icon: "https://ik.imagekit.io/workcations/gallery/landing-pages/social/google.png",
-    },
-    {
-      name: "Tripadvisor",
-      href: "https://www.tripadvisor.in/Attraction_Review-g304551-d15013133-Reviews-WanderOn-New_Delhi_National_Capital_Territory_of_Delhi.html",
-      rating: "5.0",
-      count: "3660",
-      icon: "https://ik.imagekit.io/workcations/gallery/landing-pages/social/tripadvisor.png",
-    },
-    {
-      name: "Facebook",
-      href: "https://www.facebook.com/wander.on/reviews/",
-      rating: "4.9",
-      count: "1031",
-      icon: "https://ik.imagekit.io/workcations/gallery/landing-pages/social/facebook.png",
-    },
-  ];
   const StarIcon = () => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -176,14 +254,15 @@ const Index = () => {
       />
     </svg>
   );
+
   const handleNewsletterSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Newsletter signup:", email);
     setEmail("");
   };
+
   useEffect(() => {
     const interval = setInterval(() => {
-      // Assuming your Carousel exposes a "next" method via ref
       if (carouselRef.current && carouselRef.current.next) {
         carouselRef.current.next();
       }
@@ -195,22 +274,15 @@ const Index = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsContactModalOpen(true);
-    }, 14000); // 14 seconds (can set between 12000 to 15000)
+    }, 14000);
 
-    return () => clearTimeout(timer); // Cleanup on unmount
+    return () => clearTimeout(timer);
   }, []);
 
-  const typingTexts = [
-    "Create Your Own Journey, Your Own Story...",
-    "Find Adventures That Match Your Soul...",
-    "Travel With Purpose And People You Love...",
-  ];
-
-  const [currentTextIndex, setCurrentTextIndex] = useState(0);
-  const [displayText, setDisplayText] = useState("");
-  const [typing, setTyping] = useState(true);
-
+  // Typing animation
   useEffect(() => {
+    if (!typingTexts || typingTexts.length === 0) return;
+
     let charIndex = 0;
     let currentText = typingTexts[currentTextIndex];
     let typingTimeout: NodeJS.Timeout;
@@ -227,6 +299,7 @@ const Index = () => {
         }, 1500);
       }
     };
+
     const deleteText = () => {
       if (charIndex >= 0) {
         setDisplayText(currentText.slice(0, charIndex));
@@ -243,7 +316,7 @@ const Index = () => {
       clearTimeout(typingTimeout);
       clearTimeout(deletingTimeout);
     };
-  }, [currentTextIndex, typing]);
+  }, [currentTextIndex, typing, typingTexts]);
 
   const months = [
     "JUN '25",
@@ -278,59 +351,30 @@ const Index = () => {
       date: "28 Jun",
       icon: "🇪🇺",
       month: "JUN",
-    },
-    {
-      img: "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429",
-      oldPrice: "₹2,99,990",
-      price: "₹2,74,990",
-      title: "13 Days Splendid Europe Tour Package | Summer Special",
-      days: "12N/13D",
-      location: "Paris Airport - Rome Airport",
-      date: "18 Jun, 19 Jun, 21 Jun +2 Batches",
-      icon: "🇳🇱",
-      month: "JUN",
-    },
-    {
-      img: "https://images.unsplash.com/photo-1519125323398-675f0ddb6308",
-      oldPrice: "₹2,89,990",
-      price: "₹2,43,990",
-      title: "Summer Deals: 11 Days Amazing Europe Tour",
-      days: "10N/11D",
-      location: "Paris Airport - Rome Airport",
-      date: "23 Jun, 28 Jun",
-      icon: "🇮🇹",
-      month: "JUN",
-    },
+    }
   ];
+
   const [activeMonth, setActiveMonth] = useState(monthMap[0]);
   const filteredTrips = trips.filter((trip) => trip.month === activeMonth);
 
-  const images = [
-    {
-      src: "https://images.wanderon.in/new-homepage-data/Gallery/vietnam%202",
-      label: "Vietnam",
-    },
-    {
-      src: "https://images.wanderon.in/new-homepage-data/Gallery/dubai%20re%2001?updatedAt=1711452484035/images/slide2.jpg",
-      label: "Dubai",
-    },
-    {
-      src: "https://images.wanderon.in/new-homepage-data/Gallery/bhutan%204",
-      label: "Bhutan",
-    },
-    {
-      src: "https://images.wanderon.in/new-homepage-data/Gallery/kerala-trips-1",
-      label: "Kerala",
-    },
-    {
-      src: "https://images.wanderon.in/new-homepage-data/Gallery/meghalaya%201?updatedAt=1711451040355",
-      label: "Meghalaya",
-    },
-    {
-      src: "https://images.wanderon.in/new-homepage-data/Gallery/uttarakhand-re-2?updatedAt=1711452678546",
-      label: "Uttarakhand",
-    },
-  ];
+  if (loadingHomepage) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading homepage...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!homepageData) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <p className="text-red-600">Failed to load homepage data</p>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-white">
@@ -353,7 +397,7 @@ const Index = () => {
       <section className="min-h-[380px] xs:min-h-[430px] sm:min-h-[520px] md:min-h-[600px] lg:min-h-[680px] w-full">
         <Carousel className="h-full">
           <CarouselContent>
-            {heroSlides.map((slide, index) => (
+            {homepageData.heroSlides?.map((slide, index) => (
               <CarouselItem key={index}>
                 <div className="relative h-screen">
                   <img
@@ -381,16 +425,16 @@ const Index = () => {
               </CarouselItem>
             ))}
           </CarouselContent>
-          {/* <CarouselPrevious className="hidden sm:block bg-blue-600 hover:bg-blue-700 text-white border-blue-600" /> */}
-          {/* <CarouselNext className="hidden sm:block bg-blue-600 hover:bg-blue-700 text-white border-blue-600" /> */}
         </Carousel>
       </section>
+
+      {/* Reviews Section */}
       <section
         className="py-5 flex items-center justify-center"
         style={{ backgroundColor: "#F1FDFF" }}
       >
         <div className="flex flex-wrap justify-center gap-6 max-w-4xl w-full px-4">
-          {reviews.map((item, index) => (
+          {homepageData.reviews?.map((item, index) => (
             <a
               key={index}
               href={item.href}
@@ -413,6 +457,7 @@ const Index = () => {
           ))}
         </div>
       </section>
+
       <section className="py-20 px-4 flex items-center justify-center hidden md:block">
         <div className="w-[80%] mx-auto text-center">
           <img src={abc} alt="WanderOn Logo" className="w-full" />
@@ -424,18 +469,23 @@ const Index = () => {
           <img src={uct} alt="WanderOn Logo" className="w-full" />
         </div>
       </section>
+
       <EffectCard />
+
+      {/* International Trips Section */}
       <section
-        className="py-12 relative hidden md:block bg-[#fffbe0]"
-        style={{ marginBottom: "100px" }}
+        className="py-12 relative hidden md:block"
+        style={{ 
+          backgroundColor: homepageData.sections?.internationalTrips?.backgroundColor || "#fffbe0",
+          marginBottom: "100px" 
+        }}
       >
         <div className="max-w-[1500px] mx-auto px-4 flex flex-col items-center">
           {/* Hero Banner */}
           <div
             className="w-full bg-cover bg-center rounded-2xl mb-[-60px] relative"
             style={{
-              backgroundImage:
-                "url('https://images.wanderon.in/new-homepage-data/cta%20homepage%20-%20desktop.png')",
+              backgroundImage: `url('${homepageData.sections?.internationalTrips?.backgroundImage}')`,
               minHeight: "370px",
               maxWidth: "1400px",
             }}
@@ -447,23 +497,22 @@ const Index = () => {
                 className="text-white text-5xl md:text-6xl font-bold mb-6 drop-shadow"
                 style={{ fontFamily: "Roboto, sans-serif" }}
               >
-                International Trips
+                {homepageData.sections?.internationalTrips?.title}
               </h1>
               <p
                 className="text-white text-lg md:text-2xl mb-8 font-medium"
                 style={{ fontFamily: "Roboto, sans-serif" }}
               >
-                Discover the world, one destination at a time
+                {homepageData.sections?.internationalTrips?.subtitle}
               </p>
               <button className="bg-yellow-300 hover:bg-yellow-400 text-black font-semibold rounded-md py-3 text-lg shadow-md border border-yellow-400 transition-all duration-150 focus:outline-none w-36 flex justify-center items-center">
-                Explore
+                {homepageData.sections?.internationalTrips?.buttonText}
               </button>
             </div>
           </div>
 
           {/* Swiper Slider */}
           <div className="relative w-full max-w-[1150px] min-h-[430px] flex items-center">
-            {/* LEFT ARROW */}
             <button
               ref={prevIntlRef}
               className="z-20 absolute left-[-25px] top-1/2 -translate-y-1/2 bg-[#74bdda] hover:bg-[#52aec5] w-[45px] h-[45px] rounded-full flex items-center justify-center"
@@ -483,7 +532,6 @@ const Index = () => {
               </svg>
             </button>
 
-            {/* RIGHT ARROW */}
             <button
               ref={nextIntlRef}
               className="z-20 absolute right-[-25px] top-1/2 -translate-y-1/2 bg-[#74bdda] hover:bg-[#52aec5] w-[45px] h-[45px] rounded-full flex items-center justify-center shadow-lg"
@@ -503,7 +551,6 @@ const Index = () => {
               </svg>
             </button>
 
-            {/* Swiper slides */}
             <div className="overflow-visible w-full">
               <Swiper
                 modules={[Navigation, Pagination]}
@@ -512,10 +559,6 @@ const Index = () => {
                 navigation={{
                   prevEl: prevIntlRef.current,
                   nextEl: nextIntlRef.current,
-                }}
-                pagination={{
-                  clickable: true,
-                  el: ".swiper-pagination-international",
                 }}
                 onInit={(swiper) => {
                   // @ts-ignore
@@ -579,14 +622,19 @@ const Index = () => {
       </section>
 
       <EffectCardTwo />
-      <section className="py-12 relative hidden md:block mt-15 bg-[#FFECE2]">
+
+      {/* Explore India Section */}
+      <section className="py-12 relative hidden md:block mt-15"
+        style={{ 
+          backgroundColor: homepageData.sections?.exploreIndia?.backgroundColor || "#FFECE2"
+        }}
+      >
         <div className="max-w-[1500px] mx-auto px-4 flex flex-col items-center">
           {/* Hero Banner */}
           <div
             className="w-full bg-cover bg-center rounded-2xl mb-[-60px] relative"
             style={{
-              backgroundImage:
-                "url('https://images.wanderon.in/new-homepage-data/cta%20homepage%20-%20desktop.png')",
+              backgroundImage: `url('${homepageData.sections?.exploreIndia?.backgroundImage}')`,
               minHeight: "370px",
               maxWidth: "1400px",
             }}
@@ -598,16 +646,16 @@ const Index = () => {
                 className="text-white text-5xl md:text-6xl font-bold mb-6 drop-shadow"
                 style={{ fontFamily: "Roboto, sans-serif" }}
               >
-                Explore India
+                {homepageData.sections?.exploreIndia?.title}
               </h1>
               <p
                 className="text-white text-lg md:text-2xl mb-8 font-medium"
                 style={{ fontFamily: "Roboto, sans-serif" }}
               >
-                Discover the beauty of India, one destination at a time
+                {homepageData.sections?.exploreIndia?.subtitle}
               </p>
               <button className="bg-yellow-300 hover:bg-yellow-400 text-black font-semibold rounded-md py-3 text-lg shadow-md border border-yellow-400 transition-all duration-150 focus:outline-none w-36 flex justify-center items-center">
-                Explore
+                {homepageData.sections?.exploreIndia?.buttonText}
               </button>
             </div>
           </div>
@@ -617,7 +665,6 @@ const Index = () => {
             className="relative w-full max-w-[1150px] min-h-[430px] flex items-center"
             style={{ marginTop: "-45px", zIndex: 20 }}
           >
-            {/* LEFT ARROW */}
             <button
               ref={prevIndiaRef}
               className="z-20 absolute left-[-25px] top-1/2 -translate-y-1/2 bg-[#74bdda] hover:bg-[#52aec5] w-[45px] h-[45px] rounded-full flex items-center justify-center"
@@ -637,7 +684,6 @@ const Index = () => {
               </svg>
             </button>
 
-            {/* RIGHT ARROW */}
             <button
               ref={nextIndiaRef}
               className="z-20 absolute right-[-25px] top-1/2 -translate-y-1/2 bg-[#74bdda] hover:bg-[#52aec5] w-[45px] h-[45px] rounded-full flex items-center justify-center shadow-lg"
@@ -657,7 +703,6 @@ const Index = () => {
               </svg>
             </button>
 
-            {/* Swiper slides */}
             <div className="overflow-visible w-full">
               <Link to="/package">
                 <Swiper
@@ -667,10 +712,6 @@ const Index = () => {
                   navigation={{
                     prevEl: prevIndiaRef.current,
                     nextEl: nextIndiaRef.current,
-                  }}
-                  pagination={{
-                    clickable: true,
-                    el: ".swiper-pagination-explore-india",
                   }}
                   onInit={(swiper) => {
                     // @ts-ignore
@@ -733,21 +774,24 @@ const Index = () => {
       </section>
 
       <EffectCardThree />
+
+      {/* Upcoming Community Trips Section */}
       <section className="py-10 md:py-14 bg-white hidden md:block">
         <div className="max-w-7xl mx-auto px-4">
           {/* Header */}
           <div className="flex flex-col sm:flex-row items-center justify-between mb-6 gap-2">
             <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
-              Upcoming Community Trips
+              {homepageData.sections?.upcomingTrips?.title}
             </h2>
             <a
               href="#"
               className="text-blue-700 text-base md:text-lg font-semibold flex items-center gap-1 hover:underline"
             >
-              View All
+              {homepageData.sections?.upcomingTrips?.viewAllText}
               <span className="inline-block ml-1 text-lg">→</span>
             </a>
           </div>
+          
           {/* Month Tabs */}
           <div className="flex items-center gap-2 overflow-x-auto pb-3 mb-2">
             {months.map((m, i) => (
@@ -764,23 +808,23 @@ const Index = () => {
               </button>
             ))}
           </div>
+          
           {/* Slider */}
           <div className="relative mt-4">
-            {/* Left Arrow */}
             <button
               ref={prevRef}
               className="hidden md:flex absolute z-10 left-[-25px] top-1/2 -translate-y-1/2 bg-white shadow-lg w-10 h-10 items-center justify-center rounded-full border border-gray-200 hover:bg-blue-100 transition-all"
             >
               <FaArrowLeft className="text-blue-500 text-lg" />
             </button>
-            {/* Right Arrow */}
+            
             <button
               ref={nextRef}
               className="hidden md:flex absolute z-10 right-[-25px] top-1/2 -translate-y-1/2 bg-white shadow-lg w-10 h-10 items-center justify-center rounded-full border border-gray-200 hover:bg-blue-100 transition-all"
             >
               <FaArrowRight className="text-blue-500 text-lg" />
             </button>
-            {/* Cards */}
+            
             <Swiper
               modules={[Navigation]}
               spaceBetween={16}
@@ -816,9 +860,7 @@ const Index = () => {
                           backgroundPosition: "center",
                         }}
                       >
-                        {/* Overlay */}
                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent z-0" />
-                        {/* Price Badge */}
                         <div className="absolute top-4 left-4 z-10">
                           <div className="bg-yellow-300/95 text-gray-900 font-semibold px-4 py-1 rounded-full flex items-center gap-2 text-base shadow">
                             <span className="line-through text-gray-600">
@@ -828,7 +870,6 @@ const Index = () => {
                             <span className="text-xs">Onwards</span>
                           </div>
                         </div>
-                        {/* Info */}
                         <div className="relative z-10 p-5 pb-4 flex flex-col justify-end">
                           <div className="text-white font-bold text-base leading-snug mb-2 line-clamp-2 drop-shadow">
                             {trip.title}
@@ -866,14 +907,18 @@ const Index = () => {
         </div>
       </section>
 
-      <section className="py-12 relative hidden md:block bg-[#E5F8FF]">
+      {/* Romantic Escapes Section */}
+      <section className="py-12 relative hidden md:block"
+        style={{ 
+          backgroundColor: homepageData.sections?.romanticEscapes?.backgroundColor || "#E5F8FF"
+        }}
+      >
         <div className="max-w-[1500px] mx-auto px-4 flex flex-col items-center">
           {/* Hero Banner */}
           <div
             className="w-full bg-cover bg-center rounded-2xl mb-[-60px] relative"
             style={{
-              backgroundImage:
-                "url('https://images.wanderon.in/new-homepage-data/cta%20homepage%20-%20desktop.png')",
+              backgroundImage: `url('${homepageData.sections?.romanticEscapes?.backgroundImage}')`,
               minHeight: "370px",
               maxWidth: "1400px",
             }}
@@ -884,16 +929,16 @@ const Index = () => {
                 className="text-white text-5xl md:text-6xl font-bold mb-6 drop-shadow"
                 style={{ fontFamily: "Roboto, sans-serif" }}
               >
-                Romantic Escapes
+                {homepageData.sections?.romanticEscapes?.title}
               </h1>
               <p
                 className="text-white text-lg md:text-2xl mb-8 font-medium"
                 style={{ fontFamily: "Roboto, sans-serif" }}
               >
-                Where Forever Begins...Together!{" "}
+                {homepageData.sections?.romanticEscapes?.subtitle}
               </p>
               <button className="bg-yellow-300 hover:bg-yellow-400 text-black font-semibold rounded-md py-3 text-lg shadow-md border border-yellow-400 transition-all duration-150 focus:outline-none w-36 flex justify-center items-center">
-                Explore
+                {homepageData.sections?.romanticEscapes?.buttonText}
               </button>
             </div>
           </div>
@@ -903,16 +948,14 @@ const Index = () => {
             className="relative w-full max-w-[1150px] min-h-[430px] flex items-center"
             style={{ marginTop: "-45px", zIndex: 20 }}
           >
-            {/* LEFT ARROW - align to slide */}
             <button
-              ref={prevRef}
+              ref={prevRomanticRef}
               className="z-20 absolute left-[-25px] top-1/2 -translate-y-1/2 bg-[#74bdda] hover:bg-[#52aec5] w-[45px] h-[45px] rounded-full flex items-center justify-center"
               aria-label="Previous"
               style={{
                 boxShadow: "0 4px 24px rgba(80,160,180,0.16)",
               }}
             >
-              {/* Arrow Icon */}
               <svg width={28} height={28} fill="none" viewBox="0 0 24 24">
                 <path
                   d="M15.5 19L8.5 12L15.5 5"
@@ -924,16 +967,14 @@ const Index = () => {
               </svg>
             </button>
 
-            {/* RIGHT ARROW - align to slide */}
             <button
-              ref={nextRef}
+              ref={nextRomanticRef}
               className="z-20 absolute right-[-25px] top-1/2 -translate-y-1/2 bg-[#74bdda] hover:bg-[#52aec5] w-[45px] h-[45px] rounded-full flex items-center justify-center shadow-lg"
               aria-label="Next"
               style={{
                 boxShadow: "0 4px 24px rgba(80,160,180,0.16)",
               }}
             >
-              {/* Arrow Icon */}
               <svg width={28} height={28} fill="none" viewBox="0 0 24 24">
                 <path
                   d="M8.5 5L15.5 12L8.5 19"
@@ -945,28 +986,6 @@ const Index = () => {
               </svg>
             </button>
 
-            {/* RIGHT ARROW - align to slide */}
-            <button
-              ref={nextRef}
-              className="z-20 absolute right-[-25px] top-1/2 -translate-y-1/2 bg-[#74bdda] hover:bg-[#52aec5] w-[45px] h-[45px] rounded-full flex items-center justify-center shadow-lg"
-              aria-label="Next"
-              style={{
-                boxShadow: "0 4px 24px rgba(80,160,180,0.16)",
-              }}
-            >
-              {/* Arrow Icon */}
-              <svg width={28} height={28} fill="none" viewBox="0 0 24 24">
-                <path
-                  d="M8.5 5L15.5 12L8.5 19"
-                  stroke="white"
-                  strokeWidth={3}
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </button>
-
-            {/* Swiper slides */}
             <div className="overflow-visible w-full">
               <Swiper
                 modules={[Navigation, Pagination]}
@@ -975,10 +994,6 @@ const Index = () => {
                 navigation={{
                   prevEl: prevRomanticRef.current,
                   nextEl: nextRomanticRef.current,
-                }}
-                pagination={{
-                  clickable: true,
-                  el: ".swiper-pagination-romantic",
                 }}
                 onInit={(swiper) => {
                   // @ts-ignore
@@ -1034,35 +1049,14 @@ const Index = () => {
                   ))
                 )}
               </Swiper>
-
-              {/* Pagination Dots */}
-              {/* <div className="swiper-pagination-romantic mt-6"></div> */}
             </div>
           </div>
-
-          {/* Swiper custom styles */}
-          <style>{`
-          .swiper-pagination-romantic {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            margin-top: 18px;
-          }
-          .swiper-pagination-bullet {
-            width: 44px;
-            height: 8px;
-            border-radius: 8px;
-            background: #e0e6ea;
-            opacity: 1;
-            transition: background 0.3s;
-          }
-          .swiper-pagination-bullet-active {
-            background: #74bdda;
-          }
-        `}</style>
         </div>
       </section>
+
       <Features />
+
+      {/* Journey Frames Section */}
       <div className="container mx-auto py-12">
         <div className="text-center mb-6">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-1 tracking-tight">
@@ -1092,7 +1086,7 @@ const Index = () => {
               1024: { slidesPerView: 4 },
             }}
           >
-            {images.map((dest, index) => (
+            {homepageData.journeyFrames?.map((dest, index) => (
               <SwiperSlide key={index}>
                 <div className="journey-frame-slide">
                   <img
@@ -1125,41 +1119,7 @@ const Index = () => {
           </button>
         </section>
       </div>
-      {/* <section className="py-20 px-4">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4 text-blue-900">
-              Featured Travel Packages
-            </h2>
-            <p className="text-xl text-blue-700 max-w-2xl mx-auto">
-              Discover our handpicked selection of extraordinary travel
-              experiences
-            </p>
-          </div>
 
-          <div className="px-4 py-10">
-            <Swiper
-              modules={[Navigation, Pagination]}
-              spaceBetween={20}
-              navigation
-              pagination={{ clickable: true }}
-              breakpoints={{
-                0: { slidesPerView: 1 },
-                640: { slidesPerView: 1 },
-                768: { slidesPerView: 2 },
-                1024: { slidesPerView: 3 },
-                1280: { slidesPerView: 3 },
-              }}
-            >
-              {featuredPackages.map((pkg) => (
-                <SwiperSlide key={pkg.id}>
-                  <PackageCard package={pkg} />
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          </div>
-        </div>
-      </section> */}
       {/* Customer Testimonials */}
       <section className="py-20 bg-blue-50">
         <div className="max-w-7xl mx-auto px-4">
@@ -1174,17 +1134,16 @@ const Index = () => {
 
           <Carousel className="w-full" opts={{ align: "start", loop: true }}>
             <CarouselContent>
-              {testimonials.map((testimonial, index) => (
+              {homepageData.testimonials?.map((testimonial, index) => (
                 <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
                   <TestimonialCard testimonial={testimonial} />
                 </CarouselItem>
               ))}
             </CarouselContent>
-            {/* <CarouselPrevious className="hidden sm:block bg-blue-600 hover:bg-blue-700 text-white border-blue-600" />
-            <CarouselNext className="hidden sm:block bg-blue-600 hover:bg-blue-700 text-white border-blue-600" /> */}
           </Carousel>
         </div>
       </section>
+
       {/* Footer */}
       <Footer setIsContactModalOpen={setIsContactModalOpen} />
 
