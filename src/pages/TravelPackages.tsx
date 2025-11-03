@@ -76,11 +76,11 @@ const scrollToRef = (ref) => {
 
 // Download Modal Component with Phone Number
 const DownloadModal = ({ isOpen, onClose, onDownload, loading }) => {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<{ email: string; phone: string }>({
     email: "",
     phone: ""
   });
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState<{ email?: string; phone?: string }>({});
 
   const validateForm = () => {
     const newErrors = {};
@@ -168,16 +168,15 @@ const DownloadModal = ({ isOpen, onClose, onDownload, loading }) => {
           {/* Phone Field */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Phone Number
-              <span className="text-gray-400 text-xs ml-1">(optional)</span>
+              Phone Number *
             </label>
             <div className="relative">
               <Phone className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
               <Input
                 type="tel"
                 value={formData.phone}
+                placeholder="Enter Your Phone No"
                 onChange={(e) => handleChange("phone", e.target.value)}
-                placeholder="Enter your 10-digit number"
                 className="w-full pl-10"
                 disabled={loading}
               />
@@ -189,15 +188,6 @@ const DownloadModal = ({ isOpen, onClose, onDownload, loading }) => {
           </div>
 
           <div className="flex gap-3 pt-2">
-            <Button
-              type="button"
-              variant="outline"
-              className="flex-1"
-              onClick={onClose}
-              disabled={loading}
-            >
-              Cancel
-            </Button>
             <Button
               type="submit"
               className="flex-1 bg-[#01AFD1] hover:bg-cyan-600"
