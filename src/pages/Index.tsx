@@ -458,7 +458,7 @@ const Index = () => {
         </div>
       </section>
 
-      <section className="py-20 px-4 flex items-center justify-center hidden md:block">
+      {/* <section className="py-20 px-4 flex items-center justify-center hidden md:block">
         <div className="w-[80%] mx-auto text-center">
           <img src={abc} alt="WanderOn Logo" className="w-full" />
         </div>
@@ -468,7 +468,7 @@ const Index = () => {
         <div className="w-[80%] mx-auto text-center">
           <img src={uct} alt="WanderOn Logo" className="w-full" />
         </div>
-      </section>
+      </section> */}
 
       <EffectCard />
 

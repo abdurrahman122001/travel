@@ -11,6 +11,7 @@ import {
   CheckCircle2,
   X,
   Download,
+  Phone,
 } from "lucide-react";
 import {
   FaArrowLeft,
@@ -19,7 +20,6 @@ import {
   FaMapMarkerAlt,
   FaCalendarAlt,
 } from "react-icons/fa";
-import DownloadModal from "@/components/DownloadModal";
 import Navigations from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -30,7 +30,8 @@ import "swiper/css/pagination";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 
-const BANNER_IMAGE =
+// Fallback banner image in case package image is not available
+const FALLBACK_BANNER_IMAGE =
   "https://images.wanderon.in/gallery/new/2024/12/24/prague-evening-cruise.AVIF";
 
 // Dynamic tab list that will be updated based on package data
@@ -73,26 +74,56 @@ const scrollToRef = (ref) => {
   ref.current?.scrollIntoView({ behavior: "smooth", block: "start" });
 };
 
-// Email Modal Component
-const EmailModal = ({ isOpen, onClose, onDownload, loading }) => {
-  const [email, setEmail] = useState("");
-  const [error, setError] = useState("");
+// Download Modal Component with Phone Number
+const DownloadModal = ({ isOpen, onClose, onDownload, loading }) => {
+  const [formData, setFormData] = useState({
+    email: "",
+    phone: ""
+  });
+  const [errors, setErrors] = useState({});
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    // Email validation
+    if (!formData.email) {
+      newErrors.email = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = "Please enter a valid email address";
+    }
+
+    // Phone validation (optional but if provided, validate)
+    if (formData.phone && !/^[6-9]\d{9}$/.test(formData.phone.replace(/\D/g, ''))) {
+      newErrors.phone = "Please enter a valid 10-digit phone number";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setError("");
-
-    if (!email) {
-      setError("Email is required");
+    
+    if (!validateForm()) {
       return;
     }
 
-    if (!/\S+@\S+\.\S+/.test(email)) {
-      setError("Please enter a valid email address");
-      return;
-    }
+    onDownload(formData.email, formData.phone || "");
+  };
 
-    onDownload(email);
+  const handleChange = (field, value) => {
+    setFormData(prev => ({
+      ...prev,
+      [field]: value
+    }));
+    
+    // Clear error when user starts typing
+    if (errors[field]) {
+      setErrors(prev => ({
+        ...prev,
+        [field]: ""
+      }));
+    }
   };
 
   if (!isOpen) return null;
@@ -113,27 +144,60 @@ const EmailModal = ({ isOpen, onClose, onDownload, loading }) => {
         </div>
 
         <p className="text-gray-600 mb-4">
-          Enter your email address to download the detailed itinerary PDF. We'll also send you travel updates and offers.
+          Enter your details to download the detailed itinerary PDF. We'll also send you travel updates and offers.
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Email Field */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Email Address *
             </label>
             <Input
               type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={formData.email}
+              onChange={(e) => handleChange("email", e.target.value)}
               placeholder="your@email.com"
               className="w-full"
               disabled={loading}
               required
             />
-            {error && <p className="text-red-500 text-xs mt-1">{error}</p>}
+            {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
+          </div>
+
+          {/* Phone Field */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Phone Number
+              <span className="text-gray-400 text-xs ml-1">(optional)</span>
+            </label>
+            <div className="relative">
+              <Phone className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+              <Input
+                type="tel"
+                value={formData.phone}
+                onChange={(e) => handleChange("phone", e.target.value)}
+                placeholder="Enter your 10-digit number"
+                className="w-full pl-10"
+                disabled={loading}
+              />
+            </div>
+            {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone}</p>}
+            <p className="text-xs text-gray-500 mt-1">
+              We'll use this to send you important travel updates via WhatsApp
+            </p>
           </div>
 
           <div className="flex gap-3 pt-2">
+            <Button
+              type="button"
+              variant="outline"
+              className="flex-1"
+              onClick={onClose}
+              disabled={loading}
+            >
+              Cancel
+            </Button>
             <Button
               type="submit"
               className="flex-1 bg-[#01AFD1] hover:bg-cyan-600"
@@ -154,7 +218,7 @@ const EmailModal = ({ isOpen, onClose, onDownload, loading }) => {
           </div>
 
           <p className="text-xs text-gray-500 text-center">
-            By providing your email, you agree to receive travel updates and special offers.
+            By providing your details, you agree to receive travel updates and special offers.
           </p>
         </form>
       </div>
@@ -187,7 +251,7 @@ const PackageDetailsPage = () => {
   const [formStatus, setFormStatus] = useState("idle");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
-  const [isEmailModalOpen, setIsEmailModalOpen] = useState(false);
+  const [isDownloadModalOpen, setIsDownloadModalOpen] = useState(false);
   const [formError, setFormError] = useState("");
   const [downloading, setDownloading] = useState(false);
 
@@ -256,17 +320,18 @@ const PackageDetailsPage = () => {
     }
   };
 
-  // Open email modal for download
+  // Open download modal
   const handleDownloadClick = () => {
-    setIsEmailModalOpen(true);
+    setIsDownloadModalOpen(true);
   };
 
-  // Track download email in database
-  const trackDownloadEmail = async (email, packageDetails) => {
+  // Track download details in database
+  const trackDownloadDetails = async (email, phone, packageDetails) => {
     try {
       if (email && packageDetails?._id) {
         await axios.post(`${import.meta.env.VITE_API_URL}/download-emails/track`, {
           email: email.toLowerCase().trim(),
+          phone: phone ? phone.replace(/\D/g, '') : "", // Clean phone number
           packageId: packageDetails._id,
           packageTitle: packageDetails.title,
           packageSlug: packageDetails.slug
@@ -280,13 +345,13 @@ const PackageDetailsPage = () => {
   };
 
   // Generate and download PDF
-  const generateAndDownloadPDF = async (email = "") => {
+  const generateAndDownloadPDF = async (email = "", phone = "") => {
     setDownloading(true);
 
     try {
       // Track download if email is provided
       if (email) {
-        await trackDownloadEmail(email, packageDetails);
+        await trackDownloadDetails(email, phone, packageDetails);
       }
 
       const element = contentRef.current;
@@ -431,13 +496,19 @@ const PackageDetailsPage = () => {
         </div>
       `;
 
-      // Footer
+      // Footer with downloader info
       const footerHTML = `
         <div style="text-align: center; margin-top: 40px; padding-top: 20px; border-top: 2px solid #e5e7eb; color: #6b7280; font-size: 12px;">
           <p style="margin: 0 0 8px 0; font-weight: bold;">Generated from Breakout Wanderers</p>
           <p style="margin: 0 0 8px 0;">📅 ${new Date().toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
           <p style="margin: 0;">📞 Contact: +91-XXXXXXXXXX | ✉️ support@breakoutwanderers.com</p>
-          ${email ? `<p style="margin: 8px 0 0 0; font-style: italic;">Downloaded by: ${email}</p>` : ''}
+          ${email ? `
+            <div style="margin: 8px 0 0 0; padding: 8px; background: #f8fafc; border-radius: 4px; border-left: 4px solid #01AFD1;">
+              <p style="margin: 0; font-style: italic; font-weight: bold;">Downloaded by:</p>
+              <p style="margin: 4px 0 0 0;">📧 ${email}</p>
+              ${phone ? `<p style="margin: 2px 0 0 0;">📱 ${phone}</p>` : ''}
+            </div>
+          ` : ''}
         </div>
       `;
 
@@ -463,7 +534,7 @@ const PackageDetailsPage = () => {
           pdf.save(fileName);
 
           // Close modal after successful download
-          setIsEmailModalOpen(false);
+          setIsDownloadModalOpen(false);
         },
         x: 0,
         y: 0,
@@ -479,9 +550,18 @@ const PackageDetailsPage = () => {
     }
   };
 
-  // Handle download with email
-  const handleDownloadWithEmail = (email) => {
-    generateAndDownloadPDF(email);
+  // Handle download with email and phone
+  const handleDownloadWithDetails = (email, phone) => {
+    generateAndDownloadPDF(email, phone);
+  };
+
+  // Get banner image from package data
+  const getBannerImage = () => {
+    // Priority order for banner images
+    if (packageDetails?.image) return packageDetails.image;
+    if (packageDetails?.image?.[0]) return packageDetails.image[0];
+    if (packageDetails?.image?.[0]) return packageDetails.image[0];
+    return FALLBACK_BANNER_IMAGE;
   };
 
   // Fetch package by slug
@@ -539,21 +619,42 @@ const PackageDetailsPage = () => {
       </div>
     );
 
+  const bannerImage = getBannerImage();
+
   return (
     <>
       {/* Main Page Content */}
       <div className="bg-[#f6fbfd] min-h-screen pb-8" ref={contentRef}>
         <Navigations onContactClick={() => setIsContactModalOpen(true)} />
 
-        {/* Banner Section */}
+        {/* Banner Section with Dynamic Package Image */}
         <div className="relative w-full h-[430px] md:h-[440px] lg:h-[500px] flex items-end justify-center overflow-hidden">
           <img
-            src={BANNER_IMAGE}
-            alt="cover"
+            src={bannerImage}
+            alt={packageDetails.title}
             className="absolute inset-0 w-full h-full object-cover z-0"
             style={{ minHeight: 320, filter: "brightness(0.70)" }}
+            onError={(e) => {
+              // If the package image fails to load, fallback to default
+              if (e.target.src !== FALLBACK_BANNER_IMAGE) {
+                e.target.src = FALLBACK_BANNER_IMAGE;
+              }
+            }}
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/60 to-transparent z-10" />
+          
+          {/* Package Title Overlay */}
+          <div className="absolute inset-0 flex items-center justify-center z-20">
+            <div className="text-center text-white px-4">
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 drop-shadow-lg">
+                {packageDetails.title}
+              </h1>
+              <p className="text-lg md:text-xl opacity-90 max-w-2xl mx-auto drop-shadow">
+                {packageDetails.tagline || packageDetails.shortDescription || "Experience the journey of a lifetime"}
+              </p>
+            </div>
+          </div>
+
           <Button
             onClick={handleDownloadClick}
             disabled={downloading}
@@ -561,22 +662,7 @@ const PackageDetailsPage = () => {
             style={{ boxShadow: "0 8px 24px 0 rgba(0,0,0,0.12)" }}
           >
             <span className="flex items-center gap-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width={18}
-                height={18}
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="#000"
-                strokeWidth={2}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="lucide lucide-download"
-              >
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                <polyline points="7 10 12 15 17 10" />
-                <line x1="12" x2="12" y1="15" y2="3" />
-              </svg>
+              <Download size={18} />
               {downloading ? "Generating PDF..." : "Download Itinerary"}
             </span>
           </Button>
@@ -585,8 +671,8 @@ const PackageDetailsPage = () => {
         {/* Trip Summary */}
         <div className="w-full max-w-[1480px] mx-auto flex flex-col md:flex-row gap-6 px-4 pt-16 pb-2 items-start relative z-10">
           <div className="flex-1">
-            {/* Title */}
-            <div className="text-2xl md:text-3xl lg:text-4xl font-bold text-black mb-4">
+            {/* Title (Hidden here since it's now in the banner) */}
+            <div className="text-2xl md:text-3xl lg:text-4xl font-bold text-black mb-4 sr-only">
               {packageDetails.title}
             </div>
             {/* Pickup & Drop, Duration Badges */}
@@ -702,25 +788,6 @@ const PackageDetailsPage = () => {
                     </div>
                   </div>
                 )}
-
-                {/* Trip Breakdown Section */}
-                {packageDetails.tripBreakdown && (
-                  <div className="border-b border-gray-200 pb-6 mb-6">
-                    <div className="flex items-center mb-4">
-                      <span className="bg-[#09c2e7] text-white rounded px-3 py-1 mr-3 text-sm font-bold">
-                        BREAKDOWN
-                      </span>
-                      <span className="text-base font-semibold text-gray-800">
-                        Trip Breakdown
-                      </span>
-                    </div>
-                    <div className="pl-14">
-                      <p className="text-gray-700 text-sm leading-relaxed">
-                        {packageDetails.tripBreakdown}
-                      </p>
-                    </div>
-                  </div>
-                )}    
 
                 {/* Fallback if no content */}
                 {!packageDetails.overview &&
@@ -886,8 +953,8 @@ const PackageDetailsPage = () => {
             <div ref={otherInfoRef} className="scroll-mt-24">
               <h2 className="flex items-center text-lg font-bold text-gray-700 mb-1">
                 <span className="border-l-4 border-gray-300 pl-2 mr-2" />
-                Other Info
-              </h2>
+                 Terms & Conditions
+                </h2>
               <div className="bg-white rounded-lg shadow p-5 mb-8">
                 <p className="text-sm text-gray-500">
                   {packageDetails.terms ||
@@ -1053,18 +1120,12 @@ const PackageDetailsPage = () => {
         <Footer setIsContactModalOpen={setIsContactModalOpen} />
       </div>
 
-      {/* Email Modal */}
-      <EmailModal
-        isOpen={isEmailModalOpen}
-        onClose={() => setIsEmailModalOpen(false)}
-        onDownload={handleDownloadWithEmail}
-        loading={downloading}
-      />
-
       {/* Download Modal */}
       <DownloadModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        isOpen={isDownloadModalOpen}
+        onClose={() => setIsDownloadModalOpen(false)}
+        onDownload={handleDownloadWithDetails}
+        loading={downloading}
       />
     </>
   );
