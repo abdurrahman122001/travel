@@ -67,8 +67,8 @@ export default function PrivacyPolicy() {
             <h2 className="text-lg font-semibold text-[#12a5c4] mt-6 mb-2">Contact Us</h2>
             <p className="mb-4">
               If you have any questions, contact us at:{" "}
-              <a href="mailto:hello@breakoutwanderers.com" className="text-blue-700 underline">
-                hello@breakoutwanderers.com
+              <a href="mailto:breakoutwanderers@gmail.com" className="text-blue-700 underline">
+                breakoutwanderers@gmail.com
               </a>
             </p>
           </section>

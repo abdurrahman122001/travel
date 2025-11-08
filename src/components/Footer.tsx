@@ -72,7 +72,7 @@ const Footer = ({ setIsContactModalOpen }: FooterProps) => {
             <p className="text-gray-300 text-[15px]">
               To create safe, enriching, and memorable travel experiences that
               inspire learning, strengthen connections, and leave lasting
-              impressions for every traveler.
+              impressions for every traveller.
             </p>
           </div>
 
