@@ -85,26 +85,20 @@ const Index = () => {
     reviews: [
       {
         name: "Google",
-        href: "https://www.google.com/search?gs_ssp=eJzj4tVP1zc0TE_Pzc0qsbAwYLRSNagwtjRITjVONbI0TDNJMU9JszKoMDVLMgYKpRkYGKWmJCUbeXGUJ-alpBbl5wEAV6UTSw&q=wanderon",
+        href: "https://www.google.com/search?q=breakout&sourceid=chrome&ie=UTF-8",
         rating: "4.9",
         count: "13080",
         icon: "https://ik.imagekit.io/workcations/gallery/landing-pages/social/google.png"
       },
       {
-        name: "Tripadvisor",
-        href: "https://www.tripadvisor.in/Attraction_Review-g304551-d15013133-Reviews-WanderOn-New_Delhi_National_Capital_Territory_of_Delhi.html",
-        rating: "5.0",
-        count: "3660",
-        icon: "https://ik.imagekit.io/workcations/gallery/landing-pages/social/tripadvisor.png"
-      },
-      {
         name: "Facebook",
-        href: "https://www.facebook.com/wander.on/reviews/",
+        href: "https://www.facebook.com/breakoutwanderers.com/reviews/",
         rating: "4.9",
         count: "1031",
         icon: "https://ik.imagekit.io/workcations/gallery/landing-pages/social/facebook.png"
       }
     ],
+
     sections: {
       internationalTrips: {
         title: "International Trips",
@@ -475,9 +469,9 @@ const Index = () => {
       {/* International Trips Section */}
       <section
         className="py-12 relative hidden md:block"
-        style={{ 
+        style={{
           backgroundColor: homepageData.sections?.internationalTrips?.backgroundColor || "#fffbe0",
-          marginBottom: "100px" 
+          marginBottom: "100px"
         }}
       >
         <div className="max-w-[1500px] mx-auto px-4 flex flex-col items-center">
@@ -625,7 +619,7 @@ const Index = () => {
 
       {/* Explore India Section */}
       <section className="py-12 relative hidden md:block mt-15"
-        style={{ 
+        style={{
           backgroundColor: homepageData.sections?.exploreIndia?.backgroundColor || "#FFECE2"
         }}
       >
@@ -791,24 +785,23 @@ const Index = () => {
               <span className="inline-block ml-1 text-lg">→</span>
             </a>
           </div>
-          
+
           {/* Month Tabs */}
           <div className="flex items-center gap-2 overflow-x-auto pb-3 mb-2">
             {months.map((m, i) => (
               <button
                 key={m}
                 onClick={() => setActiveMonth(monthMap[i])}
-                className={`whitespace-nowrap rounded-full px-5 py-2 border text-sm md:text-base font-medium transition-all ${
-                  activeMonth === monthMap[i]
-                    ? "bg-blue-50 border-blue-400 text-blue-800 shadow-sm"
-                    : "bg-white border-gray-200 text-gray-600 hover:border-blue-300"
-                }`}
+                className={`whitespace-nowrap rounded-full px-5 py-2 border text-sm md:text-base font-medium transition-all ${activeMonth === monthMap[i]
+                  ? "bg-blue-50 border-blue-400 text-blue-800 shadow-sm"
+                  : "bg-white border-gray-200 text-gray-600 hover:border-blue-300"
+                  }`}
               >
                 {m}
               </button>
             ))}
           </div>
-          
+
           {/* Slider */}
           <div className="relative mt-4">
             <button
@@ -817,14 +810,14 @@ const Index = () => {
             >
               <FaArrowLeft className="text-blue-500 text-lg" />
             </button>
-            
+
             <button
               ref={nextRef}
               className="hidden md:flex absolute z-10 right-[-25px] top-1/2 -translate-y-1/2 bg-white shadow-lg w-10 h-10 items-center justify-center rounded-full border border-gray-200 hover:bg-blue-100 transition-all"
             >
               <FaArrowRight className="text-blue-500 text-lg" />
             </button>
-            
+
             <Swiper
               modules={[Navigation]}
               spaceBetween={16}
@@ -909,7 +902,7 @@ const Index = () => {
 
       {/* Romantic Escapes Section */}
       <section className="py-12 relative hidden md:block"
-        style={{ 
+        style={{
           backgroundColor: homepageData.sections?.romanticEscapes?.backgroundColor || "#E5F8FF"
         }}
       >

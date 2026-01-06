@@ -77,10 +77,10 @@ export default function PrivacyPolicy() {
 
       <Footer onContactClick={() => setIsContactModalOpen(true)} />
 
-      {/* Example Contact Modal (optional) */}
-      {isContactModalOpen && (
-        <ContactModal onClose={() => setIsContactModalOpen(false)} />
-      )}
+     <ContactModal
+        isOpen={isContactModalOpen}
+        onClose={() => setIsContactModalOpen(false)}
+      />
     </>
   );
 }

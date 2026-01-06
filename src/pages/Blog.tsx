@@ -6,7 +6,7 @@ import { Calendar, User, ArrowRight } from "lucide-react";
 import Footer from "@/components/Footer";
 import Navigation from "@/components/Navigation";
 import { Link } from "react-router-dom";
-
+import ContactModal from "@/components/ContactModal";
 interface BlogPost {
   _id: string;
   slug: string; // <--- Add this!
@@ -194,6 +194,10 @@ const Blog = () => {
         </div>
       </section>
       <Footer setIsContactModalOpen={setIsContactModalOpen} />
+      <ContactModal
+        isOpen={isContactModalOpen}
+        onClose={() => setIsContactModalOpen(false)}
+      />
     </div>
   );
 };

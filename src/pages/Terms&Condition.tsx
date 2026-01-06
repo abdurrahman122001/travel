@@ -72,9 +72,10 @@ export default function TermsAndConditions() {
 
       <Footer onContactClick={() => setIsContactModalOpen(true)} />
 
-      {isContactModalOpen && (
-        <ContactModal onClose={() => setIsContactModalOpen(false)} />
-      )}
+     <ContactModal
+        isOpen={isContactModalOpen}
+        onClose={() => setIsContactModalOpen(false)}
+      />
     </>
   );
 }

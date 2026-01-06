@@ -29,6 +29,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import ContactModal from "@/components/ContactModal";
 
 // Fallback banner image in case package image is not available
 const FALLBACK_BANNER_IMAGE =
@@ -43,44 +44,14 @@ const getTabList = (overviewTitle = "Overview & Highlights") => [
   { label: "Other Info", key: "otherinfo" },
 ];
 
-const images = [
-  {
-    src: "https://images.wanderon.in/new-homepage-data/Gallery/vietnam%202",
-    label: "Vietnam",
-  },
-  {
-    src: "https://images.wanderon.in/new-homepage-data/Gallery/dubai%20re%2001?updatedAt=1711452484035/images/slide2.jpg",
-    label: "Dubai",
-  },
-  {
-    src: "https://images.wanderon.in/new-homepage-data/Gallery/bhutan%204",
-    label: "Bhutan",
-  },
-  {
-    src: "https://images.wanderon.in/new-homepage-data/Gallery/kerala-trips-1",
-    label: "Kerala",
-  },
-  {
-    src: "https://images.wanderon.in/new-homepage-data/Gallery/meghalaya%201?updatedAt=1711451040355",
-    label: "Meghalaya",
-  },
-  {
-    src: "https://images.wanderon.in/new-homepage-data/Gallery/uttarakhand-re-2?updatedAt=1711452678546",
-    label: "Uttarakhand",
-  },
-];
-
 const scrollToRef = (ref) => {
   ref.current?.scrollIntoView({ behavior: "smooth", block: "start" });
 };
 
 // Download Modal Component with Phone Number
 const DownloadModal = ({ isOpen, onClose, onDownload, loading }) => {
-  const [formData, setFormData] = useState<{ email: string; phone: string }>({
-    email: "",
-    phone: ""
-  });
-  const [errors, setErrors] = useState<{ email?: string; phone?: string }>({});
+  const [formData, setFormData] = useState({ email: "", phone: "" });
+  const [errors, setErrors] = useState({});
 
   const validateForm = () => {
     const newErrors = {};
@@ -103,7 +74,7 @@ const DownloadModal = ({ isOpen, onClose, onDownload, loading }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
@@ -116,7 +87,7 @@ const DownloadModal = ({ isOpen, onClose, onDownload, loading }) => {
       ...prev,
       [field]: value
     }));
-    
+
     // Clear error when user starts typing
     if (errors[field]) {
       setErrors(prev => ({
@@ -227,6 +198,10 @@ const PackageDetailsPage = () => {
   const [loadingTrips, setLoadingTrips] = useState(true);
   const [tabList, setTabList] = useState(getTabList());
 
+  // Dynamic homepage data state (same as Index component)
+  const [homepageData, setHomepageData] = useState(null);
+  const [loadingHomepage, setLoadingHomepage] = useState(true);
+
   // Section refs
   const overviewRef = useRef(null);
   const itineraryRef = useRef(null);
@@ -251,6 +226,56 @@ const PackageDetailsPage = () => {
 
   // Main content ref for PDF generation
   const contentRef = useRef(null);
+
+  // Default data as fallback (same as Index component)
+  const defaultHomepageData = {
+    journeyFrames: [
+      {
+        src: "https://images.wanderon.in/new-homepage-data/Gallery/vietnam%202",
+        label: "Vietnam"
+      },
+      {
+        src: "https://images.wanderon.in/new-homepage-data/Gallery/dubai%20re%2001?updatedAt=1711452484035/images/slide2.jpg",
+        label: "Dubai"
+      },
+      {
+        src: "https://images.wanderon.in/new-homepage-data/Gallery/bhutan%204",
+        label: "Bhutan"
+      },
+      {
+        src: "https://images.wanderon.in/new-homepage-data/Gallery/kerala-trips-1",
+        label: "Kerala"
+      },
+      {
+        src: "https://images.wanderon.in/new-homepage-data/Gallery/meghalaya%201?updatedAt=1711451040355",
+        label: "Meghalaya"
+      },
+      {
+        src: "https://images.wanderon.in/new-homepage-data/Gallery/uttarakhand-re-2?updatedAt=1711452678546",
+        label: "Uttarakhand"
+      }
+    ]
+  };
+
+  // Fetch homepage data (same as Index component)
+  const fetchHomepageData = async () => {
+    try {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/homepage`);
+      if (res.ok) {
+        const data = await res.json();
+        setHomepageData(data);
+      } else {
+        // If no data exists, use default structure
+        setHomepageData(defaultHomepageData);
+      }
+    } catch (error) {
+      console.error('Error fetching homepage data:', error);
+      // Use default data if fetch fails
+      setHomepageData(defaultHomepageData);
+    } finally {
+      setLoadingHomepage(false);
+    }
+  };
 
   // Tab switch
   const handleTabClick = (key) => {
@@ -554,6 +579,11 @@ const PackageDetailsPage = () => {
     return FALLBACK_BANNER_IMAGE;
   };
 
+  // Fetch homepage data
+  useEffect(() => {
+    fetchHomepageData();
+  }, []);
+
   // Fetch package by slug
   useEffect(() => {
     if (!slug) return;
@@ -632,7 +662,7 @@ const PackageDetailsPage = () => {
             }}
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/60 to-transparent z-10" />
-          
+
           {/* Package Title Overlay */}
           <div className="absolute inset-0 flex items-center justify-center z-20">
             <div className="text-center text-white px-4">
@@ -943,8 +973,8 @@ const PackageDetailsPage = () => {
             <div ref={otherInfoRef} className="scroll-mt-24">
               <h2 className="flex items-center text-lg font-bold text-gray-700 mb-1">
                 <span className="border-l-4 border-gray-300 pl-2 mr-2" />
-                 Terms & Conditions
-                </h2>
+                Terms & Conditions
+              </h2>
               <div className="bg-white rounded-lg shadow p-5 mb-8">
                 <p className="text-sm text-gray-500">
                   {packageDetails.terms ||
@@ -1045,7 +1075,7 @@ const PackageDetailsPage = () => {
           </div>
         </div>
 
-        {/* Best-Selling Community Trips */}
+        {/* Journey Frames Section - Dynamically Loaded */}
         <div className="container mx-auto py-12">
           <div className="text-center mb-6">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-1 tracking-tight">
@@ -1054,60 +1084,72 @@ const PackageDetailsPage = () => {
             <p className="text-lg text-gray-500">Pictures Perfect Moments</p>
           </div>
 
-          <section className="relative custom-swiper-slider">
-            <Swiper
-              modules={[Navigation, Autoplay]}
-              spaceBetween={16}
-              slidesPerView={4}
-              autoplay={{ delay: 2500, disableOnInteraction: false }}
-              navigation={{ prevEl: prevRef.current, nextEl: nextRef.current }}
-              onInit={(swiper) => {
-                swiper.params.navigation.prevEl = prevRef.current;
-                swiper.params.navigation.nextEl = nextRef.current;
-                swiper.navigation.init();
-                swiper.navigation.update();
-              }}
-              breakpoints={{
-                0: { slidesPerView: 1 },
-                640: { slidesPerView: 2 },
-                1024: { slidesPerView: 4 },
-              }}
-            >
-              {images.map((dest, index) => (
-                <SwiperSlide key={index}>
-                  <div className="journey-frame-slide">
-                    <img
-                      src={dest.src}
-                      alt={dest.label}
-                      className="journey-frame-img"
-                    />
-                    <div className="journey-frame-label">
-                      <MapPin
-                        size={16}
-                        style={{ marginRight: 4, marginBottom: 1 }}
+          {loadingHomepage ? (
+            <div className="flex justify-center items-center h-40">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+            </div>
+          ) : (
+            <section className="relative custom-swiper-slider">
+              <Swiper
+                modules={[Navigation, Autoplay]}
+                spaceBetween={16}
+                slidesPerView={4}
+                autoplay={{ delay: 2500, disableOnInteraction: false }}
+                navigation={{ prevEl: prevRef.current, nextEl: nextRef.current }}
+                onInit={(swiper) => {
+                  // @ts-ignore
+                  swiper.params.navigation.prevEl = prevRef.current;
+                  // @ts-ignore
+                  swiper.params.navigation.nextEl = nextRef.current;
+                  swiper.navigation.init();
+                  swiper.navigation.update();
+                }}
+                breakpoints={{
+                  0: { slidesPerView: 1 },
+                  640: { slidesPerView: 2 },
+                  1024: { slidesPerView: 4 },
+                }}
+              >
+                {(homepageData?.journeyFrames || defaultHomepageData.journeyFrames).map((dest, index) => (
+                  <SwiperSlide key={index}>
+                    <div className="journey-frame-slide">
+                      <img
+                        src={dest.src}
+                        alt={dest.label}
+                        className="journey-frame-img w-full h-64 object-cover rounded-lg"
                       />
-                      {dest.label}
+                      <div className="journey-frame-label mt-2 flex items-center justify-center text-gray-700 font-medium">
+                        <MapPin
+                          size={16}
+                          className="mr-1"
+                        />
+                        {dest.label}
+                      </div>
                     </div>
-                  </div>
-                </SwiperSlide>
-              ))}
-            </Swiper>
-            <button
-              ref={prevRef}
-              className="swiper-button-custom absolute left-0 top-1/2 transform -translate-y-1/2 z-20"
-            >
-              ‹
-            </button>
-            <button
-              ref={nextRef}
-              className="swiper-button-custom absolute right-0 top-1/2 transform -translate-y-1/2 z-20"
-            >
-              ›
-            </button>
-          </section>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+              <button
+                ref={prevRef}
+                className="swiper-button-custom absolute left-0 top-1/2 transform -translate-y-1/2 z-20 bg-white/80 hover:bg-white p-2 rounded-full shadow-lg"
+              >
+                ‹
+              </button>
+              <button
+                ref={nextRef}
+                className="swiper-button-custom absolute right-0 top-1/2 transform -translate-y-1/2 z-20 bg-white/80 hover:bg-white p-2 rounded-full shadow-lg"
+              >
+                ›
+              </button>
+            </section>
+          )}
         </div>
 
         <Footer setIsContactModalOpen={setIsContactModalOpen} />
+        <ContactModal
+          isOpen={isContactModalOpen}
+          onClose={() => setIsContactModalOpen(false)}
+        />
       </div>
 
       {/* Download Modal */}
